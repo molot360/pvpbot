@@ -319,6 +319,7204 @@ const clans = [
     msg.send(`"${user.nick}" cдался "${u.nick}". Со счёта "${user.nick}" списано ${resultplata}💵 и начислено на счёт "${u.nick}"`)
   })
 
+  
+  vk.updates.hear(/^😈$/i, msg => {
+    user = users.filter(x => x.id === msg.senderId)[0]
+    const u = users.filter(x => x.id === msg.replyMessage.senderId)[0]
+    if(!msg.hasReplyMessage) return msg.send('Необходимо переслать сообщение')
+    if(user.duel == false) return msg.send ('В данный момент вы не в дуэли')
+    if(u.duel == false) return msg.send ('В данный момент вы не в дуэли')
+    if(user.steps > 100) return msg.send ('Ходы дуэли превысили 100. Победитель не определён')
+    if(u.steps > 100) return msg.send ('Ходы дуэли превысили 100. Победитель не определён')
+    if (user.steps % 2 == 0) {
+      return msg.send ('Сейчас не твой ход')
+    }
+    else {
+      if(user.control > 0) {
+        msg.send (`Невозможно применить умение. Осталось ходов в контроле — ${user.control}`);
+      }
+      else{
+        if(u.clinch > 0) {
+          if(user.cd11 > 0) user.cd11 -= 1
+          if(user.del11 > 0) user.del11 -= 1
+          if(user.cd12 > 0) user.cd12 -= 1
+          if(user.del12 > 0) user.del12 -= 1
+          if(user.cd13 > 0) user.cd13 -= 1
+          if(user.cd14 > 0) user.cd14 -= 1
+          if(user.cd15 > 0) user.cd15 -= 1
+          if(user.spikes > 0) user.spikes -= 1
+          if(user.cd16 > 0) user.cd16 -= 1
+          if(user.cd21 > 0) user.cd21 -= 1
+          if(user.cd22 > 0) user.cd22 -= 1
+          if(user.cd31 > 0) user.cd31 -= 1
+          if(user.cd32 > 0) user.cd32 -= 1
+          if(user.cd33 > 0) user.cd33 -= 1
+          if(user.cd34 > 0) user.cd34 -= 1
+          if(user.cd35 > 0) user.cd35 -= 1
+          if(user.cd36 > 0) user.cd36 -= 1
+          if(user.cd37 > 0) user.cd37 -= 1
+          if(u.cd11 > 0) u.cd11 -= 1
+          if(u.del11 > 0) u.del11 -= 1
+          if(u.cd12 > 0) u.cd12 -= 1
+          if(u.del12 > 0) u.del12 -= 1
+          if(u.cd13 > 0) u.cd13 -= 1
+          if(u.cd14 > 0) u.cd14 -= 1
+          if(u.cd15 > 0) u.cd15 -= 1
+          if(u.spikes > 0) u.spikes -= 1
+          if(u.cd16 > 0) u.cd16 -= 1
+          if(u.clinch > 0) u.clinch == -1
+          if(u.cd21 > 0) u.cd21 -= 1
+          if(u.cd22 > 0) u.cd22 -= 1
+          if(u.cd31 > 0) u.cd31 -= 1
+          if(u.cd32 > 0) u.cd32 -= 1
+          if(u.cd33 > 0) u.cd33 -= 1
+          if(u.cd34 > 0) u.cd34 -= 1
+          if(u.cd35 > 0) u.cd35 -= 1
+          if(u.cd36 > 0) u.cd36 -= 1
+          if(u.cd37 > 0) u.cd37 -= 1
+          if(user.burn > 0) user.burn -= 1
+          if(u.burn > 0) u.burn -= 1
+          if(user.poison > 0) user.poison -= 1
+          if(u.poison > 0) u.poison -= 1
+          if(user.poisoning > 0) user.poisoning -= 1
+          if(u.poisoning > 0) u.poisoning -= 1
+          var hp = user.hp
+          var atk = user.atk
+          var procent = 20
+          var resulthp = hp / 100 * procent
+          var resultatk = atk / 100 * procent
+          user.duelhp += resulthp
+          user.duelatk += resultatk
+          user.del11 == 7
+          user.cd11 == 13
+          user.steps += 1
+          u.steps += 1
+          msg.send(`Здоровье и атака "${user.nick}" увеличены до ❤${user.duelhp} ⚔${user.duelatk}. Следующий ход делает "${u.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+          if(user.del11 == 0) {
+            var hp = user.hp
+            var atk = user.atk
+            var procent = 20
+            var resulthp = hp / 100 * procent
+            var resultatk = atk / 100 * procent
+            user.duelhp -= resulthp
+            user.duelatk -= resultatk
+            user.del11 == -1
+            msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+          }
+          if(u.del11 == 0) {
+            var hp1 = u.hp
+            var atk1 = u.atk
+            var procent = 20
+            var resulthp1 = hp1 / 100 * procent
+            var resultatk1 = atk1 / 100 * procent
+            u.duelhp -= resulthp1
+            u.duelatk -= resultatk1
+            u.del11 == -1
+            msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+          }
+          if(user.del12 == 0) {
+            var def = user.def
+            var procent = 20
+            var resultdef = def / 100 * procent
+            user.dueldef -= resultdef
+            user.del12 == -1
+            msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+          }
+          if(u.del12 == 0) {
+            var def1 = u.def
+            var procent = 20
+            var resultdef1 = def1 / 100 * procent
+            u.dueldef -= resultdef1
+            u.del12 == -1
+            msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+          }
+          if(user.spikes == 0) {
+            user.spikes -= 1
+            msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+          }
+          if(u.spikes == 0) {
+            u.spikes -= 1
+            msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+          }
+        }
+        else {
+          if(u.spikes > 0) {
+            if(u.contol > 0) {
+              if(user.cd11 > 0) user.cd11 -= 2
+              if(user.del11 > 0) user.del11 -= 2
+              if(user.cd12 > 0) user.cd12 -= 2
+              if(user.del12 > 0) user.del12 -= 2
+              if(user.cd13 > 0) user.cd13 -= 2
+              if(user.cd14 > 0) user.cd14 -= 2
+              if(user.cd15 > 0) user.cd15 -= 2
+              if(user.spikes > 0) user.spikes -= 2
+              if(user.cd16 > 0) user.cd16 -= 2
+              if(user.cd21 > 0) user.cd21 -= 2
+              if(user.cd22 > 0) user.cd22 -= 2
+              if(user.cd31 > 0) user.cd31 -= 2
+              if(user.cd32 > 0) user.cd32 -= 2
+              if(user.cd33 > 0) user.cd33 -= 2
+              if(user.cd34 > 0) user.cd34 -= 2
+              if(user.cd35 > 0) user.cd35 -= 2
+              if(user.cd36 > 0) user.cd36 -= 2
+              if(user.cd37 > 0) user.cd37 -= 2
+              if(u.cd11 > 0) u.cd11 -= 2
+              if(u.del11 > 0) u.del11 -= 2
+              if(u.cd12 > 0) u.cd12 -= 2
+              if(u.del12 > 0) u.del12 -= 2
+              if(u.cd13 > 0) u.cd13 -= 2
+              if(u.cd14 > 0) u.cd14 -= 2
+              if(u.cd15 > 0) u.cd15 -= 2
+              if(u.spikes > 0) u.spikes -= 2
+              if(u.cd16 > 0) u.cd16 -= 2
+              if(u.clinch > 0) u.clinch == -1
+              if(u.cd21 > 0) u.cd21 -= 2
+              if(u.cd22 > 0) u.cd22 -= 2
+              if(u.cd31 > 0) u.cd31 -= 2
+              if(u.cd32 > 0) u.cd32 -= 2
+              if(u.cd33 > 0) u.cd33 -= 2
+              if(u.cd34 > 0) u.cd34 -= 2
+              if(u.cd35 > 0) u.cd35 -= 2
+              if(u.cd36 > 0) u.cd36 -= 2
+              if(u.cd37 > 0) u.cd37 -= 2
+              if(user.burn > 0) user.burn -= 2
+              if(u.burn > 0) u.burn -= 2
+              if(user.poison > 0) user.poison -= 2
+              if(u.poison > 0) u.poison -= 2
+              if(user.poisoning > 0) user.poisoning -= 2
+              if(u.poisoning > 0) u.poisoning -= 2
+              var hp = user.hp
+              var atk = user.atk
+              var procent = 20
+              var resulthp = hp / 100 * procent
+              var resultatk = atk / 100 * procent
+              user.duelhp += resulthp
+              user.duelatk += resultatk
+              user.del11 == 7
+              user.cd11 == 13
+              user.steps += 2
+              u.steps += 2
+              u.control -= 2
+              msg.send(`Здоровье и атака "${user.nick}" увеличены до ❤${user.duelhp} ⚔${user.duelatk}. Следующий ход делает "${user.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+              if(user.del11 == 0) {
+                var hp = user.hp
+                var atk = user.atk
+                var procent = 20
+                var resulthp = hp / 100 * procent
+                var resultatk = atk / 100 * procent
+                user.duelhp -= resulthp
+                user.duelatk -= resultatk
+                user.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del11 == 0) {
+                var hp1 = u.hp
+                var atk1 = u.atk
+                var procent = 20
+                var resulthp1 = hp1 / 100 * procent
+                var resultatk1 = atk1 / 100 * procent
+                u.duelhp -= resulthp1
+                u.duelatk -= resultatk1
+                u.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.del12 == 0) {
+                var def = user.def
+                var procent = 20
+                var resultdef = def / 100 * procent
+                user.dueldef -= resultdef
+                user.del12 == -1
+                msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del12 == 0) {
+                var def1 = u.def
+                var procent = 20
+                var resultdef1 = def1 / 100 * procent
+                u.dueldef -= resultdef1
+                u.del12 == -1
+                msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.spikes == 0) {
+                user.spikes -= 1
+                msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.spikes == 0) {
+                u.spikes -= 1
+                msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+            }
+            else {
+              if(user.cd11 > 0) user.cd11 -= 1
+              if(user.del11 > 0) user.del11 -= 1
+              if(user.cd12 > 0) user.cd12 -= 1
+              if(user.del12 > 0) user.del12 -= 1
+              if(user.cd13 > 0) user.cd13 -= 1
+              if(user.cd14 > 0) user.cd14 -= 1
+              if(user.cd15 > 0) user.cd15 -= 1
+              if(user.spikes > 0) user.spikes -= 1
+              if(user.cd16 > 0) user.cd16 -= 1
+              if(user.cd21 > 0) user.cd21 -= 1
+              if(user.cd22 > 0) user.cd22 -= 1
+              if(user.cd31 > 0) user.cd31 -= 1
+              if(user.cd32 > 0) user.cd32 -= 1
+              if(user.cd33 > 0) user.cd33 -= 1
+              if(user.cd34 > 0) user.cd34 -= 1
+              if(user.cd35 > 0) user.cd35 -= 1
+              if(user.cd36 > 0) user.cd36 -= 1
+              if(user.cd37 > 0) user.cd37 -= 1
+              if(u.cd11 > 0) u.cd11 -= 1
+              if(u.del11 > 0) u.del11 -= 1
+              if(u.cd12 > 0) u.cd12 -= 1
+              if(u.del12 > 0) u.del12 -= 1
+              if(u.cd13 > 0) u.cd13 -= 1
+              if(u.cd14 > 0) u.cd14 -= 1
+              if(u.cd15 > 0) u.cd15 -= 1
+              if(u.spikes > 0) u.spikes -= 1
+              if(u.cd16 > 0) u.cd16 -= 1
+              if(u.clinch > 0) u.clinch == -1
+              if(u.cd21 > 0) u.cd21 -= 1
+              if(u.cd22 > 0) u.cd22 -= 1
+              if(u.cd31 > 0) u.cd31 -= 1
+              if(u.cd32 > 0) u.cd32 -= 1
+              if(u.cd33 > 0) u.cd33 -= 1
+              if(u.cd34 > 0) u.cd34 -= 1
+              if(u.cd35 > 0) u.cd35 -= 1
+              if(u.cd36 > 0) u.cd36 -= 1
+              if(u.cd37 > 0) u.cd37 -= 1
+              if(user.burn > 0) user.burn -= 1
+              if(u.burn > 0) u.burn -= 1
+              if(user.poison > 0) user.poison -= 1
+              if(u.poison > 0) u.poison -= 1
+              if(user.poisoning > 0) user.poisoning -= 1
+              if(u.poisoning > 0) u.poisoning -= 1
+              var hp = user.hp
+              var atk = user.atk
+              var procent = 20
+              var resulthp = hp / 100 * procent
+              var resultatk = atk / 100 * procent
+              user.duelhp += resulthp
+              user.duelatk += resultatk
+              user.del11 == 7
+              user.cd11 == 13
+              user.steps += 1
+              u.steps += 1
+              msg.send(`Здоровье и атака "${user.nick}" увеличены до ❤${user.duelhp} ⚔${user.duelatk}. Следующий ход делает "${u.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+              if(user.del11 == 0) {
+                var hp = user.hp
+                var atk = user.atk
+                var procent = 20
+                var resulthp = hp / 100 * procent
+                var resultatk = atk / 100 * procent
+                user.duelhp -= resulthp
+                user.duelatk -= resultatk
+                user.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del11 == 0) {
+                var hp1 = u.hp
+                var atk1 = u.atk
+                var procent = 20
+                var resulthp1 = hp1 / 100 * procent
+                var resultatk1 = atk1 / 100 * procent
+                u.duelhp -= resulthp1
+                u.duelatk -= resultatk1
+                u.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.del12 == 0) {
+                var def = user.def
+                var procent = 20
+                var resultdef = def / 100 * procent
+                user.dueldef -= resultdef
+                user.del12 == -1
+                msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del12 == 0) {
+                var def1 = u.def
+                var procent = 20
+                var resultdef1 = def1 / 100 * procent
+                u.dueldef -= resultdef1
+                u.del12 == -1
+                msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.spikes == 0) {
+                user.spikes -= 1
+                msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.spikes == 0) {
+                u.spikes -= 1
+                msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+            }
+          }
+          else {
+            if(u.contol > 0) {
+              if(user.cd11 > 0) user.cd11 -= 2
+              if(user.del11 > 0) user.del11 -= 2
+              if(user.cd12 > 0) user.cd12 -= 2
+              if(user.del12 > 0) user.del12 -= 2
+              if(user.cd13 > 0) user.cd13 -= 2
+              if(user.cd14 > 0) user.cd14 -= 2
+              if(user.cd15 > 0) user.cd15 -= 2
+              if(user.spikes > 0) user.spikes -= 2
+              if(user.cd16 > 0) user.cd16 -= 2
+              if(user.cd21 > 0) user.cd21 -= 2
+              if(user.cd22 > 0) user.cd22 -= 2
+              if(user.cd31 > 0) user.cd31 -= 2
+              if(user.cd32 > 0) user.cd32 -= 2
+              if(user.cd33 > 0) user.cd33 -= 2
+              if(user.cd34 > 0) user.cd34 -= 2
+              if(user.cd35 > 0) user.cd35 -= 2
+              if(user.cd36 > 0) user.cd36 -= 2
+              if(user.cd37 > 0) user.cd37 -= 2
+              if(u.cd11 > 0) u.cd11 -= 2
+              if(u.del11 > 0) u.del11 -= 2
+              if(u.cd12 > 0) u.cd12 -= 2
+              if(u.del12 > 0) u.del12 -= 2
+              if(u.cd13 > 0) u.cd13 -= 2
+              if(u.cd14 > 0) u.cd14 -= 2
+              if(u.cd15 > 0) u.cd15 -= 2
+              if(u.spikes > 0) u.spikes -= 2
+              if(u.cd16 > 0) u.cd16 -= 2
+              if(u.clinch > 0) u.clinch == -1
+              if(u.cd21 > 0) u.cd21 -= 2
+              if(u.cd22 > 0) u.cd22 -= 2
+              if(u.cd31 > 0) u.cd31 -= 2
+              if(u.cd32 > 0) u.cd32 -= 2
+              if(u.cd33 > 0) u.cd33 -= 2
+              if(u.cd34 > 0) u.cd34 -= 2
+              if(u.cd35 > 0) u.cd35 -= 2
+              if(u.cd36 > 0) u.cd36 -= 2
+              if(u.cd37 > 0) u.cd37 -= 2
+              if(user.burn > 0) user.burn -= 2
+              if(u.burn > 0) u.burn -= 2
+              if(user.poison > 0) user.poison -= 2
+              if(u.poison > 0) u.poison -= 2
+              if(user.poisoning > 0) user.poisoning -= 2
+              if(u.poisoning > 0) u.poisoning -= 2
+              var hp = user.hp
+              var atk = user.atk
+              var procent = 20
+              var resulthp = hp / 100 * procent
+              var resultatk = atk / 100 * procent
+              user.duelhp += resulthp
+              user.duelatk += resultatk
+              user.del11 == 7
+              user.cd11 == 13
+              user.steps += 2
+              u.steps += 2
+              u.control -= 2
+              msg.send(`Здоровье и атака "${user.nick}" увеличены до ❤${user.duelhp} ⚔${user.duelatk}. Следующий ход делает "${user.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+              if(user.del11 == 0) {
+                var hp = user.hp
+                var atk = user.atk
+                var procent = 20
+                var resulthp = hp / 100 * procent
+                var resultatk = atk / 100 * procent
+                user.duelhp -= resulthp
+                user.duelatk -= resultatk
+                user.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del11 == 0) {
+                var hp1 = u.hp
+                var atk1 = u.atk
+                var procent = 20
+                var resulthp1 = hp1 / 100 * procent
+                var resultatk1 = atk1 / 100 * procent
+                u.duelhp -= resulthp1
+                u.duelatk -= resultatk1
+                u.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.del12 == 0) {
+                var def = user.def
+                var procent = 20
+                var resultdef = def / 100 * procent
+                user.dueldef -= resultdef
+                user.del12 == -1
+                msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del12 == 0) {
+                var def1 = u.def
+                var procent = 20
+                var resultdef1 = def1 / 100 * procent
+                u.dueldef -= resultdef1
+                u.del12 == -1
+                msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.spikes == 0) {
+                user.spikes -= 1
+                msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.spikes == 0) {
+                u.spikes -= 1
+                msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+            }
+            else {
+              if(user.cd11 > 0) user.cd11 -= 1
+              if(user.del11 > 0) user.del11 -= 1
+              if(user.cd12 > 0) user.cd12 -= 1
+              if(user.del12 > 0) user.del12 -= 1
+              if(user.cd13 > 0) user.cd13 -= 1
+              if(user.cd14 > 0) user.cd14 -= 1
+              if(user.cd15 > 0) user.cd15 -= 1
+              if(user.spikes > 0) user.spikes -= 1
+              if(user.cd16 > 0) user.cd16 -= 1
+              if(user.cd21 > 0) user.cd21 -= 1
+              if(user.cd22 > 0) user.cd22 -= 1
+              if(user.cd31 > 0) user.cd31 -= 1
+              if(user.cd32 > 0) user.cd32 -= 1
+              if(user.cd33 > 0) user.cd33 -= 1
+              if(user.cd34 > 0) user.cd34 -= 1
+              if(user.cd35 > 0) user.cd35 -= 1
+              if(user.cd36 > 0) user.cd36 -= 1
+              if(user.cd37 > 0) user.cd37 -= 1
+              if(u.cd11 > 0) u.cd11 -= 1
+              if(u.del11 > 0) u.del11 -= 1
+              if(u.cd12 > 0) u.cd12 -= 1
+              if(u.del12 > 0) u.del12 -= 1
+              if(u.cd13 > 0) u.cd13 -= 1
+              if(u.cd14 > 0) u.cd14 -= 1
+              if(u.cd15 > 0) u.cd15 -= 1
+              if(u.spikes > 0) u.spikes -= 1
+              if(u.cd16 > 0) u.cd16 -= 1
+              if(u.clinch > 0) u.clinch == -1
+              if(u.cd21 > 0) u.cd21 -= 1
+              if(u.cd22 > 0) u.cd22 -= 1
+              if(u.cd31 > 0) u.cd31 -= 1
+              if(u.cd32 > 0) u.cd32 -= 1
+              if(u.cd33 > 0) u.cd33 -= 1
+              if(u.cd34 > 0) u.cd34 -= 1
+              if(u.cd35 > 0) u.cd35 -= 1
+              if(u.cd36 > 0) u.cd36 -= 1
+              if(u.cd37 > 0) u.cd37 -= 1
+              if(user.burn > 0) user.burn -= 1
+              if(u.burn > 0) u.burn -= 1
+              if(user.poison > 0) user.poison -= 1
+              if(u.poison > 0) u.poison -= 1
+              if(user.poisoning > 0) user.poisoning -= 1
+              if(u.poisoning > 0) u.poisoning -= 1
+              var hp = user.hp
+              var atk = user.atk
+              var procent = 20
+              var resulthp = hp / 100 * procent
+              var resultatk = atk / 100 * procent
+              user.duelhp += resulthp
+              user.duelatk += resultatk
+              user.del11 == 7
+              user.cd11 == 13
+              user.steps += 1
+              u.steps += 1
+              msg.send(`Здоровье и атака "${user.nick}" увеличены до ❤${user.duelhp} ⚔${user.duelatk}. Следующий ход делает "${u.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+              if(user.del11 == 0) {
+                var hp = user.hp
+                var atk = user.atk
+                var procent = 20
+                var resulthp = hp / 100 * procent
+                var resultatk = atk / 100 * procent
+                user.duelhp -= resulthp
+                user.duelatk -= resultatk
+                user.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del11 == 0) {
+                var hp1 = u.hp
+                var atk1 = u.atk
+                var procent = 20
+                var resulthp1 = hp1 / 100 * procent
+                var resultatk1 = atk1 / 100 * procent
+                u.duelhp -= resulthp1
+                u.duelatk -= resultatk1
+                u.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.del12 == 0) {
+                var def = user.def
+                var procent = 20
+                var resultdef = def / 100 * procent
+                user.dueldef -= resultdef
+                user.del12 == -1
+                msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del12 == 0) {
+                var def1 = u.def
+                var procent = 20
+                var resultdef1 = def1 / 100 * procent
+                u.dueldef -= resultdef1
+                u.del12 == -1
+                msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.spikes == 0) {
+                user.spikes -= 1
+                msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.spikes == 0) {
+                u.spikes -= 1
+                msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+            }
+          }
+        }
+      }
+    }
+  })
+
+  vk.updates.hear(/^🛡$/i, msg => {
+    user = users.filter(x => x.id === msg.senderId)[0]
+    const u = users.filter(x => x.id === msg.replyMessage.senderId)[0]
+    if(!msg.hasReplyMessage) return msg.send('Необходимо переслать сообщение')
+    if(user.duel == false) return msg.send ('В данный момент вы не в дуэли')
+    if(u.duel == false) return msg.send ('В данный момент вы не в дуэли')
+    if(user.steps > 100) return msg.send ('Ходы дуэли превысили 100. Победитель не определён')
+    if(u.steps > 100) return msg.send ('Ходы дуэли превысили 100. Победитель не определён')
+    if (user.steps % 2 == 0) {
+      return msg.send ('Сейчас не твой ход')
+    }
+    else {
+      if(user.control > 0) {
+        msg.send (`Невозможно применить умение. Осталось ходов в контроле — ${user.control}`);
+      }
+      else{
+        if(u.clinch > 0) {
+          if(user.cd11 > 0) user.cd11 -= 1
+          if(user.del11 > 0) user.del11 -= 1
+          if(user.cd12 > 0) user.cd12 -= 1
+          if(user.del12 > 0) user.del12 -= 1
+          if(user.cd13 > 0) user.cd13 -= 1
+          if(user.cd14 > 0) user.cd14 -= 1
+          if(user.cd15 > 0) user.cd15 -= 1
+          if(user.spikes > 0) user.spikes -= 1
+          if(user.cd16 > 0) user.cd16 -= 1
+          if(user.cd21 > 0) user.cd21 -= 1
+          if(user.cd22 > 0) user.cd22 -= 1
+          if(user.cd31 > 0) user.cd31 -= 1
+          if(user.cd32 > 0) user.cd32 -= 1
+          if(user.cd33 > 0) user.cd33 -= 1
+          if(user.cd34 > 0) user.cd34 -= 1
+          if(user.cd35 > 0) user.cd35 -= 1
+          if(user.cd36 > 0) user.cd36 -= 1
+          if(user.cd37 > 0) user.cd37 -= 1
+          if(u.cd11 > 0) u.cd11 -= 1
+          if(u.del11 > 0) u.del11 -= 1
+          if(u.cd12 > 0) u.cd12 -= 1
+          if(u.del12 > 0) u.del12 -= 1
+          if(u.cd13 > 0) u.cd13 -= 1
+          if(u.cd14 > 0) u.cd14 -= 1
+          if(u.cd15 > 0) u.cd15 -= 1
+          if(u.spikes > 0) u.spikes -= 1
+          if(u.cd16 > 0) u.cd16 -= 1
+          if(u.clinch > 0) u.clinch == -1
+          if(u.cd21 > 0) u.cd21 -= 1
+          if(u.cd22 > 0) u.cd22 -= 1
+          if(u.cd31 > 0) u.cd31 -= 1
+          if(u.cd32 > 0) u.cd32 -= 1
+          if(u.cd33 > 0) u.cd33 -= 1
+          if(u.cd34 > 0) u.cd34 -= 1
+          if(u.cd35 > 0) u.cd35 -= 1
+          if(u.cd36 > 0) u.cd36 -= 1
+          if(u.cd37 > 0) u.cd37 -= 1
+          if(user.burn > 0) user.burn -= 1
+          if(u.burn > 0) u.burn -= 1
+          if(user.poison > 0) user.poison -= 1
+          if(u.poison > 0) u.poison -= 1
+          if(user.poisoning > 0) user.poisoning -= 1
+          if(u.poisoning > 0) u.poisoning -= 1
+          var def = user.dueldef
+          var procent = 20
+          var resultdef = def / 100 * procent
+          user.dueldef += resultdef
+          user.del12 == 6
+          user.cd12 == 9
+          user.steps += 1
+          u.steps += 1
+          msg.send(`Защита "${user.nick}" увеличена до 🛡"${user.dueldef}". Следующий ход делает "${u.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+          if(user.del11 == 0) {
+            var hp = user.hp
+            var atk = user.atk
+            var procent = 20
+            var resulthp = hp / 100 * procent
+            var resultatk = atk / 100 * procent
+            user.duelhp -= resulthp
+            user.duelatk -= resultatk
+            user.del11 == -1
+            msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+          }
+          if(u.del11 == 0) {
+            var hp1 = u.hp
+            var atk1 = u.atk
+            var procent = 20
+            var resulthp1 = hp1 / 100 * procent
+            var resultatk1 = atk1 / 100 * procent
+            u.duelhp -= resulthp1
+            u.duelatk -= resultatk1
+            u.del11 == -1
+            msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+          }
+          if(user.del12 == 0) {
+            var def = user.def
+            var procent = 20
+            var resultdef = def / 100 * procent
+            user.dueldef -= resultdef
+            user.del12 == -1
+            msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+          }
+          if(u.del12 == 0) {
+            var def1 = u.def
+            var procent = 20
+            var resultdef1 = def1 / 100 * procent
+            u.dueldef -= resultdef1
+            u.del12 == -1
+            msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+          }
+          if(user.spikes == 0) {
+            user.spikes -= 1
+            msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+          }
+          if(u.spikes == 0) {
+            u.spikes -= 1
+            msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+          }
+        }
+        else {
+          if(u.spikes > 0) {
+            if(u.contol > 0) {
+              if(user.cd11 > 0) user.cd11 -= 2
+              if(user.del11 > 0) user.del11 -= 2
+              if(user.cd12 > 0) user.cd12 -= 2
+              if(user.del12 > 0) user.del12 -= 2
+              if(user.cd13 > 0) user.cd13 -= 2
+              if(user.cd14 > 0) user.cd14 -= 2
+              if(user.cd15 > 0) user.cd15 -= 2
+              if(user.spikes > 0) user.spikes -= 2
+              if(user.cd16 > 0) user.cd16 -= 2
+              if(user.cd21 > 0) user.cd21 -= 2
+              if(user.cd22 > 0) user.cd22 -= 2
+              if(user.cd31 > 0) user.cd31 -= 2
+              if(user.cd32 > 0) user.cd32 -= 2
+              if(user.cd33 > 0) user.cd33 -= 2
+              if(user.cd34 > 0) user.cd34 -= 2
+              if(user.cd35 > 0) user.cd35 -= 2
+              if(user.cd36 > 0) user.cd36 -= 2
+              if(user.cd37 > 0) user.cd37 -= 2
+              if(u.cd11 > 0) u.cd11 -= 2
+              if(u.del11 > 0) u.del11 -= 2
+              if(u.cd12 > 0) u.cd12 -= 2
+              if(u.del12 > 0) u.del12 -= 2
+              if(u.cd13 > 0) u.cd13 -= 2
+              if(u.cd14 > 0) u.cd14 -= 2
+              if(u.cd15 > 0) u.cd15 -= 2
+              if(u.spikes > 0) u.spikes -= 2
+              if(u.cd16 > 0) u.cd16 -= 2
+              if(u.clinch > 0) u.clinch == -1
+              if(u.cd21 > 0) u.cd21 -= 2
+              if(u.cd22 > 0) u.cd22 -= 2
+              if(u.cd31 > 0) u.cd31 -= 2
+              if(u.cd32 > 0) u.cd32 -= 2
+              if(u.cd33 > 0) u.cd33 -= 2
+              if(u.cd34 > 0) u.cd34 -= 2
+              if(u.cd35 > 0) u.cd35 -= 2
+              if(u.cd36 > 0) u.cd36 -= 2
+              if(u.cd37 > 0) u.cd37 -= 2
+              if(user.burn > 0) user.burn -= 2
+              if(u.burn > 0) u.burn -= 2
+              if(user.poison > 0) user.poison -= 2
+              if(u.poison > 0) u.poison -= 2
+              if(user.poisoning > 0) user.poisoning -= 2
+              if(u.poisoning > 0) u.poisoning -= 2
+              var def = user.dueldef
+              var procent = 20
+              var resultdef = def / 100 * procent
+              user.dueldef += resultdef
+              user.del12 == 6
+              user.cd12 == 9
+              user.steps += 2
+              u.steps += 2
+              u.control -= 2
+              msg.send(`Защита "${user.nick}" увеличена до 🛡"${user.dueldef}". Следующий ход делает "${user.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+              if(user.del11 == 0) {
+                var hp = user.hp
+                var atk = user.atk
+                var procent = 20
+                var resulthp = hp / 100 * procent
+                var resultatk = atk / 100 * procent
+                user.duelhp -= resulthp
+                user.duelatk -= resultatk
+                user.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del11 == 0) {
+                var hp1 = u.hp
+                var atk1 = u.atk
+                var procent = 20
+                var resulthp1 = hp1 / 100 * procent
+                var resultatk1 = atk1 / 100 * procent
+                u.duelhp -= resulthp1
+                u.duelatk -= resultatk1
+                u.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.del12 == 0) {
+                var def = user.def
+                var procent = 20
+                var resultdef = def / 100 * procent
+                user.dueldef -= resultdef
+                user.del12 == -1
+                msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del12 == 0) {
+                var def1 = u.def
+                var procent = 20
+                var resultdef1 = def1 / 100 * procent
+                u.dueldef -= resultdef1
+                u.del12 == -1
+                msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.spikes == 0) {
+                user.spikes -= 1
+                msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.spikes == 0) {
+                u.spikes -= 1
+                msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+            }
+            else {
+              if(user.cd11 > 0) user.cd11 -= 1
+              if(user.del11 > 0) user.del11 -= 1
+              if(user.cd12 > 0) user.cd12 -= 1
+              if(user.del12 > 0) user.del12 -= 1
+              if(user.cd13 > 0) user.cd13 -= 1
+              if(user.cd14 > 0) user.cd14 -= 1
+              if(user.cd15 > 0) user.cd15 -= 1
+              if(user.spikes > 0) user.spikes -= 1
+              if(user.cd16 > 0) user.cd16 -= 1
+              if(user.cd21 > 0) user.cd21 -= 1
+              if(user.cd22 > 0) user.cd22 -= 1
+              if(user.cd31 > 0) user.cd31 -= 1
+              if(user.cd32 > 0) user.cd32 -= 1
+              if(user.cd33 > 0) user.cd33 -= 1
+              if(user.cd34 > 0) user.cd34 -= 1
+              if(user.cd35 > 0) user.cd35 -= 1
+              if(user.cd36 > 0) user.cd36 -= 1
+              if(user.cd37 > 0) user.cd37 -= 1
+              if(u.cd11 > 0) u.cd11 -= 1
+              if(u.del11 > 0) u.del11 -= 1
+              if(u.cd12 > 0) u.cd12 -= 1
+              if(u.del12 > 0) u.del12 -= 1
+              if(u.cd13 > 0) u.cd13 -= 1
+              if(u.cd14 > 0) u.cd14 -= 1
+              if(u.cd15 > 0) u.cd15 -= 1
+              if(u.spikes > 0) u.spikes -= 1
+              if(u.cd16 > 0) u.cd16 -= 1
+              if(u.clinch > 0) u.clinch == -1
+              if(u.cd21 > 0) u.cd21 -= 1
+              if(u.cd22 > 0) u.cd22 -= 1
+              if(u.cd31 > 0) u.cd31 -= 1
+              if(u.cd32 > 0) u.cd32 -= 1
+              if(u.cd33 > 0) u.cd33 -= 1
+              if(u.cd34 > 0) u.cd34 -= 1
+              if(u.cd35 > 0) u.cd35 -= 1
+              if(u.cd36 > 0) u.cd36 -= 1
+              if(u.cd37 > 0) u.cd37 -= 1
+              if(user.burn > 0) user.burn -= 1
+              if(u.burn > 0) u.burn -= 1
+              if(user.poison > 0) user.poison -= 1
+              if(u.poison > 0) u.poison -= 1
+              if(user.poisoning > 0) user.poisoning -= 1
+              if(u.poisoning > 0) u.poisoning -= 1
+              var def = user.dueldef
+              var procent = 20
+              var resultdef = def / 100 * procent
+              user.dueldef += resultdef
+              user.del12 == 6
+              user.cd12 == 9
+              user.steps += 1
+              u.steps += 1
+              msg.send(`Защита "${user.nick}" увеличена до 🛡"${user.dueldef}". Следующий ход делает "${u.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+              if(user.del11 == 0) {
+                var hp = user.hp
+                var atk = user.atk
+                var procent = 20
+                var resulthp = hp / 100 * procent
+                var resultatk = atk / 100 * procent
+                user.duelhp -= resulthp
+                user.duelatk -= resultatk
+                user.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del11 == 0) {
+                var hp1 = u.hp
+                var atk1 = u.atk
+                var procent = 20
+                var resulthp1 = hp1 / 100 * procent
+                var resultatk1 = atk1 / 100 * procent
+                u.duelhp -= resulthp1
+                u.duelatk -= resultatk1
+                u.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.del12 == 0) {
+                var def = user.def
+                var procent = 20
+                var resultdef = def / 100 * procent
+                user.dueldef -= resultdef
+                user.del12 == -1
+                msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del12 == 0) {
+                var def1 = u.def
+                var procent = 20
+                var resultdef1 = def1 / 100 * procent
+                u.dueldef -= resultdef1
+                u.del12 == -1
+                msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.spikes == 0) {
+                user.spikes -= 1
+                msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.spikes == 0) {
+                u.spikes -= 1
+                msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+            }
+          }
+          else {
+            if(u.contol > 0) {
+              if(user.cd11 > 0) user.cd11 -= 2
+              if(user.del11 > 0) user.del11 -= 2
+              if(user.cd12 > 0) user.cd12 -= 2
+              if(user.del12 > 0) user.del12 -= 2
+              if(user.cd13 > 0) user.cd13 -= 2
+              if(user.cd14 > 0) user.cd14 -= 2
+              if(user.cd15 > 0) user.cd15 -= 2
+              if(user.spikes > 0) user.spikes -= 2
+              if(user.cd16 > 0) user.cd16 -= 2
+              if(user.cd21 > 0) user.cd21 -= 2
+              if(user.cd22 > 0) user.cd22 -= 2
+              if(user.cd31 > 0) user.cd31 -= 2
+              if(user.cd32 > 0) user.cd32 -= 2
+              if(user.cd33 > 0) user.cd33 -= 2
+              if(user.cd34 > 0) user.cd34 -= 2
+              if(user.cd35 > 0) user.cd35 -= 2
+              if(user.cd36 > 0) user.cd36 -= 2
+              if(user.cd37 > 0) user.cd37 -= 2
+              if(u.cd11 > 0) u.cd11 -= 2
+              if(u.del11 > 0) u.del11 -= 2
+              if(u.cd12 > 0) u.cd12 -= 2
+              if(u.del12 > 0) u.del12 -= 2
+              if(u.cd13 > 0) u.cd13 -= 2
+              if(u.cd14 > 0) u.cd14 -= 2
+              if(u.cd15 > 0) u.cd15 -= 2
+              if(u.spikes > 0) u.spikes -= 2
+              if(u.cd16 > 0) u.cd16 -= 2
+              if(u.clinch > 0) u.clinch == -1
+              if(u.cd21 > 0) u.cd21 -= 2
+              if(u.cd22 > 0) u.cd22 -= 2
+              if(u.cd31 > 0) u.cd31 -= 2
+              if(u.cd32 > 0) u.cd32 -= 2
+              if(u.cd33 > 0) u.cd33 -= 2
+              if(u.cd34 > 0) u.cd34 -= 2
+              if(u.cd35 > 0) u.cd35 -= 2
+              if(u.cd36 > 0) u.cd36 -= 2
+              if(u.cd37 > 0) u.cd37 -= 2
+              if(user.burn > 0) user.burn -= 2
+              if(u.burn > 0) u.burn -= 2
+              if(user.poison > 0) user.poison -= 2
+              if(u.poison > 0) u.poison -= 2
+              if(user.poisoning > 0) user.poisoning -= 2
+              if(u.poisoning > 0) u.poisoning -= 2
+              var def = user.dueldef
+              var procent = 20
+              var resultdef = def / 100 * procent
+              user.dueldef += resultdef
+              user.del12 == 6
+              user.cd12 == 9
+              user.steps += 2
+              u.steps += 2
+              u.control -= 2
+              msg.send(`Защита "${user.nick}" увеличена до 🛡"${user.dueldef}". Следующий ход делает "${user.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+              if(user.del11 == 0) {
+                var hp = user.hp
+                var atk = user.atk
+                var procent = 20
+                var resulthp = hp / 100 * procent
+                var resultatk = atk / 100 * procent
+                user.duelhp -= resulthp
+                user.duelatk -= resultatk
+                user.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del11 == 0) {
+                var hp1 = u.hp
+                var atk1 = u.atk
+                var procent = 20
+                var resulthp1 = hp1 / 100 * procent
+                var resultatk1 = atk1 / 100 * procent
+                u.duelhp -= resulthp1
+                u.duelatk -= resultatk1
+                u.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.del12 == 0) {
+                var def = user.def
+                var procent = 20
+                var resultdef = def / 100 * procent
+                user.dueldef -= resultdef
+                user.del12 == -1
+                msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del12 == 0) {
+                var def1 = u.def
+                var procent = 20
+                var resultdef1 = def1 / 100 * procent
+                u.dueldef -= resultdef1
+                u.del12 == -1
+                msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.spikes == 0) {
+                user.spikes -= 1
+                msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.spikes == 0) {
+                u.spikes -= 1
+                msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+            }
+            else {
+              if(user.cd11 > 0) user.cd11 -= 1
+              if(user.del11 > 0) user.del11 -= 1
+              if(user.cd12 > 0) user.cd12 -= 1
+              if(user.del12 > 0) user.del12 -= 1
+              if(user.cd13 > 0) user.cd13 -= 1
+              if(user.cd14 > 0) user.cd14 -= 1
+              if(user.cd15 > 0) user.cd15 -= 1
+              if(user.spikes > 0) user.spikes -= 1
+              if(user.cd16 > 0) user.cd16 -= 1
+              if(user.cd21 > 0) user.cd21 -= 1
+              if(user.cd22 > 0) user.cd22 -= 1
+              if(user.cd31 > 0) user.cd31 -= 1
+              if(user.cd32 > 0) user.cd32 -= 1
+              if(user.cd33 > 0) user.cd33 -= 1
+              if(user.cd34 > 0) user.cd34 -= 1
+              if(user.cd35 > 0) user.cd35 -= 1
+              if(user.cd36 > 0) user.cd36 -= 1
+              if(user.cd37 > 0) user.cd37 -= 1
+              if(u.cd11 > 0) u.cd11 -= 1
+              if(u.del11 > 0) u.del11 -= 1
+              if(u.cd12 > 0) u.cd12 -= 1
+              if(u.del12 > 0) u.del12 -= 1
+              if(u.cd13 > 0) u.cd13 -= 1
+              if(u.cd14 > 0) u.cd14 -= 1
+              if(u.cd15 > 0) u.cd15 -= 1
+              if(u.spikes > 0) u.spikes -= 1
+              if(u.cd16 > 0) u.cd16 -= 1
+              if(u.clinch > 0) u.clinch == -1
+              if(u.cd21 > 0) u.cd21 -= 1
+              if(u.cd22 > 0) u.cd22 -= 1
+              if(u.cd31 > 0) u.cd31 -= 1
+              if(u.cd32 > 0) u.cd32 -= 1
+              if(u.cd33 > 0) u.cd33 -= 1
+              if(u.cd34 > 0) u.cd34 -= 1
+              if(u.cd35 > 0) u.cd35 -= 1
+              if(u.cd36 > 0) u.cd36 -= 1
+              if(u.cd37 > 0) u.cd37 -= 1
+              if(user.burn > 0) user.burn -= 1
+              if(u.burn > 0) u.burn -= 1
+              if(user.poison > 0) user.poison -= 1
+              if(u.poison > 0) u.poison -= 1
+              if(user.poisoning > 0) user.poisoning -= 1
+              if(u.poisoning > 0) u.poisoning -= 1
+              var def = user.dueldef
+              var procent = 20
+              var resultdef = def / 100 * procent
+              user.dueldef += resultdef
+              user.del12 == 6
+              user.cd12 == 9
+              user.steps += 1
+              u.steps += 1
+              msg.send(`Защита "${user.nick}" увеличена до 🛡"${user.dueldef}". Следующий ход делает "${u.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+              if(user.del11 == 0) {
+                var hp = user.hp
+                var atk = user.atk
+                var procent = 20
+                var resulthp = hp / 100 * procent
+                var resultatk = atk / 100 * procent
+                user.duelhp -= resulthp
+                user.duelatk -= resultatk
+                user.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del11 == 0) {
+                var hp1 = u.hp
+                var atk1 = u.atk
+                var procent = 20
+                var resulthp1 = hp1 / 100 * procent
+                var resultatk1 = atk1 / 100 * procent
+                u.duelhp -= resulthp1
+                u.duelatk -= resultatk1
+                u.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.del12 == 0) {
+                var def = user.def
+                var procent = 20
+                var resultdef = def / 100 * procent
+                user.dueldef -= resultdef
+                user.del12 == -1
+                msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del12 == 0) {
+                var def1 = u.def
+                var procent = 20
+                var resultdef1 = def1 / 100 * procent
+                u.dueldef -= resultdef1
+                u.del12 == -1
+                msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.spikes == 0) {
+                user.spikes -= 1
+                msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.spikes == 0) {
+                u.spikes -= 1
+                msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+            }
+          }
+        }
+      }
+    }
+  })
+
+  vk.updates.hear(/^🖤$/i, msg => {
+    user = users.filter(x => x.id === msg.senderId)[0]
+    const u = users.filter(x => x.id === msg.replyMessage.senderId)[0]
+    if(!msg.hasReplyMessage) return msg.send('Необходимо переслать сообщение')
+    if(user.duel == false) return msg.send ('В данный момент вы не в дуэли')
+    if(u.duel == false) return msg.send ('В данный момент вы не в дуэли')
+    if(user.steps > 100) return msg.send ('Ходы дуэли превысили 100. Победитель не определён')
+    if(u.steps > 100) return msg.send ('Ходы дуэли превысили 100. Победитель не определён')
+    if (user.steps % 2 == 0) {
+      return msg.send ('Сейчас не твой ход')
+    }
+    else {
+      if(user.control > 0) {
+        msg.send (`Невозможно применить умение. Осталось ходов в контроле — ${user.control}`);
+      }
+      else{
+        if(u.clinch > 0) {
+          if(user.duelatk < u.dueldef) {
+            if(user.cd11 > 0) user.cd11 -= 1
+            if(user.del11 > 0) user.del11 -= 1
+            if(user.cd12 > 0) user.cd12 -= 1
+            if(user.del12 > 0) user.del12 -= 1
+            if(user.cd13 > 0) user.cd13 -= 1
+            if(user.cd14 > 0) user.cd14 -= 1
+            if(user.cd15 > 0) user.cd15 -= 1
+            if(user.spikes > 0) user.spikes -= 1
+            if(user.cd16 > 0) user.cd16 -= 1
+            if(user.cd21 > 0) user.cd21 -= 1
+            if(user.cd22 > 0) user.cd22 -= 1
+            if(user.cd31 > 0) user.cd31 -= 1
+            if(user.cd32 > 0) user.cd32 -= 1
+            if(user.cd33 > 0) user.cd33 -= 1
+            if(user.cd34 > 0) user.cd34 -= 1
+            if(user.cd35 > 0) user.cd35 -= 1
+            if(user.cd36 > 0) user.cd36 -= 1
+            if(user.cd37 > 0) user.cd37 -= 1
+            if(u.cd11 > 0) u.cd11 -= 1
+            if(u.del11 > 0) u.del11 -= 1
+            if(u.cd12 > 0) u.cd12 -= 1
+            if(u.del12 > 0) u.del12 -= 1
+            if(u.cd13 > 0) u.cd13 -= 1
+            if(u.cd14 > 0) u.cd14 -= 1
+            if(u.cd15 > 0) u.cd15 -= 1
+            if(u.spikes > 0) u.spikes -= 1
+            if(u.cd16 > 0) u.cd16 -= 1
+            if(u.clinch > 0) u.clinch == -1
+            if(u.cd21 > 0) u.cd21 -= 1
+            if(u.cd22 > 0) u.cd22 -= 1
+            if(u.cd31 > 0) u.cd31 -= 1
+            if(u.cd32 > 0) u.cd32 -= 1
+            if(u.cd33 > 0) u.cd33 -= 1
+            if(u.cd34 > 0) u.cd34 -= 1
+            if(u.cd35 > 0) u.cd35 -= 1
+            if(u.cd36 > 0) u.cd36 -= 1
+            if(u.cd37 > 0) u.cd37 -= 1
+            if(user.burn > 0) user.burn -= 1
+            if(u.burn > 0) u.burn -= 1
+            if(user.poison > 0) user.poison -= 1
+            if(u.poison > 0) u.poison -= 1
+            if(user.poisoning > 0) user.poisoning -= 1
+            if(u.poisoning > 0) u.poisoning -= 1
+            user.steps += 1
+            u.steps += 1
+            user.cd13 == 5
+            msg.send(`"${u.nick}" не получает урона, так как активировал "клинч", "${user.nick}" получает ⚔0 урона, так как атака "${user.nick}" меньше защиты "${u.nick}". Следующим ходит — "${u.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+            if(user.del11 == 0) {
+              var hp = user.hp
+              var atk = user.atk
+              var procent = 20
+              var resulthp = hp / 100 * procent
+              var resultatk = atk / 100 * procent
+              user.duelhp -= resulthp
+              user.duelatk -= resultatk
+              user.del11 == -1
+              msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+            }
+            if(u.del11 == 0) {
+              var hp1 = u.hp
+              var atk1 = u.atk
+              var procent = 20
+              var resulthp1 = hp1 / 100 * procent
+              var resultatk1 = atk1 / 100 * procent
+              u.duelhp -= resulthp1
+              u.duelatk -= resultatk1
+              u.del11 == -1
+              msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+            }
+            if(user.del12 == 0) {
+              var def = user.def
+              var procent = 20
+              var resultdef = def / 100 * procent
+              user.dueldef -= resultdef
+              user.del12 == -1
+              msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+            }
+            if(u.del12 == 0) {
+              var def1 = u.def
+              var procent = 20
+              var resultdef1 = def1 / 100 * procent
+              u.dueldef -= resultdef1
+              u.del12 == -1
+              msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+            }
+            if(user.spikes == 0) {
+              user.spikes -= 1
+              msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+            }
+            if(u.spikes == 0) {
+              u.spikes -= 1
+              msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+            }
+          }
+          else {
+            var hp = user.hp
+            var procent20 = 20
+            var resulthp = hp / 100 * procent20
+            var resulthpminusdef = resulthp - u.dueldef
+            user.duelhp -= resulthpminusdef
+            if(user.cd11 > 0) user.cd11 -= 1
+            if(user.del11 > 0) user.del11 -= 1
+            if(user.cd12 > 0) user.cd12 -= 1
+            if(user.del12 > 0) user.del12 -= 1
+            if(user.cd13 > 0) user.cd13 -= 1
+            if(user.cd14 > 0) user.cd14 -= 1
+            if(user.cd15 > 0) user.cd15 -= 1
+            if(user.spikes > 0) user.spikes -= 1
+            if(user.cd16 > 0) user.cd16 -= 1
+            if(user.cd21 > 0) user.cd21 -= 1
+            if(user.cd22 > 0) user.cd22 -= 1
+            if(user.cd31 > 0) user.cd31 -= 1
+            if(user.cd32 > 0) user.cd32 -= 1
+            if(user.cd33 > 0) user.cd33 -= 1
+            if(user.cd34 > 0) user.cd34 -= 1
+            if(user.cd35 > 0) user.cd35 -= 1
+            if(user.cd36 > 0) user.cd36 -= 1
+            if(user.cd37 > 0) user.cd37 -= 1
+            if(u.cd11 > 0) u.cd11 -= 1
+            if(u.del11 > 0) u.del11 -= 1
+            if(u.cd12 > 0) u.cd12 -= 1
+            if(u.del12 > 0) u.del12 -= 1
+            if(u.cd13 > 0) u.cd13 -= 1
+            if(u.cd14 > 0) u.cd14 -= 1
+            if(u.cd15 > 0) u.cd15 -= 1
+            if(u.spikes > 0) u.spikes -= 1
+            if(u.cd16 > 0) u.cd16 -= 1
+            if(u.clinch > 0) u.clinch == -1
+            if(u.cd21 > 0) u.cd21 -= 1
+            if(u.cd22 > 0) u.cd22 -= 1
+            if(u.cd31 > 0) u.cd31 -= 1
+            if(u.cd32 > 0) u.cd32 -= 1
+            if(u.cd33 > 0) u.cd33 -= 1
+            if(u.cd34 > 0) u.cd34 -= 1
+            if(u.cd35 > 0) u.cd35 -= 1
+            if(u.cd36 > 0) u.cd36 -= 1
+            if(u.cd37 > 0) u.cd37 -= 1
+            if(user.burn > 0) user.burn -= 1
+            if(u.burn > 0) u.burn -= 1
+            if(user.poison > 0) user.poison -= 1
+            if(u.poison > 0) u.poison -= 1
+            if(user.poisoning > 0) user.poisoning -= 1
+            if(u.poisoning > 0) u.poisoning -= 1
+            user.cd13 == 5
+            user.steps += 1
+            u.steps += 1
+            msg.send(`"${u.nick}" не получает урона, "${user.nick}" получает ⚔${resulthpminusdef} урона, так как "${u.nick}" активировал "клинч". Следующим ходит — "${u.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+            if(user.duelhp < 1) {
+              var plata2 = user.money
+              var procentplata = 10
+              var resultplata2 = plata2 / 100 * procentplata
+              user.duel = false
+              u.duel = false
+              u.predictionduel = false
+              user.predictduel = false
+              user.steps = 0
+              u.steps = 0
+              user.timer = 0
+              u.timer = 0
+              user.duelhp = 0
+              user.duelatk = 0
+              user.dueldef = 0
+              u.duelhp = 0
+              u.duelatk = 0
+              u.dueldef = 0
+              u.money += resultplata2
+              user.money -= resultplata2
+              user.cd11 = 0,
+              user.del11 = -1,
+              user.cd12 = 0,
+              user.del12 = -1,
+              user.cd13 = 0,
+              user.cd14 = 0,
+              user.cd15 = 0,
+              user.spikes = -1,
+              user.cd16 = 0,
+              user.clinch = -1,
+              user.cd21 = 0,
+              user.cd22 = 0,
+              user.nakopleniye = 0,
+              user.el1 = 0,
+              user.burn = 0,
+              user.el2 = 0,
+              user.el3 = 0,
+              user.cd31 = 0,
+              user.poison = 0,
+              user.cd32 = 0,
+              user.cd33 = 0,
+              user.cd34 = 0,
+              user.invisible = false,
+              user.cd35 = 0,
+              user.cd36 = 0,
+              user.cd37 = 0,
+              user.poisoning = 0
+              u.cd11 = 0,
+              u.del11 = -1,
+              u.cd12 = 0,
+              u.del12 = -1,
+              u.cd13 = 0,
+              u.cd14 = 0,
+              u.cd15 = 0,
+              u.spikes = -1,
+              u.cd16 = 0,
+              u.clinch = -1,
+              u.cd21 = 0,
+              u.cd22 = 0,
+              u.nakopleniye = 0,
+              u.el1 = 0,
+              u.burn = 0,
+              u.el2 = 0,
+              u.el3 = 0,
+              u.cd31 = 0,
+              u.poison = 0,
+              u.cd32 = 0,
+              u.cd33 = 0,
+              u.cd34 = 0,
+              u.invisible = false,
+              u.cd35 = 0,
+              u.cd36 = 0,
+              u.cd37 = 0,
+              u.poisoning = 0
+              msg.send(`"${u.nick}" победил "${user.nick}" в дуэли. Со счёта "${user.nick}" списано ${resultplata2}💵 и начислено на счёт "${u.nick}"`)
+            }
+            if(user.del11 == 0) {
+              var hp = user.hp
+              var atk = user.atk
+              var procent = 20
+              var resulthp = hp / 100 * procent
+              var resultatk = atk / 100 * procent
+              user.duelhp -= resulthp
+              user.duelatk -= resultatk
+              user.del11 == -1
+              msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+            }
+            if(u.del11 == 0) {
+              var hp1 = u.hp
+              var atk1 = u.atk
+              var procent = 20
+              var resulthp1 = hp1 / 100 * procent
+              var resultatk1 = atk1 / 100 * procent
+              u.duelhp -= resulthp1
+              u.duelatk -= resultatk1
+              u.del11 == -1
+              msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+            }
+            if(user.del12 == 0) {
+              var def = user.def
+              var procent = 20
+              var resultdef = def / 100 * procent
+              user.dueldef -= resultdef
+              user.del12 == -1
+              msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+            }
+            if(u.del12 == 0) {
+              var def1 = u.def
+              var procent = 20
+              var resultdef1 = def1 / 100 * procent
+              u.dueldef -= resultdef1
+              u.del12 == -1
+              msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+            }
+            if(user.spikes == 0) {
+              user.spikes -= 1
+              msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+            }
+            if(u.spikes == 0) {
+              u.spikes -= 1
+              msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+            }
+          }
+        }
+        else {
+          if(u.spikes > 0) {
+            if(u.control > 0) {
+              if(u.dueldef > user.duelatk) {
+                if(user.cd11 > 0) user.cd11 -= 2
+                if(user.del11 > 0) user.del11 -= 2
+                if(user.cd12 > 0) user.cd12 -= 2
+                if(user.del12 > 0) user.del12 -= 2
+                if(user.cd13 > 0) user.cd13 -= 2
+                if(user.cd14 > 0) user.cd14 -= 2
+                if(user.cd15 > 0) user.cd15 -= 2
+                if(user.spikes > 0) user.spikes -= 2
+                if(user.cd16 > 0) user.cd16 -= 2
+                if(user.cd21 > 0) user.cd21 -= 2
+                if(user.cd22 > 0) user.cd22 -= 2
+                if(user.cd31 > 0) user.cd31 -= 2
+                if(user.cd32 > 0) user.cd32 -= 2
+                if(user.cd33 > 0) user.cd33 -= 2
+                if(user.cd34 > 0) user.cd34 -= 2
+                if(user.cd35 > 0) user.cd35 -= 2
+                if(user.cd36 > 0) user.cd36 -= 2
+                if(user.cd37 > 0) user.cd37 -= 2
+                if(u.cd11 > 0) u.cd11 -= 2
+                if(u.del11 > 0) u.del11 -= 2
+                if(u.cd12 > 0) u.cd12 -= 2
+                if(u.del12 > 0) u.del12 -= 2
+                if(u.cd13 > 0) u.cd13 -= 2
+                if(u.cd14 > 0) u.cd14 -= 2
+                if(u.cd15 > 0) u.cd15 -= 2
+                if(u.spikes > 0) u.spikes -= 2
+                if(u.cd16 > 0) u.cd16 -= 2
+                if(u.clinch > 0) u.clinch == -1
+                if(u.cd21 > 0) u.cd21 -= 2
+                if(u.cd22 > 0) u.cd22 -= 2
+                if(u.cd31 > 0) u.cd31 -= 2
+                if(u.cd32 > 0) u.cd32 -= 2
+                if(u.cd33 > 0) u.cd33 -= 2
+                if(u.cd34 > 0) u.cd34 -= 2
+                if(u.cd35 > 0) u.cd35 -= 2
+                if(u.cd36 > 0) u.cd36 -= 2
+                if(u.cd37 > 0) u.cd37 -= 2
+                if(user.burn > 0) user.burn -= 2
+                if(u.burn > 0) u.burn -= 2
+                if(user.poison > 0) user.poison -= 2
+                if(u.poison > 0) u.poison -= 2
+                if(user.poisoning > 0) user.poisoning -= 2
+                if(u.poisoning > 0) u.poisoning -= 2
+                user.cd13 == 5
+                user.steps += 2
+                u.steps += 2
+                u.control -= 2
+                msg.send(`"${u.nick}" не получает урона, так как его защита выше атаки "${user.nick}". Следующим ходит — "${user.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+                if(user.del11 == 0) {
+                  var hp = user.hp
+                  var atk = user.atk
+                  var procent = 20
+                  var resulthp = hp / 100 * procent
+                  var resultatk = atk / 100 * procent
+                  user.duelhp -= resulthp
+                  user.duelatk -= resultatk
+                  user.del11 == -1
+                  msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.del11 == 0) {
+                  var hp1 = u.hp
+                  var atk1 = u.atk
+                  var procent = 20
+                  var resulthp1 = hp1 / 100 * procent
+                  var resultatk1 = atk1 / 100 * procent
+                  u.duelhp -= resulthp1
+                  u.duelatk -= resultatk1
+                  u.del11 == -1
+                  msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(user.del12 == 0) {
+                  var def = user.def
+                  var procent = 20
+                  var resultdef = def / 100 * procent
+                  user.dueldef -= resultdef
+                  user.del12 == -1
+                  msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.del12 == 0) {
+                  var def1 = u.def
+                  var procent = 20
+                  var resultdef1 = def1 / 100 * procent
+                  u.dueldef -= resultdef1
+                  u.del12 == -1
+                  msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(user.spikes == 0) {
+                  user.spikes -= 1
+                  msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.spikes == 0) {
+                  u.spikes -= 1
+                  msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+              }
+              else {
+              var hp = user.hp
+              var procent = 20
+              var resulthp = hp / 100 * procent
+              var resulthpminusdef = resulthp - u.dueldef
+              var procentspikes = 50
+              var resultresulthpminusdefprocentspikes = resulthpminusdef / 100 * procentspikes
+              u.duelhp -= resulthpminusdef
+              user.duelhp -= resultresulthpminusdefprocentspikes
+              if(user.cd11 > 0) user.cd11 -= 2
+              if(user.del11 > 0) user.del11 -= 2
+              if(user.cd12 > 0) user.cd12 -= 2
+              if(user.del12 > 0) user.del12 -= 2
+              if(user.cd13 > 0) user.cd13 -= 2
+              if(user.cd14 > 0) user.cd14 -= 2
+              if(user.cd15 > 0) user.cd15 -= 2
+              if(user.spikes > 0) user.spikes -= 2
+              if(user.cd16 > 0) user.cd16 -= 2
+              if(user.cd21 > 0) user.cd21 -= 2
+              if(user.cd22 > 0) user.cd22 -= 2
+              if(user.cd31 > 0) user.cd31 -= 2
+              if(user.cd32 > 0) user.cd32 -= 2
+              if(user.cd33 > 0) user.cd33 -= 2
+              if(user.cd34 > 0) user.cd34 -= 2
+              if(user.cd35 > 0) user.cd35 -= 2
+              if(user.cd36 > 0) user.cd36 -= 2
+              if(user.cd37 > 0) user.cd37 -= 2
+              if(u.cd11 > 0) u.cd11 -= 2
+              if(u.del11 > 0) u.del11 -= 2
+              if(u.cd12 > 0) u.cd12 -= 2
+              if(u.del12 > 0) u.del12 -= 2
+              if(u.cd13 > 0) u.cd13 -= 2
+              if(u.cd14 > 0) u.cd14 -= 2
+              if(u.cd15 > 0) u.cd15 -= 2
+              if(u.spikes > 0) u.spikes -= 2
+              if(u.cd16 > 0) u.cd16 -= 2
+              if(u.clinch > 0) u.clinch == -1
+              if(u.cd21 > 0) u.cd21 -= 2
+              if(u.cd22 > 0) u.cd22 -= 2
+              if(u.cd31 > 0) u.cd31 -= 2
+              if(u.cd32 > 0) u.cd32 -= 2
+              if(u.cd33 > 0) u.cd33 -= 2
+              if(u.cd34 > 0) u.cd34 -= 2
+              if(u.cd35 > 0) u.cd35 -= 2
+              if(u.cd36 > 0) u.cd36 -= 2
+              if(u.cd37 > 0) u.cd37 -= 2
+              if(user.burn > 0) user.burn -= 2
+              if(u.burn > 0) u.burn -= 2
+              if(user.poison > 0) user.poison -= 2
+              if(u.poison > 0) u.poison -= 2
+              if(user.poisoning > 0) user.poisoning -= 2
+              if(u.poisoning > 0) u.poisoning -= 2
+              user.cd13 == 5
+              user.steps += 2
+              u.steps += 2
+              u.control -= 2
+              msg.send(`"${u.nick}" получает ⚔${resulthpminusdef} урона. ${user.nick}" получает ⚔${resultresulthpminusdefprocentspikes} урона, так как у "${u.nick}" активны "шипы". Следующим ходит — "${user.nick}". "${u.nick}", вам осталось ${u.control} ходов в контроле\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+              if(u.duelhp < 1) {
+                var plata1 = u.money
+                var procentplata = 10
+                var resultplata1 = plata1 / 100 * procentplata
+                user.duel = false
+                u.duel = false
+                u.predictionduel = false
+                user.predictduel = false
+                user.steps = 0
+                u.steps = 0
+                user.timer = 0
+                u.timer = 0
+                user.duelhp = 0
+                user.duelatk = 0
+                user.dueldef = 0
+                u.duelhp = 0
+                u.duelatk = 0
+                u.dueldef = 0
+                user.money += resultplata1
+                u.money -= resultplata1
+                user.cd11 = 0,
+                user.del11 = -1,
+                user.cd12 = 0,
+                user.del12 = -1,
+                user.cd13 = 0,
+                user.cd14 = 0,
+                user.cd15 = 0,
+                user.spikes = -1,
+                user.cd16 = 0,
+                user.clinch = -1,
+                user.cd21 = 0,
+                user.cd22 = 0,
+                user.nakopleniye = 0,
+                user.el1 = 0,
+                user.burn = 0,
+                user.el2 = 0,
+                user.el3 = 0,
+                user.cd31 = 0,
+                user.poison = 0,
+                user.cd32 = 0,
+                user.cd33 = 0,
+                user.cd34 = 0,
+                user.invisible = false,
+                user.cd35 = 0,
+                user.cd36 = 0,
+                user.cd37 = 0,
+                user.poisoning = 0
+                u.cd11 = 0,
+                u.del11 = -1,
+                u.cd12 = 0,
+                u.del12 = -1,
+                u.cd13 = 0,
+                u.cd14 = 0,
+                u.cd15 = 0,
+                u.spikes = -1,
+                u.cd16 = 0,
+                u.clinch = -1,
+                u.cd21 = 0,
+                u.cd22 = 0,
+                u.nakopleniye = 0,
+                u.el1 = 0,
+                u.burn = 0,
+                u.el2 = 0,
+                u.el3 = 0,
+                u.cd31 = 0,
+                u.poison = 0,
+                u.cd32 = 0,
+                u.cd33 = 0,
+                u.cd34 = 0,
+                u.invisible = false,
+                u.cd35 = 0,
+                u.cd36 = 0,
+                u.cd37 = 0,
+                u.poisoning = 0
+                msg.send(`"${user.nick}" победил "${u.nick}" в дуэли. Со счёта "${u.nick}" списано ${resultplata}💵 и начислено на счёт "${user.nick}"`)
+              }
+              if(user.duelhp < 1) {
+                var plata2 = user.money
+                var procentplata = 10
+                var resultplata2 = plata2 / 100 * procentplata
+                user.duel = false
+                u.duel = false
+                u.predictionduel = false
+                user.predictduel = false
+                user.steps = 0
+                u.steps = 0
+                user.timer = 0
+                u.timer = 0
+                user.duelhp = 0
+                user.duelatk = 0
+                user.dueldef = 0
+                u.duelhp = 0
+                u.duelatk = 0
+                u.dueldef = 0
+                u.money += resultplata2
+                user.money -= resultplata2
+                user.cd11 = 0,
+                user.del11 = -1,
+                user.cd12 = 0,
+                user.del12 = -1,
+                user.cd13 = 0,
+                user.cd14 = 0,
+                user.cd15 = 0,
+                user.spikes = -1,
+                user.cd16 = 0,
+                user.clinch = -1,
+                user.cd21 = 0,
+                user.cd22 = 0,
+                user.nakopleniye = 0,
+                user.el1 = 0,
+                user.burn = 0,
+                user.el2 = 0,
+                user.el3 = 0,
+                user.cd31 = 0,
+                user.poison = 0,
+                user.cd32 = 0,
+                user.cd33 = 0,
+                user.cd34 = 0,
+                user.invisible = false,
+                user.cd35 = 0,
+                user.cd36 = 0,
+                user.cd37 = 0,
+                user.poisoning = 0
+                u.cd11 = 0,
+                u.del11 = -1,
+                u.cd12 = 0,
+                u.del12 = -1,
+                u.cd13 = 0,
+                u.cd14 = 0,
+                u.cd15 = 0,
+                u.spikes = -1,
+                u.cd16 = 0,
+                u.clinch = -1,
+                u.cd21 = 0,
+                u.cd22 = 0,
+                u.nakopleniye = 0,
+                u.el1 = 0,
+                u.burn = 0,
+                u.el2 = 0,
+                u.el3 = 0,
+                u.cd31 = 0,
+                u.poison = 0,
+                u.cd32 = 0,
+                u.cd33 = 0,
+                u.cd34 = 0,
+                u.invisible = false,
+                u.cd35 = 0,
+                u.cd36 = 0,
+                u.cd37 = 0,
+                u.poisoning = 0
+                msg.send(`"${u.nick}" победил "${user.nick}" в дуэли. Со счёта "${user.nick}" списано ${resultplata2}💵 и начислено на счёт "${u.nick}"`)
+              }
+              if(user.del11 == 0) {
+                var hp = user.hp
+                var atk = user.atk
+                var procent = 20
+                var resulthp = hp / 100 * procent
+                var resultatk = atk / 100 * procent
+                user.duelhp -= resulthp
+                user.duelatk -= resultatk
+                user.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del11 == 0) {
+                var hp1 = u.hp
+                var atk1 = u.atk
+                var procent = 20
+                var resulthp1 = hp1 / 100 * procent
+                var resultatk1 = atk1 / 100 * procent
+                u.duelhp -= resulthp1
+                u.duelatk -= resultatk1
+                u.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.del12 == 0) {
+                var def = user.def
+                var procent = 20
+                var resultdef = def / 100 * procent
+                user.dueldef -= resultdef
+                user.del12 == -1
+                msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del12 == 0) {
+                var def1 = u.def
+                var procent = 20
+                var resultdef1 = def1 / 100 * procent
+                u.dueldef -= resultdef1
+                u.del12 == -1
+                msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.spikes == 0) {
+                user.spikes -= 1
+                msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.spikes == 0) {
+                u.spikes -= 1
+                msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              }
+            }
+            else {
+              if(u.dueldef > user.duelatk) {
+                if(user.cd11 > 0) user.cd11 -= 2
+                if(user.del11 > 0) user.del11 -= 2
+                if(user.cd12 > 0) user.cd12 -= 2
+                if(user.del12 > 0) user.del12 -= 2
+                if(user.cd13 > 0) user.cd13 -= 2
+                if(user.cd14 > 0) user.cd14 -= 2
+                if(user.cd15 > 0) user.cd15 -= 2
+                if(user.spikes > 0) user.spikes -= 2
+                if(user.cd16 > 0) user.cd16 -= 2
+                if(user.cd21 > 0) user.cd21 -= 2
+                if(user.cd22 > 0) user.cd22 -= 2
+                if(user.cd31 > 0) user.cd31 -= 2
+                if(user.cd32 > 0) user.cd32 -= 2
+                if(user.cd33 > 0) user.cd33 -= 2
+                if(user.cd34 > 0) user.cd34 -= 2
+                if(user.cd35 > 0) user.cd35 -= 2
+                if(user.cd36 > 0) user.cd36 -= 2
+                if(user.cd37 > 0) user.cd37 -= 2
+                if(u.cd11 > 0) u.cd11 -= 2
+                if(u.del11 > 0) u.del11 -= 2
+                if(u.cd12 > 0) u.cd12 -= 2
+                if(u.del12 > 0) u.del12 -= 2
+                if(u.cd13 > 0) u.cd13 -= 2
+                if(u.cd14 > 0) u.cd14 -= 2
+                if(u.cd15 > 0) u.cd15 -= 2
+                if(u.spikes > 0) u.spikes -= 2
+                if(u.cd16 > 0) u.cd16 -= 2
+                if(u.clinch > 0) u.clinch == -1
+                if(u.cd21 > 0) u.cd21 -= 2
+                if(u.cd22 > 0) u.cd22 -= 2
+                if(u.cd31 > 0) u.cd31 -= 2
+                if(u.cd32 > 0) u.cd32 -= 2
+                if(u.cd33 > 0) u.cd33 -= 2
+                if(u.cd34 > 0) u.cd34 -= 2
+                if(u.cd35 > 0) u.cd35 -= 2
+                if(u.cd36 > 0) u.cd36 -= 2
+                if(u.cd37 > 0) u.cd37 -= 2
+                if(user.burn > 0) user.burn -= 2
+                if(u.burn > 0) u.burn -= 2
+                if(user.poison > 0) user.poison -= 2
+                if(u.poison > 0) u.poison -= 2
+                if(user.poisoning > 0) user.poisoning -= 2
+                if(u.poisoning > 0) u.poisoning -= 2
+                user.cd13 == 5
+                user.steps += 1
+                u.steps += 1
+                msg.send(`"${u.nick}" не получает урона, так как его защита выше атаки "${user.nick}". Следующим ходит — "${u.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+                if(user.del11 == 0) {
+                  var hp = user.hp
+                  var atk = user.atk
+                  var procent = 20
+                  var resulthp = hp / 100 * procent
+                  var resultatk = atk / 100 * procent
+                  user.duelhp -= resulthp
+                  user.duelatk -= resultatk
+                  user.del11 == -1
+                  msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.del11 == 0) {
+                  var hp1 = u.hp
+                  var atk1 = u.atk
+                  var procent = 20
+                  var resulthp1 = hp1 / 100 * procent
+                  var resultatk1 = atk1 / 100 * procent
+                  u.duelhp -= resulthp1
+                  u.duelatk -= resultatk1
+                  u.del11 == -1
+                  msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(user.del12 == 0) {
+                  var def = user.def
+                  var procent = 20
+                  var resultdef = def / 100 * procent
+                  user.dueldef -= resultdef
+                  user.del12 == -1
+                  msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.del12 == 0) {
+                  var def1 = u.def
+                  var procent = 20
+                  var resultdef1 = def1 / 100 * procent
+                  u.dueldef -= resultdef1
+                  u.del12 == -1
+                  msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(user.spikes == 0) {
+                  user.spikes -= 1
+                  msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.spikes == 0) {
+                  u.spikes -= 1
+                  msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+              }
+              else {
+              var hp = user.hp
+              var procent = 20
+              var resulthp = hp / 100 * procent
+              var resulthpminusdef = resulthp - u.dueldef
+              var procentspikes = 50
+              var resultresulthpminusdefprocentspikes = resulthpminusdef / 100 * procentspikes
+              u.duelhp -= resulthpminusdef
+              user.duelhp -= resultresulthpminusdefprocentspikes
+              if(user.cd11 > 0) user.cd11 -= 2
+              if(user.del11 > 0) user.del11 -= 2
+              if(user.cd12 > 0) user.cd12 -= 2
+              if(user.del12 > 0) user.del12 -= 2
+              if(user.cd13 > 0) user.cd13 -= 2
+              if(user.cd14 > 0) user.cd14 -= 2
+              if(user.cd15 > 0) user.cd15 -= 2
+              if(user.spikes > 0) user.spikes -= 2
+              if(user.cd16 > 0) user.cd16 -= 2
+              if(user.cd21 > 0) user.cd21 -= 2
+              if(user.cd22 > 0) user.cd22 -= 2
+              if(user.cd31 > 0) user.cd31 -= 2
+              if(user.cd32 > 0) user.cd32 -= 2
+              if(user.cd33 > 0) user.cd33 -= 2
+              if(user.cd34 > 0) user.cd34 -= 2
+              if(user.cd35 > 0) user.cd35 -= 2
+              if(user.cd36 > 0) user.cd36 -= 2
+              if(user.cd37 > 0) user.cd37 -= 2
+              if(u.cd11 > 0) u.cd11 -= 2
+              if(u.del11 > 0) u.del11 -= 2
+              if(u.cd12 > 0) u.cd12 -= 2
+              if(u.del12 > 0) u.del12 -= 2
+              if(u.cd13 > 0) u.cd13 -= 2
+              if(u.cd14 > 0) u.cd14 -= 2
+              if(u.cd15 > 0) u.cd15 -= 2
+              if(u.spikes > 0) u.spikes -= 2
+              if(u.cd16 > 0) u.cd16 -= 2
+              if(u.clinch > 0) u.clinch == -1
+              if(u.cd21 > 0) u.cd21 -= 2
+              if(u.cd22 > 0) u.cd22 -= 2
+              if(u.cd31 > 0) u.cd31 -= 2
+              if(u.cd32 > 0) u.cd32 -= 2
+              if(u.cd33 > 0) u.cd33 -= 2
+              if(u.cd34 > 0) u.cd34 -= 2
+              if(u.cd35 > 0) u.cd35 -= 2
+              if(u.cd36 > 0) u.cd36 -= 2
+              if(u.cd37 > 0) u.cd37 -= 2
+              if(user.burn > 0) user.burn -= 2
+              if(u.burn > 0) u.burn -= 2
+              if(user.poison > 0) user.poison -= 2
+              if(u.poison > 0) u.poison -= 2
+              if(user.poisoning > 0) user.poisoning -= 2
+              if(u.poisoning > 0) u.poisoning -= 2
+              user.cd13 == 5
+              user.steps += 1
+              u.steps += 1
+              msg.send(`"${u.nick}" получает ⚔${resulthpminusdef} урона. ${user.nick}" получает ⚔${resultresulthpminusdefprocentspikes} урона, так как у "${u.nick}" активны "шипы". Следующим ходит — "${u.nick}". "${u.nick}", вам осталось ${u.control} ходов в контроле\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+              if(u.duelhp < 1) {
+                var plata1 = u.money
+                var procentplata = 10
+                var resultplata1 = plata1 / 100 * procentplata
+                user.duel = false
+                u.duel = false
+                u.predictionduel = false
+                user.predictduel = false
+                user.steps = 0
+                u.steps = 0
+                user.timer = 0
+                u.timer = 0
+                user.duelhp = 0
+                user.duelatk = 0
+                user.dueldef = 0
+                u.duelhp = 0
+                u.duelatk = 0
+                u.dueldef = 0
+                user.money += resultplata1
+                u.money -= resultplata1
+                user.cd11 = 0,
+                user.del11 = -1,
+                user.cd12 = 0,
+                user.del12 = -1,
+                user.cd13 = 0,
+                user.cd14 = 0,
+                user.cd15 = 0,
+                user.spikes = -1,
+                user.cd16 = 0,
+                user.clinch = -1,
+                user.cd21 = 0,
+                user.cd22 = 0,
+                user.nakopleniye = 0,
+                user.el1 = 0,
+                user.burn = 0,
+                user.el2 = 0,
+                user.el3 = 0,
+                user.cd31 = 0,
+                user.poison = 0,
+                user.cd32 = 0,
+                user.cd33 = 0,
+                user.cd34 = 0,
+                user.invisible = false,
+                user.cd35 = 0,
+                user.cd36 = 0,
+                user.cd37 = 0,
+                user.poisoning = 0
+                u.cd11 = 0,
+                u.del11 = -1,
+                u.cd12 = 0,
+                u.del12 = -1,
+                u.cd13 = 0,
+                u.cd14 = 0,
+                u.cd15 = 0,
+                u.spikes = -1,
+                u.cd16 = 0,
+                u.clinch = -1,
+                u.cd21 = 0,
+                u.cd22 = 0,
+                u.nakopleniye = 0,
+                u.el1 = 0,
+                u.burn = 0,
+                u.el2 = 0,
+                u.el3 = 0,
+                u.cd31 = 0,
+                u.poison = 0,
+                u.cd32 = 0,
+                u.cd33 = 0,
+                u.cd34 = 0,
+                u.invisible = false,
+                u.cd35 = 0,
+                u.cd36 = 0,
+                u.cd37 = 0,
+                u.poisoning = 0
+                msg.send(`"${user.nick}" победил "${u.nick}" в дуэли. Со счёта "${u.nick}" списано ${resultplata}💵 и начислено на счёт "${user.nick}"`)
+              }
+              if(user.duelhp < 1) {
+                var plata2 = user.money
+                var procentplata = 10
+                var resultplata2 = plata2 / 100 * procentplata
+                user.duel = false
+                u.duel = false
+                u.predictionduel = false
+                user.predictduel = false
+                user.steps = 0
+                u.steps = 0
+                user.timer = 0
+                u.timer = 0
+                user.duelhp = 0
+                user.duelatk = 0
+                user.dueldef = 0
+                u.duelhp = 0
+                u.duelatk = 0
+                u.dueldef = 0
+                u.money += resultplata2
+                user.money -= resultplata2
+                user.cd11 = 0,
+                user.del11 = -1,
+                user.cd12 = 0,
+                user.del12 = -1,
+                user.cd13 = 0,
+                user.cd14 = 0,
+                user.cd15 = 0,
+                user.spikes = -1,
+                user.cd16 = 0,
+                user.clinch = -1,
+                user.cd21 = 0,
+                user.cd22 = 0,
+                user.nakopleniye = 0,
+                user.el1 = 0,
+                user.burn = 0,
+                user.el2 = 0,
+                user.el3 = 0,
+                user.cd31 = 0,
+                user.poison = 0,
+                user.cd32 = 0,
+                user.cd33 = 0,
+                user.cd34 = 0,
+                user.invisible = false,
+                user.cd35 = 0,
+                user.cd36 = 0,
+                user.cd37 = 0,
+                user.poisoning = 0
+                u.cd11 = 0,
+                u.del11 = -1,
+                u.cd12 = 0,
+                u.del12 = -1,
+                u.cd13 = 0,
+                u.cd14 = 0,
+                u.cd15 = 0,
+                u.spikes = -1,
+                u.cd16 = 0,
+                u.clinch = -1,
+                u.cd21 = 0,
+                u.cd22 = 0,
+                u.nakopleniye = 0,
+                u.el1 = 0,
+                u.burn = 0,
+                u.el2 = 0,
+                u.el3 = 0,
+                u.cd31 = 0,
+                u.poison = 0,
+                u.cd32 = 0,
+                u.cd33 = 0,
+                u.cd34 = 0,
+                u.invisible = false,
+                u.cd35 = 0,
+                u.cd36 = 0,
+                u.cd37 = 0,
+                u.poisoning = 0
+                msg.send(`"${u.nick}" победил "${user.nick}" в дуэли. Со счёта "${user.nick}" списано ${resultplata2}💵 и начислено на счёт "${u.nick}"`)
+              }
+              if(user.del11 == 0) {
+                var hp = user.hp
+                var atk = user.atk
+                var procent = 20
+                var resulthp = hp / 100 * procent
+                var resultatk = atk / 100 * procent
+                user.duelhp -= resulthp
+                user.duelatk -= resultatk
+                user.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del11 == 0) {
+                var hp1 = u.hp
+                var atk1 = u.atk
+                var procent = 20
+                var resulthp1 = hp1 / 100 * procent
+                var resultatk1 = atk1 / 100 * procent
+                u.duelhp -= resulthp1
+                u.duelatk -= resultatk1
+                u.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.del12 == 0) {
+                var def = user.def
+                var procent = 20
+                var resultdef = def / 100 * procent
+                user.dueldef -= resultdef
+                user.del12 == -1
+                msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del12 == 0) {
+                var def1 = u.def
+                var procent = 20
+                var resultdef1 = def1 / 100 * procent
+                u.dueldef -= resultdef1
+                u.del12 == -1
+                msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.spikes == 0) {
+                user.spikes -= 1
+                msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.spikes == 0) {
+                u.spikes -= 1
+                msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              }
+            }
+          }
+          else {
+            if(u.control > 0) {
+              if(u.dueldef > user.duelatk) {
+                if(user.cd11 > 0) user.cd11 -= 2
+                if(user.del11 > 0) user.del11 -= 2
+                if(user.cd12 > 0) user.cd12 -= 2
+                if(user.del12 > 0) user.del12 -= 2
+                if(user.cd13 > 0) user.cd13 -= 2
+                if(user.cd14 > 0) user.cd14 -= 2
+                if(user.cd15 > 0) user.cd15 -= 2
+                if(user.spikes > 0) user.spikes -= 2
+                if(user.cd16 > 0) user.cd16 -= 2
+                if(user.cd21 > 0) user.cd21 -= 2
+                if(user.cd22 > 0) user.cd22 -= 2
+                if(user.cd31 > 0) user.cd31 -= 2
+                if(user.cd32 > 0) user.cd32 -= 2
+                if(user.cd33 > 0) user.cd33 -= 2
+                if(user.cd34 > 0) user.cd34 -= 2
+                if(user.cd35 > 0) user.cd35 -= 2
+                if(user.cd36 > 0) user.cd36 -= 2
+                if(user.cd37 > 0) user.cd37 -= 2
+                if(u.cd11 > 0) u.cd11 -= 2
+                if(u.del11 > 0) u.del11 -= 2
+                if(u.cd12 > 0) u.cd12 -= 2
+                if(u.del12 > 0) u.del12 -= 2
+                if(u.cd13 > 0) u.cd13 -= 2
+                if(u.cd14 > 0) u.cd14 -= 2
+                if(u.cd15 > 0) u.cd15 -= 2
+                if(u.spikes > 0) u.spikes -= 2
+                if(u.cd16 > 0) u.cd16 -= 2
+                if(u.clinch > 0) u.clinch == -1
+                if(u.cd21 > 0) u.cd21 -= 2
+                if(u.cd22 > 0) u.cd22 -= 2
+                if(u.cd31 > 0) u.cd31 -= 2
+                if(u.cd32 > 0) u.cd32 -= 2
+                if(u.cd33 > 0) u.cd33 -= 2
+                if(u.cd34 > 0) u.cd34 -= 2
+                if(u.cd35 > 0) u.cd35 -= 2
+                if(u.cd36 > 0) u.cd36 -= 2
+                if(u.cd37 > 0) u.cd37 -= 2
+                if(user.burn > 0) user.burn -= 2
+                if(u.burn > 0) u.burn -= 2
+                if(user.poison > 0) user.poison -= 2
+                if(u.poison > 0) u.poison -= 2
+                if(user.poisoning > 0) user.poisoning -= 2
+                if(u.poisoning > 0) u.poisoning -= 2
+                user.cd13 == 5
+                user.steps += 2
+                u.steps += 2
+                u.control -= 2
+                msg.send(`"${u.nick}" не получает урона, так как его защита выше атаки "${user.nick}". Следующим ходит — "${user.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+                if(user.del11 == 0) {
+                  var hp = user.hp
+                  var atk = user.atk
+                  var procent = 20
+                  var resulthp = hp / 100 * procent
+                  var resultatk = atk / 100 * procent
+                  user.duelhp -= resulthp
+                  user.duelatk -= resultatk
+                  user.del11 == -1
+                  msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.del11 == 0) {
+                  var hp1 = u.hp
+                  var atk1 = u.atk
+                  var procent = 20
+                  var resulthp1 = hp1 / 100 * procent
+                  var resultatk1 = atk1 / 100 * procent
+                  u.duelhp -= resulthp1
+                  u.duelatk -= resultatk1
+                  u.del11 == -1
+                  msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(user.del12 == 0) {
+                  var def = user.def
+                  var procent = 20
+                  var resultdef = def / 100 * procent
+                  user.dueldef -= resultdef
+                  user.del12 == -1
+                  msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.del12 == 0) {
+                  var def1 = u.def
+                  var procent = 20
+                  var resultdef1 = def1 / 100 * procent
+                  u.dueldef -= resultdef1
+                  u.del12 == -1
+                  msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(user.spikes == 0) {
+                  user.spikes -= 1
+                  msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.spikes == 0) {
+                  u.spikes -= 1
+                  msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+              }
+              else {
+                var hp = user.hp
+                var procent = 20
+                var resulthp = hp / 100 * procent
+                var resulthpminusdef = resulthp - u.dueldef
+                u.duelhp -= resulthpminusdef
+                if(user.cd11 > 0) user.cd11 -= 2
+                if(user.del11 > 0) user.del11 -= 2
+                if(user.cd12 > 0) user.cd12 -= 2
+                if(user.del12 > 0) user.del12 -= 2
+                if(user.cd13 > 0) user.cd13 -= 2
+                if(user.cd14 > 0) user.cd14 -= 2
+                if(user.cd15 > 0) user.cd15 -= 2
+                if(user.spikes > 0) user.spikes -= 2
+                if(user.cd16 > 0) user.cd16 -= 2
+                if(user.cd21 > 0) user.cd21 -= 2
+                if(user.cd22 > 0) user.cd22 -= 2
+                if(user.cd31 > 0) user.cd31 -= 2
+                if(user.cd32 > 0) user.cd32 -= 2
+                if(user.cd33 > 0) user.cd33 -= 2
+                if(user.cd34 > 0) user.cd34 -= 2
+                if(user.cd35 > 0) user.cd35 -= 2
+                if(user.cd36 > 0) user.cd36 -= 2
+                if(user.cd37 > 0) user.cd37 -= 2
+                if(u.cd11 > 0) u.cd11 -= 2
+                if(u.del11 > 0) u.del11 -= 2
+                if(u.cd12 > 0) u.cd12 -= 2
+                if(u.del12 > 0) u.del12 -= 2
+                if(u.cd13 > 0) u.cd13 -= 2
+                if(u.cd14 > 0) u.cd14 -= 2
+                if(u.cd15 > 0) u.cd15 -= 2
+                if(u.spikes > 0) u.spikes -= 2
+                if(u.cd16 > 0) u.cd16 -= 2
+                if(u.clinch > 0) u.clinch == -1
+                if(u.cd21 > 0) u.cd21 -= 2
+                if(u.cd22 > 0) u.cd22 -= 2
+                if(u.cd31 > 0) u.cd31 -= 2
+                if(u.cd32 > 0) u.cd32 -= 2
+                if(u.cd33 > 0) u.cd33 -= 2
+                if(u.cd34 > 0) u.cd34 -= 2
+                if(u.cd35 > 0) u.cd35 -= 2
+                if(u.cd36 > 0) u.cd36 -= 2
+                if(u.cd37 > 0) u.cd37 -= 2
+                if(user.burn > 0) user.burn -= 2
+                if(u.burn > 0) u.burn -= 2
+                if(user.poison > 0) user.poison -= 2
+                if(u.poison > 0) u.poison -= 2
+                if(user.poisoning > 0) user.poisoning -= 2
+                if(u.poisoning > 0) u.poisoning -= 2
+                user.cd13 == 5
+                user.steps += 2
+                u.steps += 2
+                u.control -= 2
+                msg.send(`"${u.nick}" получает ⚔${resulthpminusdef} урона. Следующим ходит — "${user.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+                if(u.duelhp < 1) {
+                  var plata1 = u.money
+                  var procentplata = 10
+                  var resultplata1 = plata1 / 100 * procentplata
+                  user.duel = false
+                  u.duel = false
+                  u.predictionduel = false
+                  user.predictduel = false
+                  user.steps = 0
+                  u.steps = 0
+                  user.timer = 0
+                  u.timer = 0
+                  user.duelhp = 0
+                  user.duelatk = 0
+                  user.dueldef = 0
+                  u.duelhp = 0
+                  u.duelatk = 0
+                  u.dueldef = 0
+                  user.money += resultplata1
+                  u.money -= resultplata1
+                  user.cd11 = 0,
+                  user.del11 = -1,
+                  user.cd12 = 0,
+                  user.del12 = -1,
+                  user.cd13 = 0,
+                  user.cd14 = 0,
+                  user.cd15 = 0,
+                  user.spikes = -1,
+                  user.cd16 = 0,
+                  user.clinch = -1,
+                  user.cd21 = 0,
+                  user.cd22 = 0,
+                  user.nakopleniye = 0,
+                  user.el1 = 0,
+                  user.burn = 0,
+                  user.el2 = 0,
+                  user.el3 = 0,
+                  user.cd31 = 0,
+                  user.poison = 0,
+                  user.cd32 = 0,
+                  user.cd33 = 0,
+                  user.cd34 = 0,
+                  user.invisible = false,
+                  user.cd35 = 0,
+                  user.cd36 = 0,
+                  user.cd37 = 0,
+                  user.poisoning = 0
+                  u.cd11 = 0,
+                  u.del11 = -1,
+                  u.cd12 = 0,
+                  u.del12 = -1,
+                  u.cd13 = 0,
+                  u.cd14 = 0,
+                  u.cd15 = 0,
+                  u.spikes = -1,
+                  u.cd16 = 0,
+                  u.clinch = -1,
+                  u.cd21 = 0,
+                  u.cd22 = 0,
+                  u.nakopleniye = 0,
+                  u.el1 = 0,
+                  u.burn = 0,
+                  u.el2 = 0,
+                  u.el3 = 0,
+                  u.cd31 = 0,
+                  u.poison = 0,
+                  u.cd32 = 0,
+                  u.cd33 = 0,
+                  u.cd34 = 0,
+                  u.invisible = false,
+                  u.cd35 = 0,
+                  u.cd36 = 0,
+                  u.cd37 = 0,
+                  u.poisoning = 0
+                  msg.send(`"${user.nick}" победил "${u.nick}" в дуэли. Со счёта "${u.nick}" списано ${resultplata}💵 и начислено на счёт "${user.nick}"`)
+                }
+                if(user.duelhp < 1) {
+                  var plata2 = user.money
+                  var procentplata = 10
+                  var resultplata2 = plata2 / 100 * procentplata
+                  user.duel = false
+                  u.duel = false
+                  u.predictionduel = false
+                  user.predictduel = false
+                  user.steps = 0
+                  u.steps = 0
+                  user.timer = 0
+                  u.timer = 0
+                  user.duelhp = 0
+                  user.duelatk = 0
+                  user.dueldef = 0
+                  u.duelhp = 0
+                  u.duelatk = 0
+                  u.dueldef = 0
+                  u.money += resultplata2
+                  user.money -= resultplata2
+                  user.cd11 = 0,
+                  user.del11 = -1,
+                  user.cd12 = 0,
+                  user.del12 = -1,
+                  user.cd13 = 0,
+                  user.cd14 = 0,
+                  user.cd15 = 0,
+                  user.spikes = -1,
+                  user.cd16 = 0,
+                  user.clinch = -1,
+                  user.cd21 = 0,
+                  user.cd22 = 0,
+                  user.nakopleniye = 0,
+                  user.el1 = 0,
+                  user.burn = 0,
+                  user.el2 = 0,
+                  user.el3 = 0,
+                  user.cd31 = 0,
+                  user.poison = 0,
+                  user.cd32 = 0,
+                  user.cd33 = 0,
+                  user.cd34 = 0,
+                  user.invisible = false,
+                  user.cd35 = 0,
+                  user.cd36 = 0,
+                  user.cd37 = 0,
+                  user.poisoning = 0
+                  u.cd11 = 0,
+                  u.del11 = -1,
+                  u.cd12 = 0,
+                  u.del12 = -1,
+                  u.cd13 = 0,
+                  u.cd14 = 0,
+                  u.cd15 = 0,
+                  u.spikes = -1,
+                  u.cd16 = 0,
+                  u.clinch = -1,
+                  u.cd21 = 0,
+                  u.cd22 = 0,
+                  u.nakopleniye = 0,
+                  u.el1 = 0,
+                  u.burn = 0,
+                  u.el2 = 0,
+                  u.el3 = 0,
+                  u.cd31 = 0,
+                  u.poison = 0,
+                  u.cd32 = 0,
+                  u.cd33 = 0,
+                  u.cd34 = 0,
+                  u.invisible = false,
+                  u.cd35 = 0,
+                  u.cd36 = 0,
+                  u.cd37 = 0,
+                  u.poisoning = 0
+                  msg.send(`"${u.nick}" победил "${user.nick}" в дуэли. Со счёта "${user.nick}" списано ${resultplata2}💵 и начислено на счёт "${u.nick}"`)
+                }
+                if(user.del11 == 0) {
+                  var hp = user.hp
+                  var atk = user.atk
+                  var procent = 20
+                  var resulthp = hp / 100 * procent
+                  var resultatk = atk / 100 * procent
+                  user.duelhp -= resulthp
+                  user.duelatk -= resultatk
+                  user.del11 == -1
+                  msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.del11 == 0) {
+                  var hp1 = u.hp
+                  var atk1 = u.atk
+                  var procent = 20
+                  var resulthp1 = hp1 / 100 * procent
+                  var resultatk1 = atk1 / 100 * procent
+                  u.duelhp -= resulthp1
+                  u.duelatk -= resultatk1
+                  u.del11 == -1
+                  msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(user.del12 == 0) {
+                  var def = user.def
+                  var procent = 20
+                  var resultdef = def / 100 * procent
+                  user.dueldef -= resultdef
+                  user.del12 == -1
+                  msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.del12 == 0) {
+                  var def1 = u.def
+                  var procent = 20
+                  var resultdef1 = def1 / 100 * procent
+                  u.dueldef -= resultdef1
+                  u.del12 == -1
+                  msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(user.spikes == 0) {
+                  user.spikes -= 1
+                  msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.spikes == 0) {
+                  u.spikes -= 1
+                  msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+              }
+            }
+            else {
+              if(u.dueldef > user.duelatk) {
+                if(user.cd11 > 0) user.cd11 -= 1
+                if(user.del11 > 0) user.del11 -= 1
+                if(user.cd12 > 0) user.cd12 -= 1
+                if(user.del12 > 0) user.del12 -= 1
+                if(user.cd13 > 0) user.cd13 -= 1
+                if(user.cd14 > 0) user.cd14 -= 1
+                if(user.cd15 > 0) user.cd15 -= 1
+                if(user.spikes > 0) user.spikes -= 1
+                if(user.cd16 > 0) user.cd16 -= 1
+                if(user.cd21 > 0) user.cd21 -= 1
+                if(user.cd22 > 0) user.cd22 -= 1
+                if(user.cd31 > 0) user.cd31 -= 1
+                if(user.cd32 > 0) user.cd32 -= 1
+                if(user.cd33 > 0) user.cd33 -= 1
+                if(user.cd34 > 0) user.cd34 -= 1
+                if(user.cd35 > 0) user.cd35 -= 1
+                if(user.cd36 > 0) user.cd36 -= 1
+                if(user.cd37 > 0) user.cd37 -= 1
+                if(u.cd11 > 0) u.cd11 -= 1
+                if(u.del11 > 0) u.del11 -= 1
+                if(u.cd12 > 0) u.cd12 -= 1
+                if(u.del12 > 0) u.del12 -= 1
+                if(u.cd13 > 0) u.cd13 -= 1
+                if(u.cd14 > 0) u.cd14 -= 1
+                if(u.cd15 > 0) u.cd15 -= 1
+                if(u.spikes > 0) u.spikes -= 1
+                if(u.cd16 > 0) u.cd16 -= 1
+                if(u.clinch > 0) u.clinch == -1
+                if(u.cd21 > 0) u.cd21 -= 1
+                if(u.cd22 > 0) u.cd22 -= 1
+                if(u.cd31 > 0) u.cd31 -= 1
+                if(u.cd32 > 0) u.cd32 -= 1
+                if(u.cd33 > 0) u.cd33 -= 1
+                if(u.cd34 > 0) u.cd34 -= 1
+                if(u.cd35 > 0) u.cd35 -= 1
+                if(u.cd36 > 0) u.cd36 -= 1
+                if(u.cd37 > 0) u.cd37 -= 1
+                if(user.burn > 0) user.burn -= 1
+                if(u.burn > 0) u.burn -= 1
+                if(user.poison > 0) user.poison -= 1
+                if(u.poison > 0) u.poison -= 1
+                if(user.poisoning > 0) user.poisoning -= 1
+                if(u.poisoning > 0) u.poisoning -= 1
+                user.cd13 == 5
+                user.steps += 1
+                u.steps += 1
+                msg.send(`"${u.nick}" не получает урона, так как его защита выше атаки "${user.nick}". Следующим ходит — "${u.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+                if(user.del11 == 0) {
+                  var hp = user.hp
+                  var atk = user.atk
+                  var procent = 20
+                  var resulthp = hp / 100 * procent
+                  var resultatk = atk / 100 * procent
+                  user.duelhp -= resulthp
+                  user.duelatk -= resultatk
+                  user.del11 == -1
+                  msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.del11 == 0) {
+                  var hp1 = u.hp
+                  var atk1 = u.atk
+                  var procent = 20
+                  var resulthp1 = hp1 / 100 * procent
+                  var resultatk1 = atk1 / 100 * procent
+                  u.duelhp -= resulthp1
+                  u.duelatk -= resultatk1
+                  u.del11 == -1
+                  msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(user.del12 == 0) {
+                  var def = user.def
+                  var procent = 20
+                  var resultdef = def / 100 * procent
+                  user.dueldef -= resultdef
+                  user.del12 == -1
+                  msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.del12 == 0) {
+                  var def1 = u.def
+                  var procent = 20
+                  var resultdef1 = def1 / 100 * procent
+                  u.dueldef -= resultdef1
+                  u.del12 == -1
+                  msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(user.spikes == 0) {
+                  user.spikes -= 1
+                  msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.spikes == 0) {
+                  u.spikes -= 1
+                  msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+              }
+              else {
+                var hp = user.hp
+                var procent = 20
+                var resulthp = hp / 100 * procent
+                var resulthpminusdef = resulthp - u.dueldef
+                u.duelhp -= resulthpminusdef
+                if(user.cd11 > 0) user.cd11 -= 1
+                if(user.del11 > 0) user.del11 -= 1
+                if(user.cd12 > 0) user.cd12 -= 1
+                if(user.del12 > 0) user.del12 -= 1
+                if(user.cd13 > 0) user.cd13 -= 1
+                if(user.cd14 > 0) user.cd14 -= 1
+                if(user.cd15 > 0) user.cd15 -= 1
+                if(user.spikes > 0) user.spikes -= 1
+                if(user.cd16 > 0) user.cd16 -= 1
+                if(user.cd21 > 0) user.cd21 -= 1
+                if(user.cd22 > 0) user.cd22 -= 1
+                if(user.cd31 > 0) user.cd31 -= 1
+                if(user.cd32 > 0) user.cd32 -= 1
+                if(user.cd33 > 0) user.cd33 -= 1
+                if(user.cd34 > 0) user.cd34 -= 1
+                if(user.cd35 > 0) user.cd35 -= 1
+                if(user.cd36 > 0) user.cd36 -= 1
+                if(user.cd37 > 0) user.cd37 -= 1
+                if(u.cd11 > 0) u.cd11 -= 1
+                if(u.del11 > 0) u.del11 -= 1
+                if(u.cd12 > 0) u.cd12 -= 1
+                if(u.del12 > 0) u.del12 -= 1
+                if(u.cd13 > 0) u.cd13 -= 1
+                if(u.cd14 > 0) u.cd14 -= 1
+                if(u.cd15 > 0) u.cd15 -= 1
+                if(u.spikes > 0) u.spikes -= 1
+                if(u.cd16 > 0) u.cd16 -= 1
+                if(u.clinch > 0) u.clinch == -1
+                if(u.cd21 > 0) u.cd21 -= 1
+                if(u.cd22 > 0) u.cd22 -= 1
+                if(u.cd31 > 0) u.cd31 -= 1
+                if(u.cd32 > 0) u.cd32 -= 1
+                if(u.cd33 > 0) u.cd33 -= 1
+                if(u.cd34 > 0) u.cd34 -= 1
+                if(u.cd35 > 0) u.cd35 -= 1
+                if(u.cd36 > 0) u.cd36 -= 1
+                if(u.cd37 > 0) u.cd37 -= 1
+                if(user.burn > 0) user.burn -= 1
+                if(u.burn > 0) u.burn -= 1
+                if(user.poison > 0) user.poison -= 1
+                if(u.poison > 0) u.poison -= 1
+                if(user.poisoning > 0) user.poisoning -= 1
+                if(u.poisoning > 0) u.poisoning -= 1
+                user.cd13 == 5
+                user.steps += 1
+                u.steps += 1
+                msg.send(`"${u.nick}" получает ⚔${resulthpminusdef} урона. "${user.nick}" восстанавливает 💚"${resultheal}" злоровья. Следующим ходит — "${u.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+                if(u.duelhp < 1) {
+                  var plata1 = u.money
+                  var procentplata = 10
+                  var resultplata1 = plata1 / 100 * procentplata
+                  user.duel = false
+                  u.duel = false
+                  u.predictionduel = false
+                  user.predictduel = false
+                  user.steps = 0
+                  u.steps = 0
+                  user.timer = 0
+                  u.timer = 0
+                  user.duelhp = 0
+                  user.duelatk = 0
+                  user.dueldef = 0
+                  u.duelhp = 0
+                  u.duelatk = 0
+                  u.dueldef = 0
+                  user.money += resultplata1
+                  u.money -= resultplata1
+                  user.cd11 = 0,
+                  user.del11 = -1,
+                  user.cd12 = 0,
+                  user.del12 = -1,
+                  user.cd13 = 0,
+                  user.cd14 = 0,
+                  user.cd15 = 0,
+                  user.spikes = -1,
+                  user.cd16 = 0,
+                  user.clinch = -1,
+                  user.cd21 = 0,
+                  user.cd22 = 0,
+                  user.nakopleniye = 0,
+                  user.el1 = 0,
+                  user.burn = 0,
+                  user.el2 = 0,
+                  user.el3 = 0,
+                  user.cd31 = 0,
+                  user.poison = 0,
+                  user.cd32 = 0,
+                  user.cd33 = 0,
+                  user.cd34 = 0,
+                  user.invisible = false,
+                  user.cd35 = 0,
+                  user.cd36 = 0,
+                  user.cd37 = 0,
+                  user.poisoning = 0
+                  u.cd11 = 0,
+                  u.del11 = -1,
+                  u.cd12 = 0,
+                  u.del12 = -1,
+                  u.cd13 = 0,
+                  u.cd14 = 0,
+                  u.cd15 = 0,
+                  u.spikes = -1,
+                  u.cd16 = 0,
+                  u.clinch = -1,
+                  u.cd21 = 0,
+                  u.cd22 = 0,
+                  u.nakopleniye = 0,
+                  u.el1 = 0,
+                  u.burn = 0,
+                  u.el2 = 0,
+                  u.el3 = 0,
+                  u.cd31 = 0,
+                  u.poison = 0,
+                  u.cd32 = 0,
+                  u.cd33 = 0,
+                  u.cd34 = 0,
+                  u.invisible = false,
+                  u.cd35 = 0,
+                  u.cd36 = 0,
+                  u.cd37 = 0,
+                  u.poisoning = 0
+                  msg.send(`"${user.nick}" победил "${u.nick}" в дуэли. Со счёта "${u.nick}" списано ${resultplata}💵 и начислено на счёт "${user.nick}"`)
+                }
+                if(user.duelhp < 1) {
+                  var plata2 = user.money
+                  var procentplata = 10
+                  var resultplata2 = plata2 / 100 * procentplata
+                  user.duel = false
+                  u.duel = false
+                  u.predictionduel = false
+                  user.predictduel = false
+                  user.steps = 0
+                  u.steps = 0
+                  user.timer = 0
+                  u.timer = 0
+                  user.duelhp = 0
+                  user.duelatk = 0
+                  user.dueldef = 0
+                  u.duelhp = 0
+                  u.duelatk = 0
+                  u.dueldef = 0
+                  u.money += resultplata2
+                  user.money -= resultplata2
+                  user.cd11 = 0,
+                  user.del11 = -1,
+                  user.cd12 = 0,
+                  user.del12 = -1,
+                  user.cd13 = 0,
+                  user.cd14 = 0,
+                  user.cd15 = 0,
+                  user.spikes = -1,
+                  user.cd16 = 0,
+                  user.clinch = -1,
+                  user.cd21 = 0,
+                  user.cd22 = 0,
+                  user.nakopleniye = 0,
+                  user.el1 = 0,
+                  user.burn = 0,
+                  user.el2 = 0,
+                  user.el3 = 0,
+                  user.cd31 = 0,
+                  user.poison = 0,
+                  user.cd32 = 0,
+                  user.cd33 = 0,
+                  user.cd34 = 0,
+                  user.invisible = false,
+                  user.cd35 = 0,
+                  user.cd36 = 0,
+                  user.cd37 = 0,
+                  user.poisoning = 0
+                  u.cd11 = 0,
+                  u.del11 = -1,
+                  u.cd12 = 0,
+                  u.del12 = -1,
+                  u.cd13 = 0,
+                  u.cd14 = 0,
+                  u.cd15 = 0,
+                  u.spikes = -1,
+                  u.cd16 = 0,
+                  u.clinch = -1,
+                  u.cd21 = 0,
+                  u.cd22 = 0,
+                  u.nakopleniye = 0,
+                  u.el1 = 0,
+                  u.burn = 0,
+                  u.el2 = 0,
+                  u.el3 = 0,
+                  u.cd31 = 0,
+                  u.poison = 0,
+                  u.cd32 = 0,
+                  u.cd33 = 0,
+                  u.cd34 = 0,
+                  u.invisible = false,
+                  u.cd35 = 0,
+                  u.cd36 = 0,
+                  u.cd37 = 0,
+                  u.poisoning = 0
+                  msg.send(`"${u.nick}" победил "${user.nick}" в дуэли. Со счёта "${user.nick}" списано ${resultplata2}💵 и начислено на счёт "${u.nick}"`)
+                }
+                if(user.del11 == 0) {
+                  var hp = user.hp
+                  var atk = user.atk
+                  var procent = 20
+                  var resulthp = hp / 100 * procent
+                  var resultatk = atk / 100 * procent
+                  user.duelhp -= resulthp
+                  user.duelatk -= resultatk
+                  user.del11 == -1
+                  msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.del11 == 0) {
+                  var hp1 = u.hp
+                  var atk1 = u.atk
+                  var procent = 20
+                  var resulthp1 = hp1 / 100 * procent
+                  var resultatk1 = atk1 / 100 * procent
+                  u.duelhp -= resulthp1
+                  u.duelatk -= resultatk1
+                  u.del11 == -1
+                  msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(user.del12 == 0) {
+                  var def = user.def
+                  var procent = 20
+                  var resultdef = def / 100 * procent
+                  user.dueldef -= resultdef
+                  user.del12 == -1
+                  msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.del12 == 0) {
+                  var def1 = u.def
+                  var procent = 20
+                  var resultdef1 = def1 / 100 * procent
+                  u.dueldef -= resultdef1
+                  u.del12 == -1
+                  msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(user.spikes == 0) {
+                  user.spikes -= 1
+                  msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.spikes == 0) {
+                  u.spikes -= 1
+                  msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  })
+
+  vk.updates.hear(/^❣$/i, msg => {
+    user = users.filter(x => x.id === msg.senderId)[0]
+    const u = users.filter(x => x.id === msg.replyMessage.senderId)[0]
+    if(!msg.hasReplyMessage) return msg.send('Необходимо переслать сообщение')
+    if(user.duel == false) return msg.send ('В данный момент вы не в дуэли')
+    if(u.duel == false) return msg.send ('В данный момент вы не в дуэли')
+    if(user.steps > 100) return msg.send ('Ходы дуэли превысили 100. Победитель не определён')
+    if(u.steps > 100) return msg.send ('Ходы дуэли превысили 100. Победитель не определён')
+    if (user.steps % 2 == 0) {
+      return msg.send ('Сейчас не твой ход')
+    }
+    else {
+      if(user.control > 0) {
+        msg.send (`Невозможно применить умение. Осталось ходов в контроле — ${user.control}`);
+      }
+      else{
+        if(u.clinch > 0) {
+          if(user.duelatk < u.dueldef) {
+            if(user.cd11 > 0) user.cd11 -= 1
+            if(user.del11 > 0) user.del11 -= 1
+            if(user.cd12 > 0) user.cd12 -= 1
+            if(user.del12 > 0) user.del12 -= 1
+            if(user.cd13 > 0) user.cd13 -= 1
+            if(user.cd14 > 0) user.cd14 -= 1
+            if(user.cd15 > 0) user.cd15 -= 1
+            if(user.spikes > 0) user.spikes -= 1
+            if(user.cd16 > 0) user.cd16 -= 1
+            if(user.cd21 > 0) user.cd21 -= 1
+            if(user.cd22 > 0) user.cd22 -= 1
+            if(user.cd31 > 0) user.cd31 -= 1
+            if(user.cd32 > 0) user.cd32 -= 1
+            if(user.cd33 > 0) user.cd33 -= 1
+            if(user.cd34 > 0) user.cd34 -= 1
+            if(user.cd35 > 0) user.cd35 -= 1
+            if(user.cd36 > 0) user.cd36 -= 1
+            if(user.cd37 > 0) user.cd37 -= 1
+            if(u.cd11 > 0) u.cd11 -= 1
+            if(u.del11 > 0) u.del11 -= 1
+            if(u.cd12 > 0) u.cd12 -= 1
+            if(u.del12 > 0) u.del12 -= 1
+            if(u.cd13 > 0) u.cd13 -= 1
+            if(u.cd14 > 0) u.cd14 -= 1
+            if(u.cd15 > 0) u.cd15 -= 1
+            if(u.spikes > 0) u.spikes -= 1
+            if(u.cd16 > 0) u.cd16 -= 1
+            if(u.clinch > 0) u.clinch == -1
+            if(u.cd21 > 0) u.cd21 -= 1
+            if(u.cd22 > 0) u.cd22 -= 1
+            if(u.cd31 > 0) u.cd31 -= 1
+            if(u.cd32 > 0) u.cd32 -= 1
+            if(u.cd33 > 0) u.cd33 -= 1
+            if(u.cd34 > 0) u.cd34 -= 1
+            if(u.cd35 > 0) u.cd35 -= 1
+            if(u.cd36 > 0) u.cd36 -= 1
+            if(u.cd37 > 0) u.cd37 -= 1
+            if(user.burn > 0) user.burn -= 1
+            if(u.burn > 0) u.burn -= 1
+            if(user.poison > 0) user.poison -= 1
+            if(u.poison > 0) u.poison -= 1
+            if(user.poisoning > 0) user.poisoning -= 1
+            if(u.poisoning > 0) u.poisoning -= 1
+            user.steps += 1
+            u.steps += 1
+            user.cd14 == 3
+            msg.send(`"${u.nick}" не получает урона, так как активировал "клинч", "${user.nick}" получает ⚔0 урона, так как атака "${user.nick}" меньше защиты "${u.nick}". Следующим ходит — "${u.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+            if(user.del11 == 0) {
+              var hp = user.hp
+              var atk = user.atk
+              var procent = 20
+              var resulthp = hp / 100 * procent
+              var resultatk = atk / 100 * procent
+              user.duelhp -= resulthp
+              user.duelatk -= resultatk
+              user.del11 == -1
+              msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+            }
+            if(u.del11 == 0) {
+              var hp1 = u.hp
+              var atk1 = u.atk
+              var procent = 20
+              var resulthp1 = hp1 / 100 * procent
+              var resultatk1 = atk1 / 100 * procent
+              u.duelhp -= resulthp1
+              u.duelatk -= resultatk1
+              u.del11 == -1
+              msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+            }
+            if(user.del12 == 0) {
+              var def = user.def
+              var procent = 20
+              var resultdef = def / 100 * procent
+              user.dueldef -= resultdef
+              user.del12 == -1
+              msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+            }
+            if(u.del12 == 0) {
+              var def1 = u.def
+              var procent = 20
+              var resultdef1 = def1 / 100 * procent
+              u.dueldef -= resultdef1
+              u.del12 == -1
+              msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+            }
+            if(user.spikes == 0) {
+              user.spikes -= 1
+              msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+            }
+            if(u.spikes == 0) {
+              u.spikes -= 1
+              msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+            }
+          }
+          else {
+            var uduelhp = u.duelhp
+            var procent10 = 10
+            var resultheal = uduelhp / 100 * procent10
+            var resultdamage = resultheal - u.dueldef
+            user.duelhp -= resultdamage
+            if(user.cd11 > 0) user.cd11 -= 1
+            if(user.del11 > 0) user.del11 -= 1
+            if(user.cd12 > 0) user.cd12 -= 1
+            if(user.del12 > 0) user.del12 -= 1
+            if(user.cd13 > 0) user.cd13 -= 1
+            if(user.cd14 > 0) user.cd14 -= 1
+            if(user.cd15 > 0) user.cd15 -= 1
+            if(user.spikes > 0) user.spikes -= 1
+            if(user.cd16 > 0) user.cd16 -= 1
+            if(user.cd21 > 0) user.cd21 -= 1
+            if(user.cd22 > 0) user.cd22 -= 1
+            if(user.cd31 > 0) user.cd31 -= 1
+            if(user.cd32 > 0) user.cd32 -= 1
+            if(user.cd33 > 0) user.cd33 -= 1
+            if(user.cd34 > 0) user.cd34 -= 1
+            if(user.cd35 > 0) user.cd35 -= 1
+            if(user.cd36 > 0) user.cd36 -= 1
+            if(user.cd37 > 0) user.cd37 -= 1
+            if(u.cd11 > 0) u.cd11 -= 1
+            if(u.del11 > 0) u.del11 -= 1
+            if(u.cd12 > 0) u.cd12 -= 1
+            if(u.del12 > 0) u.del12 -= 1
+            if(u.cd13 > 0) u.cd13 -= 1
+            if(u.cd14 > 0) u.cd14 -= 1
+            if(u.cd15 > 0) u.cd15 -= 1
+            if(u.spikes > 0) u.spikes -= 1
+            if(u.cd16 > 0) u.cd16 -= 1
+            if(u.clinch > 0) u.clinch == -1
+            if(u.cd21 > 0) u.cd21 -= 1
+            if(u.cd22 > 0) u.cd22 -= 1
+            if(u.cd31 > 0) u.cd31 -= 1
+            if(u.cd32 > 0) u.cd32 -= 1
+            if(u.cd33 > 0) u.cd33 -= 1
+            if(u.cd34 > 0) u.cd34 -= 1
+            if(u.cd35 > 0) u.cd35 -= 1
+            if(u.cd36 > 0) u.cd36 -= 1
+            if(u.cd37 > 0) u.cd37 -= 1
+            if(user.burn > 0) user.burn -= 1
+            if(u.burn > 0) u.burn -= 1
+            if(user.poison > 0) user.poison -= 1
+            if(u.poison > 0) u.poison -= 1
+            if(user.poisoning > 0) user.poisoning -= 1
+            if(u.poisoning > 0) u.poisoning -= 1
+            user.cd14 == 3
+            user.steps += 1
+            u.steps += 1
+            msg.send(`"${u.nick}" не получает урона, "${user.nick}" получает ⚔${resultdamage} урона, так как "${u.nick}" активировал "клинч". Следующим ходит — "${u.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+            if(user.duelhp < 1) {
+              var plata2 = user.money
+              var procentplata = 10
+              var resultplata2 = plata2 / 100 * procentplata
+              user.duel = false
+              u.duel = false
+              u.predictionduel = false
+              user.predictduel = false
+              user.steps = 0
+              u.steps = 0
+              user.timer = 0
+              u.timer = 0
+              user.duelhp = 0
+              user.duelatk = 0
+              user.dueldef = 0
+              u.duelhp = 0
+              u.duelatk = 0
+              u.dueldef = 0
+              u.money += resultplata2
+              user.money -= resultplata2
+              user.cd11 = 0,
+              user.del11 = -1,
+              user.cd12 = 0,
+              user.del12 = -1,
+              user.cd13 = 0,
+              user.cd14 = 0,
+              user.cd15 = 0,
+              user.spikes = -1,
+              user.cd16 = 0,
+              user.clinch = -1,
+              user.cd21 = 0,
+              user.cd22 = 0,
+              user.nakopleniye = 0,
+              user.el1 = 0,
+              user.burn = 0,
+              user.el2 = 0,
+              user.el3 = 0,
+              user.cd31 = 0,
+              user.poison = 0,
+              user.cd32 = 0,
+              user.cd33 = 0,
+              user.cd34 = 0,
+              user.invisible = false,
+              user.cd35 = 0,
+              user.cd36 = 0,
+              user.cd37 = 0,
+              user.poisoning = 0
+              u.cd11 = 0,
+              u.del11 = -1,
+              u.cd12 = 0,
+              u.del12 = -1,
+              u.cd13 = 0,
+              u.cd14 = 0,
+              u.cd15 = 0,
+              u.spikes = -1,
+              u.cd16 = 0,
+              u.clinch = -1,
+              u.cd21 = 0,
+              u.cd22 = 0,
+              u.nakopleniye = 0,
+              u.el1 = 0,
+              u.burn = 0,
+              u.el2 = 0,
+              u.el3 = 0,
+              u.cd31 = 0,
+              u.poison = 0,
+              u.cd32 = 0,
+              u.cd33 = 0,
+              u.cd34 = 0,
+              u.invisible = false,
+              u.cd35 = 0,
+              u.cd36 = 0,
+              u.cd37 = 0,
+              u.poisoning = 0
+              msg.send(`"${u.nick}" победил "${user.nick}" в дуэли. Со счёта "${user.nick}" списано ${resultplata2}💵 и начислено на счёт "${u.nick}"`)
+            }
+            if(user.del11 == 0) {
+              var hp = user.hp
+              var atk = user.atk
+              var procent = 20
+              var resulthp = hp / 100 * procent
+              var resultatk = atk / 100 * procent
+              user.duelhp -= resulthp
+              user.duelatk -= resultatk
+              user.del11 == -1
+              msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+            }
+            if(u.del11 == 0) {
+              var hp1 = u.hp
+              var atk1 = u.atk
+              var procent = 20
+              var resulthp1 = hp1 / 100 * procent
+              var resultatk1 = atk1 / 100 * procent
+              u.duelhp -= resulthp1
+              u.duelatk -= resultatk1
+              u.del11 == -1
+              msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+            }
+            if(user.del12 == 0) {
+              var def = user.def
+              var procent = 20
+              var resultdef = def / 100 * procent
+              user.dueldef -= resultdef
+              user.del12 == -1
+              msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+            }
+            if(u.del12 == 0) {
+              var def1 = u.def
+              var procent = 20
+              var resultdef1 = def1 / 100 * procent
+              u.dueldef -= resultdef1
+              u.del12 == -1
+              msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+            }
+            if(user.spikes == 0) {
+              user.spikes -= 1
+              msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+            }
+            if(u.spikes == 0) {
+              u.spikes -= 1
+              msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+            }
+          }
+        }
+        else {
+          if(u.spikes > 0) {
+            if(u.control > 0) {
+              if(u.dueldef > user.duelatk) {
+                if(user.cd11 > 0) user.cd11 -= 2
+                if(user.del11 > 0) user.del11 -= 2
+                if(user.cd12 > 0) user.cd12 -= 2
+                if(user.del12 > 0) user.del12 -= 2
+                if(user.cd13 > 0) user.cd13 -= 2
+                if(user.cd14 > 0) user.cd14 -= 2
+                if(user.cd15 > 0) user.cd15 -= 2
+                if(user.spikes > 0) user.spikes -= 2
+                if(user.cd16 > 0) user.cd16 -= 2
+                if(user.cd21 > 0) user.cd21 -= 2
+                if(user.cd22 > 0) user.cd22 -= 2
+                if(user.cd31 > 0) user.cd31 -= 2
+                if(user.cd32 > 0) user.cd32 -= 2
+                if(user.cd33 > 0) user.cd33 -= 2
+                if(user.cd34 > 0) user.cd34 -= 2
+                if(user.cd35 > 0) user.cd35 -= 2
+                if(user.cd36 > 0) user.cd36 -= 2
+                if(user.cd37 > 0) user.cd37 -= 2
+                if(u.cd11 > 0) u.cd11 -= 2
+                if(u.del11 > 0) u.del11 -= 2
+                if(u.cd12 > 0) u.cd12 -= 2
+                if(u.del12 > 0) u.del12 -= 2
+                if(u.cd13 > 0) u.cd13 -= 2
+                if(u.cd14 > 0) u.cd14 -= 2
+                if(u.cd15 > 0) u.cd15 -= 2
+                if(u.spikes > 0) u.spikes -= 2
+                if(u.cd16 > 0) u.cd16 -= 2
+                if(u.clinch > 0) u.clinch == -1
+                if(u.cd21 > 0) u.cd21 -= 2
+                if(u.cd22 > 0) u.cd22 -= 2
+                if(u.cd31 > 0) u.cd31 -= 2
+                if(u.cd32 > 0) u.cd32 -= 2
+                if(u.cd33 > 0) u.cd33 -= 2
+                if(u.cd34 > 0) u.cd34 -= 2
+                if(u.cd35 > 0) u.cd35 -= 2
+                if(u.cd36 > 0) u.cd36 -= 2
+                if(u.cd37 > 0) u.cd37 -= 2
+                if(user.burn > 0) user.burn -= 2
+                if(u.burn > 0) u.burn -= 2
+                if(user.poison > 0) user.poison -= 2
+                if(u.poison > 0) u.poison -= 2
+                if(user.poisoning > 0) user.poisoning -= 2
+                if(u.poisoning > 0) u.poisoning -= 2
+                user.cd14 == 3
+                user.steps += 2
+                u.steps += 2
+                u.control -= 2
+                msg.send(`"${u.nick}" не получает урона, так как его защита выше атаки "${user.nick}". Следующим ходит — "${user.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+                if(user.del11 == 0) {
+                  var hp = user.hp
+                  var atk = user.atk
+                  var procent = 20
+                  var resulthp = hp / 100 * procent
+                  var resultatk = atk / 100 * procent
+                  user.duelhp -= resulthp
+                  user.duelatk -= resultatk
+                  user.del11 == -1
+                  msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.del11 == 0) {
+                  var hp1 = u.hp
+                  var atk1 = u.atk
+                  var procent = 20
+                  var resulthp1 = hp1 / 100 * procent
+                  var resultatk1 = atk1 / 100 * procent
+                  u.duelhp -= resulthp1
+                  u.duelatk -= resultatk1
+                  u.del11 == -1
+                  msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(user.del12 == 0) {
+                  var def = user.def
+                  var procent = 20
+                  var resultdef = def / 100 * procent
+                  user.dueldef -= resultdef
+                  user.del12 == -1
+                  msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.del12 == 0) {
+                  var def1 = u.def
+                  var procent = 20
+                  var resultdef1 = def1 / 100 * procent
+                  u.dueldef -= resultdef1
+                  u.del12 == -1
+                  msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(user.spikes == 0) {
+                  user.spikes -= 1
+                  msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.spikes == 0) {
+                  u.spikes -= 1
+                  msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+              }
+              else {
+              var uduelhp = u.duelhp
+              var procent10 = 10
+              var resultheal = uduelhp / 100 * procent10
+              var resultdamage = resultheal - u.dueldef
+              user.duelhp += resultheal
+              u.duelhp -= resultdamage
+              user.duelhp -= spikes
+              var spikes = resultdamage / 2
+              if(user.cd11 > 0) user.cd11 -= 2
+              if(user.del11 > 0) user.del11 -= 2
+              if(user.cd12 > 0) user.cd12 -= 2
+              if(user.del12 > 0) user.del12 -= 2
+              if(user.cd13 > 0) user.cd13 -= 2
+              if(user.cd14 > 0) user.cd14 -= 2
+              if(user.cd15 > 0) user.cd15 -= 2
+              if(user.spikes > 0) user.spikes -= 2
+              if(user.cd16 > 0) user.cd16 -= 2
+              if(user.cd21 > 0) user.cd21 -= 2
+              if(user.cd22 > 0) user.cd22 -= 2
+              if(user.cd31 > 0) user.cd31 -= 2
+              if(user.cd32 > 0) user.cd32 -= 2
+              if(user.cd33 > 0) user.cd33 -= 2
+              if(user.cd34 > 0) user.cd34 -= 2
+              if(user.cd35 > 0) user.cd35 -= 2
+              if(user.cd36 > 0) user.cd36 -= 2
+              if(user.cd37 > 0) user.cd37 -= 2
+              if(u.cd11 > 0) u.cd11 -= 2
+              if(u.del11 > 0) u.del11 -= 2
+              if(u.cd12 > 0) u.cd12 -= 2
+              if(u.del12 > 0) u.del12 -= 2
+              if(u.cd13 > 0) u.cd13 -= 2
+              if(u.cd14 > 0) u.cd14 -= 2
+              if(u.cd15 > 0) u.cd15 -= 2
+              if(u.spikes > 0) u.spikes -= 2
+              if(u.cd16 > 0) u.cd16 -= 2
+              if(u.clinch > 0) u.clinch == -1
+              if(u.cd21 > 0) u.cd21 -= 2
+              if(u.cd22 > 0) u.cd22 -= 2
+              if(u.cd31 > 0) u.cd31 -= 2
+              if(u.cd32 > 0) u.cd32 -= 2
+              if(u.cd33 > 0) u.cd33 -= 2
+              if(u.cd34 > 0) u.cd34 -= 2
+              if(u.cd35 > 0) u.cd35 -= 2
+              if(u.cd36 > 0) u.cd36 -= 2
+              if(u.cd37 > 0) u.cd37 -= 2
+              if(user.burn > 0) user.burn -= 2
+              if(u.burn > 0) u.burn -= 2
+              if(user.poison > 0) user.poison -= 2
+              if(u.poison > 0) u.poison -= 2
+              if(user.poisoning > 0) user.poisoning -= 2
+              if(u.poisoning > 0) u.poisoning -= 2
+              user.cd14 == 3
+              user.steps += 2
+              u.steps += 2
+              u.control -= 2
+              msg.send(`"${u.nick}" получает ⚔${resultdamage} урона. "${user.nick}" восстанавливает 💚"${resultheal}" здоровья. ${user.nick}" получает ⚔${spikes} урона, так как у "${u.nick}" активны "шипы". Следующим ходит — "${user.nick}". "${u.nick}", вам осталось ${u.control} ходов в контроле\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+              if(u.duelhp < 1) {
+                var plata1 = u.money
+                var procentplata = 10
+                var resultplata1 = plata1 / 100 * procentplata
+                user.duel = false
+                u.duel = false
+                u.predictionduel = false
+                user.predictduel = false
+                user.steps = 0
+                u.steps = 0
+                user.timer = 0
+                u.timer = 0
+                user.duelhp = 0
+                user.duelatk = 0
+                user.dueldef = 0
+                u.duelhp = 0
+                u.duelatk = 0
+                u.dueldef = 0
+                user.money += resultplata1
+                u.money -= resultplata1
+                user.cd11 = 0,
+                user.del11 = -1,
+                user.cd12 = 0,
+                user.del12 = -1,
+                user.cd13 = 0,
+                user.cd14 = 0,
+                user.cd15 = 0,
+                user.spikes = -1,
+                user.cd16 = 0,
+                user.clinch = -1,
+                user.cd21 = 0,
+                user.cd22 = 0,
+                user.nakopleniye = 0,
+                user.el1 = 0,
+                user.burn = 0,
+                user.el2 = 0,
+                user.el3 = 0,
+                user.cd31 = 0,
+                user.poison = 0,
+                user.cd32 = 0,
+                user.cd33 = 0,
+                user.cd34 = 0,
+                user.invisible = false,
+                user.cd35 = 0,
+                user.cd36 = 0,
+                user.cd37 = 0,
+                user.poisoning = 0
+                u.cd11 = 0,
+                u.del11 = -1,
+                u.cd12 = 0,
+                u.del12 = -1,
+                u.cd13 = 0,
+                u.cd14 = 0,
+                u.cd15 = 0,
+                u.spikes = -1,
+                u.cd16 = 0,
+                u.clinch = -1,
+                u.cd21 = 0,
+                u.cd22 = 0,
+                u.nakopleniye = 0,
+                u.el1 = 0,
+                u.burn = 0,
+                u.el2 = 0,
+                u.el3 = 0,
+                u.cd31 = 0,
+                u.poison = 0,
+                u.cd32 = 0,
+                u.cd33 = 0,
+                u.cd34 = 0,
+                u.invisible = false,
+                u.cd35 = 0,
+                u.cd36 = 0,
+                u.cd37 = 0,
+                u.poisoning = 0
+                msg.send(`"${user.nick}" победил "${u.nick}" в дуэли. Со счёта "${u.nick}" списано ${resultplata}💵 и начислено на счёт "${user.nick}"`)
+              }
+              if(user.duelhp < 1) {
+                var plata2 = user.money
+                var procentplata = 10
+                var resultplata2 = plata2 / 100 * procentplata
+                user.duel = false
+                u.duel = false
+                u.predictionduel = false
+                user.predictduel = false
+                user.steps = 0
+                u.steps = 0
+                user.timer = 0
+                u.timer = 0
+                user.duelhp = 0
+                user.duelatk = 0
+                user.dueldef = 0
+                u.duelhp = 0
+                u.duelatk = 0
+                u.dueldef = 0
+                u.money += resultplata2
+                user.money -= resultplata2
+                user.cd11 = 0,
+                user.del11 = -1,
+                user.cd12 = 0,
+                user.del12 = -1,
+                user.cd13 = 0,
+                user.cd14 = 0,
+                user.cd15 = 0,
+                user.spikes = -1,
+                user.cd16 = 0,
+                user.clinch = -1,
+                user.cd21 = 0,
+                user.cd22 = 0,
+                user.nakopleniye = 0,
+                user.el1 = 0,
+                user.burn = 0,
+                user.el2 = 0,
+                user.el3 = 0,
+                user.cd31 = 0,
+                user.poison = 0,
+                user.cd32 = 0,
+                user.cd33 = 0,
+                user.cd34 = 0,
+                user.invisible = false,
+                user.cd35 = 0,
+                user.cd36 = 0,
+                user.cd37 = 0,
+                user.poisoning = 0
+                u.cd11 = 0,
+                u.del11 = -1,
+                u.cd12 = 0,
+                u.del12 = -1,
+                u.cd13 = 0,
+                u.cd14 = 0,
+                u.cd15 = 0,
+                u.spikes = -1,
+                u.cd16 = 0,
+                u.clinch = -1,
+                u.cd21 = 0,
+                u.cd22 = 0,
+                u.nakopleniye = 0,
+                u.el1 = 0,
+                u.burn = 0,
+                u.el2 = 0,
+                u.el3 = 0,
+                u.cd31 = 0,
+                u.poison = 0,
+                u.cd32 = 0,
+                u.cd33 = 0,
+                u.cd34 = 0,
+                u.invisible = false,
+                u.cd35 = 0,
+                u.cd36 = 0,
+                u.cd37 = 0,
+                u.poisoning = 0
+                msg.send(`"${u.nick}" победил "${user.nick}" в дуэли. Со счёта "${user.nick}" списано ${resultplata2}💵 и начислено на счёт "${u.nick}"`)
+              }
+              if(user.del11 == 0) {
+                var hp = user.hp
+                var atk = user.atk
+                var procent = 20
+                var resulthp = hp / 100 * procent
+                var resultatk = atk / 100 * procent
+                user.duelhp -= resulthp
+                user.duelatk -= resultatk
+                user.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del11 == 0) {
+                var hp1 = u.hp
+                var atk1 = u.atk
+                var procent = 20
+                var resulthp1 = hp1 / 100 * procent
+                var resultatk1 = atk1 / 100 * procent
+                u.duelhp -= resulthp1
+                u.duelatk -= resultatk1
+                u.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.del12 == 0) {
+                var def = user.def
+                var procent = 20
+                var resultdef = def / 100 * procent
+                user.dueldef -= resultdef
+                user.del12 == -1
+                msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del12 == 0) {
+                var def1 = u.def
+                var procent = 20
+                var resultdef1 = def1 / 100 * procent
+                u.dueldef -= resultdef1
+                u.del12 == -1
+                msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.spikes == 0) {
+                user.spikes -= 1
+                msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.spikes == 0) {
+                u.spikes -= 1
+                msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              }
+            }
+            else {
+              if(u.dueldef > user.duelatk) {
+                if(user.cd11 > 0) user.cd11 -= 2
+                if(user.del11 > 0) user.del11 -= 2
+                if(user.cd12 > 0) user.cd12 -= 2
+                if(user.del12 > 0) user.del12 -= 2
+                if(user.cd13 > 0) user.cd13 -= 2
+                if(user.cd14 > 0) user.cd14 -= 2
+                if(user.cd15 > 0) user.cd15 -= 2
+                if(user.spikes > 0) user.spikes -= 2
+                if(user.cd16 > 0) user.cd16 -= 2
+                if(user.cd21 > 0) user.cd21 -= 2
+                if(user.cd22 > 0) user.cd22 -= 2
+                if(user.cd31 > 0) user.cd31 -= 2
+                if(user.cd32 > 0) user.cd32 -= 2
+                if(user.cd33 > 0) user.cd33 -= 2
+                if(user.cd34 > 0) user.cd34 -= 2
+                if(user.cd35 > 0) user.cd35 -= 2
+                if(user.cd36 > 0) user.cd36 -= 2
+                if(user.cd37 > 0) user.cd37 -= 2
+                if(u.cd11 > 0) u.cd11 -= 2
+                if(u.del11 > 0) u.del11 -= 2
+                if(u.cd12 > 0) u.cd12 -= 2
+                if(u.del12 > 0) u.del12 -= 2
+                if(u.cd13 > 0) u.cd13 -= 2
+                if(u.cd14 > 0) u.cd14 -= 2
+                if(u.cd15 > 0) u.cd15 -= 2
+                if(u.spikes > 0) u.spikes -= 2
+                if(u.cd16 > 0) u.cd16 -= 2
+                if(u.clinch > 0) u.clinch == -1
+                if(u.cd21 > 0) u.cd21 -= 2
+                if(u.cd22 > 0) u.cd22 -= 2
+                if(u.cd31 > 0) u.cd31 -= 2
+                if(u.cd32 > 0) u.cd32 -= 2
+                if(u.cd33 > 0) u.cd33 -= 2
+                if(u.cd34 > 0) u.cd34 -= 2
+                if(u.cd35 > 0) u.cd35 -= 2
+                if(u.cd36 > 0) u.cd36 -= 2
+                if(u.cd37 > 0) u.cd37 -= 2
+                if(user.burn > 0) user.burn -= 2
+                if(u.burn > 0) u.burn -= 2
+                if(user.poison > 0) user.poison -= 2
+                if(u.poison > 0) u.poison -= 2
+                if(user.poisoning > 0) user.poisoning -= 2
+                if(u.poisoning > 0) u.poisoning -= 2
+                user.cd14 == 3
+                user.steps += 1
+                u.steps += 1
+                msg.send(`"${u.nick}" не получает урона, так как его защита выше атаки "${user.nick}". Следующим ходит — "${u.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+                if(user.del11 == 0) {
+                  var hp = user.hp
+                  var atk = user.atk
+                  var procent = 20
+                  var resulthp = hp / 100 * procent
+                  var resultatk = atk / 100 * procent
+                  user.duelhp -= resulthp
+                  user.duelatk -= resultatk
+                  user.del11 == -1
+                  msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.del11 == 0) {
+                  var hp1 = u.hp
+                  var atk1 = u.atk
+                  var procent = 20
+                  var resulthp1 = hp1 / 100 * procent
+                  var resultatk1 = atk1 / 100 * procent
+                  u.duelhp -= resulthp1
+                  u.duelatk -= resultatk1
+                  u.del11 == -1
+                  msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(user.del12 == 0) {
+                  var def = user.def
+                  var procent = 20
+                  var resultdef = def / 100 * procent
+                  user.dueldef -= resultdef
+                  user.del12 == -1
+                  msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.del12 == 0) {
+                  var def1 = u.def
+                  var procent = 20
+                  var resultdef1 = def1 / 100 * procent
+                  u.dueldef -= resultdef1
+                  u.del12 == -1
+                  msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(user.spikes == 0) {
+                  user.spikes -= 1
+                  msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.spikes == 0) {
+                  u.spikes -= 1
+                  msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+              }
+              else {
+              var uduelhp = u.duelhp
+              var procent10 = 10
+              var resultheal = uduelhp / 100 * procent10
+              var resultdamage = resultheal - u.dueldef
+              user.duelhp += resultheal
+              u.duelhp -= resultdamage
+              user.duelhp -= spikes
+              var spikes = resultdamage / 2
+              if(user.cd11 > 0) user.cd11 -= 2
+              if(user.del11 > 0) user.del11 -= 2
+              if(user.cd12 > 0) user.cd12 -= 2
+              if(user.del12 > 0) user.del12 -= 2
+              if(user.cd13 > 0) user.cd13 -= 2
+              if(user.cd14 > 0) user.cd14 -= 2
+              if(user.cd15 > 0) user.cd15 -= 2
+              if(user.spikes > 0) user.spikes -= 2
+              if(user.cd16 > 0) user.cd16 -= 2
+              if(user.cd21 > 0) user.cd21 -= 2
+              if(user.cd22 > 0) user.cd22 -= 2
+              if(user.cd31 > 0) user.cd31 -= 2
+              if(user.cd32 > 0) user.cd32 -= 2
+              if(user.cd33 > 0) user.cd33 -= 2
+              if(user.cd34 > 0) user.cd34 -= 2
+              if(user.cd35 > 0) user.cd35 -= 2
+              if(user.cd36 > 0) user.cd36 -= 2
+              if(user.cd37 > 0) user.cd37 -= 2
+              if(u.cd11 > 0) u.cd11 -= 2
+              if(u.del11 > 0) u.del11 -= 2
+              if(u.cd12 > 0) u.cd12 -= 2
+              if(u.del12 > 0) u.del12 -= 2
+              if(u.cd13 > 0) u.cd13 -= 2
+              if(u.cd14 > 0) u.cd14 -= 2
+              if(u.cd15 > 0) u.cd15 -= 2
+              if(u.spikes > 0) u.spikes -= 2
+              if(u.cd16 > 0) u.cd16 -= 2
+              if(u.clinch > 0) u.clinch == -1
+              if(u.cd21 > 0) u.cd21 -= 2
+              if(u.cd22 > 0) u.cd22 -= 2
+              if(u.cd31 > 0) u.cd31 -= 2
+              if(u.cd32 > 0) u.cd32 -= 2
+              if(u.cd33 > 0) u.cd33 -= 2
+              if(u.cd34 > 0) u.cd34 -= 2
+              if(u.cd35 > 0) u.cd35 -= 2
+              if(u.cd36 > 0) u.cd36 -= 2
+              if(u.cd37 > 0) u.cd37 -= 2
+              if(user.burn > 0) user.burn -= 2
+              if(u.burn > 0) u.burn -= 2
+              if(user.poison > 0) user.poison -= 2
+              if(u.poison > 0) u.poison -= 2
+              if(user.poisoning > 0) user.poisoning -= 2
+              if(u.poisoning > 0) u.poisoning -= 2
+              user.cd14 == 3
+              user.steps += 1
+              u.steps += 1
+              msg.send(`"${u.nick}" получает ⚔${resultdamage} урона. "${user.nick}" восстанавливает 💚"${resultheal}" здоровья. ${user.nick}" получает ⚔${spikes} урона, так как у "${u.nick}" активны "шипы". Следующим ходит — "${u.nick}". "${u.nick}", вам осталось ${u.control} ходов в контроле\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+              if(u.duelhp < 1) {
+                var plata1 = u.money
+                var procentplata = 10
+                var resultplata1 = plata1 / 100 * procentplata
+                user.duel = false
+                u.duel = false
+                u.predictionduel = false
+                user.predictduel = false
+                user.steps = 0
+                u.steps = 0
+                user.timer = 0
+                u.timer = 0
+                user.duelhp = 0
+                user.duelatk = 0
+                user.dueldef = 0
+                u.duelhp = 0
+                u.duelatk = 0
+                u.dueldef = 0
+                user.money += resultplata1
+                u.money -= resultplata1
+                user.cd11 = 0,
+                user.del11 = -1,
+                user.cd12 = 0,
+                user.del12 = -1,
+                user.cd13 = 0,
+                user.cd14 = 0,
+                user.cd15 = 0,
+                user.spikes = -1,
+                user.cd16 = 0,
+                user.clinch = -1,
+                user.cd21 = 0,
+                user.cd22 = 0,
+                user.nakopleniye = 0,
+                user.el1 = 0,
+                user.burn = 0,
+                user.el2 = 0,
+                user.el3 = 0,
+                user.cd31 = 0,
+                user.poison = 0,
+                user.cd32 = 0,
+                user.cd33 = 0,
+                user.cd34 = 0,
+                user.invisible = false,
+                user.cd35 = 0,
+                user.cd36 = 0,
+                user.cd37 = 0,
+                user.poisoning = 0
+                u.cd11 = 0,
+                u.del11 = -1,
+                u.cd12 = 0,
+                u.del12 = -1,
+                u.cd13 = 0,
+                u.cd14 = 0,
+                u.cd15 = 0,
+                u.spikes = -1,
+                u.cd16 = 0,
+                u.clinch = -1,
+                u.cd21 = 0,
+                u.cd22 = 0,
+                u.nakopleniye = 0,
+                u.el1 = 0,
+                u.burn = 0,
+                u.el2 = 0,
+                u.el3 = 0,
+                u.cd31 = 0,
+                u.poison = 0,
+                u.cd32 = 0,
+                u.cd33 = 0,
+                u.cd34 = 0,
+                u.invisible = false,
+                u.cd35 = 0,
+                u.cd36 = 0,
+                u.cd37 = 0,
+                u.poisoning = 0
+                msg.send(`"${user.nick}" победил "${u.nick}" в дуэли. Со счёта "${u.nick}" списано ${resultplata}💵 и начислено на счёт "${user.nick}"`)
+              }
+              if(user.duelhp < 1) {
+                var plata2 = user.money
+                var procentplata = 10
+                var resultplata2 = plata2 / 100 * procentplata
+                user.duel = false
+                u.duel = false
+                u.predictionduel = false
+                user.predictduel = false
+                user.steps = 0
+                u.steps = 0
+                user.timer = 0
+                u.timer = 0
+                user.duelhp = 0
+                user.duelatk = 0
+                user.dueldef = 0
+                u.duelhp = 0
+                u.duelatk = 0
+                u.dueldef = 0
+                u.money += resultplata2
+                user.money -= resultplata2
+                user.cd11 = 0,
+                user.del11 = -1,
+                user.cd12 = 0,
+                user.del12 = -1,
+                user.cd13 = 0,
+                user.cd14 = 0,
+                user.cd15 = 0,
+                user.spikes = -1,
+                user.cd16 = 0,
+                user.clinch = -1,
+                user.cd21 = 0,
+                user.cd22 = 0,
+                user.nakopleniye = 0,
+                user.el1 = 0,
+                user.burn = 0,
+                user.el2 = 0,
+                user.el3 = 0,
+                user.cd31 = 0,
+                user.poison = 0,
+                user.cd32 = 0,
+                user.cd33 = 0,
+                user.cd34 = 0,
+                user.invisible = false,
+                user.cd35 = 0,
+                user.cd36 = 0,
+                user.cd37 = 0,
+                user.poisoning = 0
+                u.cd11 = 0,
+                u.del11 = -1,
+                u.cd12 = 0,
+                u.del12 = -1,
+                u.cd13 = 0,
+                u.cd14 = 0,
+                u.cd15 = 0,
+                u.spikes = -1,
+                u.cd16 = 0,
+                u.clinch = -1,
+                u.cd21 = 0,
+                u.cd22 = 0,
+                u.nakopleniye = 0,
+                u.el1 = 0,
+                u.burn = 0,
+                u.el2 = 0,
+                u.el3 = 0,
+                u.cd31 = 0,
+                u.poison = 0,
+                u.cd32 = 0,
+                u.cd33 = 0,
+                u.cd34 = 0,
+                u.invisible = false,
+                u.cd35 = 0,
+                u.cd36 = 0,
+                u.cd37 = 0,
+                u.poisoning = 0
+                msg.send(`"${u.nick}" победил "${user.nick}" в дуэли. Со счёта "${user.nick}" списано ${resultplata2}💵 и начислено на счёт "${u.nick}"`)
+              }
+              if(user.del11 == 0) {
+                var hp = user.hp
+                var atk = user.atk
+                var procent = 20
+                var resulthp = hp / 100 * procent
+                var resultatk = atk / 100 * procent
+                user.duelhp -= resulthp
+                user.duelatk -= resultatk
+                user.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del11 == 0) {
+                var hp1 = u.hp
+                var atk1 = u.atk
+                var procent = 20
+                var resulthp1 = hp1 / 100 * procent
+                var resultatk1 = atk1 / 100 * procent
+                u.duelhp -= resulthp1
+                u.duelatk -= resultatk1
+                u.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.del12 == 0) {
+                var def = user.def
+                var procent = 20
+                var resultdef = def / 100 * procent
+                user.dueldef -= resultdef
+                user.del12 == -1
+                msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del12 == 0) {
+                var def1 = u.def
+                var procent = 20
+                var resultdef1 = def1 / 100 * procent
+                u.dueldef -= resultdef1
+                u.del12 == -1
+                msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.spikes == 0) {
+                user.spikes -= 1
+                msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.spikes == 0) {
+                u.spikes -= 1
+                msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              }
+            }
+          }
+          else {
+            if(u.control > 0) {
+              if(u.dueldef > user.duelatk) {
+                if(user.cd11 > 0) user.cd11 -= 2
+                if(user.del11 > 0) user.del11 -= 2
+                if(user.cd12 > 0) user.cd12 -= 2
+                if(user.del12 > 0) user.del12 -= 2
+                if(user.cd13 > 0) user.cd13 -= 2
+                if(user.cd14 > 0) user.cd14 -= 2
+                if(user.cd15 > 0) user.cd15 -= 2
+                if(user.spikes > 0) user.spikes -= 2
+                if(user.cd16 > 0) user.cd16 -= 2
+                if(user.cd21 > 0) user.cd21 -= 2
+                if(user.cd22 > 0) user.cd22 -= 2
+                if(user.cd31 > 0) user.cd31 -= 2
+                if(user.cd32 > 0) user.cd32 -= 2
+                if(user.cd33 > 0) user.cd33 -= 2
+                if(user.cd34 > 0) user.cd34 -= 2
+                if(user.cd35 > 0) user.cd35 -= 2
+                if(user.cd36 > 0) user.cd36 -= 2
+                if(user.cd37 > 0) user.cd37 -= 2
+                if(u.cd11 > 0) u.cd11 -= 2
+                if(u.del11 > 0) u.del11 -= 2
+                if(u.cd12 > 0) u.cd12 -= 2
+                if(u.del12 > 0) u.del12 -= 2
+                if(u.cd13 > 0) u.cd13 -= 2
+                if(u.cd14 > 0) u.cd14 -= 2
+                if(u.cd15 > 0) u.cd15 -= 2
+                if(u.spikes > 0) u.spikes -= 2
+                if(u.cd16 > 0) u.cd16 -= 2
+                if(u.clinch > 0) u.clinch == -1
+                if(u.cd21 > 0) u.cd21 -= 2
+                if(u.cd22 > 0) u.cd22 -= 2
+                if(u.cd31 > 0) u.cd31 -= 2
+                if(u.cd32 > 0) u.cd32 -= 2
+                if(u.cd33 > 0) u.cd33 -= 2
+                if(u.cd34 > 0) u.cd34 -= 2
+                if(u.cd35 > 0) u.cd35 -= 2
+                if(u.cd36 > 0) u.cd36 -= 2
+                if(u.cd37 > 0) u.cd37 -= 2
+                if(user.burn > 0) user.burn -= 2
+                if(u.burn > 0) u.burn -= 2
+                if(user.poison > 0) user.poison -= 2
+                if(u.poison > 0) u.poison -= 2
+                if(user.poisoning > 0) user.poisoning -= 2
+                if(u.poisoning > 0) u.poisoning -= 2
+                user.cd14 == 3
+                user.steps += 2
+                u.steps += 2
+                u.control -= 2
+                msg.send(`"${u.nick}" не получает урона, так как его защита выше атаки "${user.nick}". Следующим ходит — "${user.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+                if(user.del11 == 0) {
+                  var hp = user.hp
+                  var atk = user.atk
+                  var procent = 20
+                  var resulthp = hp / 100 * procent
+                  var resultatk = atk / 100 * procent
+                  user.duelhp -= resulthp
+                  user.duelatk -= resultatk
+                  user.del11 == -1
+                  msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.del11 == 0) {
+                  var hp1 = u.hp
+                  var atk1 = u.atk
+                  var procent = 20
+                  var resulthp1 = hp1 / 100 * procent
+                  var resultatk1 = atk1 / 100 * procent
+                  u.duelhp -= resulthp1
+                  u.duelatk -= resultatk1
+                  u.del11 == -1
+                  msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(user.del12 == 0) {
+                  var def = user.def
+                  var procent = 20
+                  var resultdef = def / 100 * procent
+                  user.dueldef -= resultdef
+                  user.del12 == -1
+                  msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.del12 == 0) {
+                  var def1 = u.def
+                  var procent = 20
+                  var resultdef1 = def1 / 100 * procent
+                  u.dueldef -= resultdef1
+                  u.del12 == -1
+                  msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(user.spikes == 0) {
+                  user.spikes -= 1
+                  msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.spikes == 0) {
+                  u.spikes -= 1
+                  msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+              }
+              else {
+                var uduelhp = u.duelhp
+                var procent10 = 10
+                var resultheal = uduelhp / 100 * procent10
+                var resultdamage = resultheal - u.dueldef
+                user.duelhp += resultheal
+                u.duelhp -= resultdamage
+                if(user.cd11 > 0) user.cd11 -= 2
+                if(user.del11 > 0) user.del11 -= 2
+                if(user.cd12 > 0) user.cd12 -= 2
+                if(user.del12 > 0) user.del12 -= 2
+                if(user.cd13 > 0) user.cd13 -= 2
+                if(user.cd14 > 0) user.cd14 -= 2
+                if(user.cd15 > 0) user.cd15 -= 2
+                if(user.spikes > 0) user.spikes -= 2
+                if(user.cd16 > 0) user.cd16 -= 2
+                if(user.cd21 > 0) user.cd21 -= 2
+                if(user.cd22 > 0) user.cd22 -= 2
+                if(user.cd31 > 0) user.cd31 -= 2
+                if(user.cd32 > 0) user.cd32 -= 2
+                if(user.cd33 > 0) user.cd33 -= 2
+                if(user.cd34 > 0) user.cd34 -= 2
+                if(user.cd35 > 0) user.cd35 -= 2
+                if(user.cd36 > 0) user.cd36 -= 2
+                if(user.cd37 > 0) user.cd37 -= 2
+                if(u.cd11 > 0) u.cd11 -= 2
+                if(u.del11 > 0) u.del11 -= 2
+                if(u.cd12 > 0) u.cd12 -= 2
+                if(u.del12 > 0) u.del12 -= 2
+                if(u.cd13 > 0) u.cd13 -= 2
+                if(u.cd14 > 0) u.cd14 -= 2
+                if(u.cd15 > 0) u.cd15 -= 2
+                if(u.spikes > 0) u.spikes -= 2
+                if(u.cd16 > 0) u.cd16 -= 2
+                if(u.clinch > 0) u.clinch == -1
+                if(u.cd21 > 0) u.cd21 -= 2
+                if(u.cd22 > 0) u.cd22 -= 2
+                if(u.cd31 > 0) u.cd31 -= 2
+                if(u.cd32 > 0) u.cd32 -= 2
+                if(u.cd33 > 0) u.cd33 -= 2
+                if(u.cd34 > 0) u.cd34 -= 2
+                if(u.cd35 > 0) u.cd35 -= 2
+                if(u.cd36 > 0) u.cd36 -= 2
+                if(u.cd37 > 0) u.cd37 -= 2
+                if(user.burn > 0) user.burn -= 2
+                if(u.burn > 0) u.burn -= 2
+                if(user.poison > 0) user.poison -= 2
+                if(u.poison > 0) u.poison -= 2
+                if(user.poisoning > 0) user.poisoning -= 2
+                if(u.poisoning > 0) u.poisoning -= 2
+                user.cd14 == 3
+                user.steps += 2
+                u.steps += 2
+                u.control -= 2
+                msg.send(`"${u.nick}" получает ⚔${resultdamage} урона. "${user.nick}" восстанавливает 💚"${resultheal}" злоровья. Следующим ходит — "${user.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+                if(u.duelhp < 1) {
+                  var plata1 = u.money
+                  var procentplata = 10
+                  var resultplata1 = plata1 / 100 * procentplata
+                  user.duel = false
+                  u.duel = false
+                  u.predictionduel = false
+                  user.predictduel = false
+                  user.steps = 0
+                  u.steps = 0
+                  user.timer = 0
+                  u.timer = 0
+                  user.duelhp = 0
+                  user.duelatk = 0
+                  user.dueldef = 0
+                  u.duelhp = 0
+                  u.duelatk = 0
+                  u.dueldef = 0
+                  user.money += resultplata1
+                  u.money -= resultplata1
+                  user.cd11 = 0,
+                  user.del11 = -1,
+                  user.cd12 = 0,
+                  user.del12 = -1,
+                  user.cd13 = 0,
+                  user.cd14 = 0,
+                  user.cd15 = 0,
+                  user.spikes = -1,
+                  user.cd16 = 0,
+                  user.clinch = -1,
+                  user.cd21 = 0,
+                  user.cd22 = 0,
+                  user.nakopleniye = 0,
+                  user.el1 = 0,
+                  user.burn = 0,
+                  user.el2 = 0,
+                  user.el3 = 0,
+                  user.cd31 = 0,
+                  user.poison = 0,
+                  user.cd32 = 0,
+                  user.cd33 = 0,
+                  user.cd34 = 0,
+                  user.invisible = false,
+                  user.cd35 = 0,
+                  user.cd36 = 0,
+                  user.cd37 = 0,
+                  user.poisoning = 0
+                  u.cd11 = 0,
+                  u.del11 = -1,
+                  u.cd12 = 0,
+                  u.del12 = -1,
+                  u.cd13 = 0,
+                  u.cd14 = 0,
+                  u.cd15 = 0,
+                  u.spikes = -1,
+                  u.cd16 = 0,
+                  u.clinch = -1,
+                  u.cd21 = 0,
+                  u.cd22 = 0,
+                  u.nakopleniye = 0,
+                  u.el1 = 0,
+                  u.burn = 0,
+                  u.el2 = 0,
+                  u.el3 = 0,
+                  u.cd31 = 0,
+                  u.poison = 0,
+                  u.cd32 = 0,
+                  u.cd33 = 0,
+                  u.cd34 = 0,
+                  u.invisible = false,
+                  u.cd35 = 0,
+                  u.cd36 = 0,
+                  u.cd37 = 0,
+                  u.poisoning = 0
+                  msg.send(`"${user.nick}" победил "${u.nick}" в дуэли. Со счёта "${u.nick}" списано ${resultplata}💵 и начислено на счёт "${user.nick}"`)
+                }
+                if(user.duelhp < 1) {
+                  var plata2 = user.money
+                  var procentplata = 10
+                  var resultplata2 = plata2 / 100 * procentplata
+                  user.duel = false
+                  u.duel = false
+                  u.predictionduel = false
+                  user.predictduel = false
+                  user.steps = 0
+                  u.steps = 0
+                  user.timer = 0
+                  u.timer = 0
+                  user.duelhp = 0
+                  user.duelatk = 0
+                  user.dueldef = 0
+                  u.duelhp = 0
+                  u.duelatk = 0
+                  u.dueldef = 0
+                  u.money += resultplata2
+                  user.money -= resultplata2
+                  user.cd11 = 0,
+                  user.del11 = -1,
+                  user.cd12 = 0,
+                  user.del12 = -1,
+                  user.cd13 = 0,
+                  user.cd14 = 0,
+                  user.cd15 = 0,
+                  user.spikes = -1,
+                  user.cd16 = 0,
+                  user.clinch = -1,
+                  user.cd21 = 0,
+                  user.cd22 = 0,
+                  user.nakopleniye = 0,
+                  user.el1 = 0,
+                  user.burn = 0,
+                  user.el2 = 0,
+                  user.el3 = 0,
+                  user.cd31 = 0,
+                  user.poison = 0,
+                  user.cd32 = 0,
+                  user.cd33 = 0,
+                  user.cd34 = 0,
+                  user.invisible = false,
+                  user.cd35 = 0,
+                  user.cd36 = 0,
+                  user.cd37 = 0,
+                  user.poisoning = 0
+                  u.cd11 = 0,
+                  u.del11 = -1,
+                  u.cd12 = 0,
+                  u.del12 = -1,
+                  u.cd13 = 0,
+                  u.cd14 = 0,
+                  u.cd15 = 0,
+                  u.spikes = -1,
+                  u.cd16 = 0,
+                  u.clinch = -1,
+                  u.cd21 = 0,
+                  u.cd22 = 0,
+                  u.nakopleniye = 0,
+                  u.el1 = 0,
+                  u.burn = 0,
+                  u.el2 = 0,
+                  u.el3 = 0,
+                  u.cd31 = 0,
+                  u.poison = 0,
+                  u.cd32 = 0,
+                  u.cd33 = 0,
+                  u.cd34 = 0,
+                  u.invisible = false,
+                  u.cd35 = 0,
+                  u.cd36 = 0,
+                  u.cd37 = 0,
+                  u.poisoning = 0
+                  msg.send(`"${u.nick}" победил "${user.nick}" в дуэли. Со счёта "${user.nick}" списано ${resultplata2}💵 и начислено на счёт "${u.nick}"`)
+                }
+                if(user.del11 == 0) {
+                  var hp = user.hp
+                  var atk = user.atk
+                  var procent = 20
+                  var resulthp = hp / 100 * procent
+                  var resultatk = atk / 100 * procent
+                  user.duelhp -= resulthp
+                  user.duelatk -= resultatk
+                  user.del11 == -1
+                  msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.del11 == 0) {
+                  var hp1 = u.hp
+                  var atk1 = u.atk
+                  var procent = 20
+                  var resulthp1 = hp1 / 100 * procent
+                  var resultatk1 = atk1 / 100 * procent
+                  u.duelhp -= resulthp1
+                  u.duelatk -= resultatk1
+                  u.del11 == -1
+                  msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(user.del12 == 0) {
+                  var def = user.def
+                  var procent = 20
+                  var resultdef = def / 100 * procent
+                  user.dueldef -= resultdef
+                  user.del12 == -1
+                  msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.del12 == 0) {
+                  var def1 = u.def
+                  var procent = 20
+                  var resultdef1 = def1 / 100 * procent
+                  u.dueldef -= resultdef1
+                  u.del12 == -1
+                  msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(user.spikes == 0) {
+                  user.spikes -= 1
+                  msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.spikes == 0) {
+                  u.spikes -= 1
+                  msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+              }
+            }
+            else {
+              if(u.dueldef > user.duelatk) {
+                if(user.cd11 > 0) user.cd11 -= 1
+                if(user.del11 > 0) user.del11 -= 1
+                if(user.cd12 > 0) user.cd12 -= 1
+                if(user.del12 > 0) user.del12 -= 1
+                if(user.cd13 > 0) user.cd13 -= 1
+                if(user.cd14 > 0) user.cd14 -= 1
+                if(user.cd15 > 0) user.cd15 -= 1
+                if(user.spikes > 0) user.spikes -= 1
+                if(user.cd16 > 0) user.cd16 -= 1
+                if(user.cd21 > 0) user.cd21 -= 1
+                if(user.cd22 > 0) user.cd22 -= 1
+                if(user.cd31 > 0) user.cd31 -= 1
+                if(user.cd32 > 0) user.cd32 -= 1
+                if(user.cd33 > 0) user.cd33 -= 1
+                if(user.cd34 > 0) user.cd34 -= 1
+                if(user.cd35 > 0) user.cd35 -= 1
+                if(user.cd36 > 0) user.cd36 -= 1
+                if(user.cd37 > 0) user.cd37 -= 1
+                if(u.cd11 > 0) u.cd11 -= 1
+                if(u.del11 > 0) u.del11 -= 1
+                if(u.cd12 > 0) u.cd12 -= 1
+                if(u.del12 > 0) u.del12 -= 1
+                if(u.cd13 > 0) u.cd13 -= 1
+                if(u.cd14 > 0) u.cd14 -= 1
+                if(u.cd15 > 0) u.cd15 -= 1
+                if(u.spikes > 0) u.spikes -= 1
+                if(u.cd16 > 0) u.cd16 -= 1
+                if(u.clinch > 0) u.clinch == -1
+                if(u.cd21 > 0) u.cd21 -= 1
+                if(u.cd22 > 0) u.cd22 -= 1
+                if(u.cd31 > 0) u.cd31 -= 1
+                if(u.cd32 > 0) u.cd32 -= 1
+                if(u.cd33 > 0) u.cd33 -= 1
+                if(u.cd34 > 0) u.cd34 -= 1
+                if(u.cd35 > 0) u.cd35 -= 1
+                if(u.cd36 > 0) u.cd36 -= 1
+                if(u.cd37 > 0) u.cd37 -= 1
+                if(user.burn > 0) user.burn -= 1
+                if(u.burn > 0) u.burn -= 1
+                if(user.poison > 0) user.poison -= 1
+                if(u.poison > 0) u.poison -= 1
+                if(user.poisoning > 0) user.poisoning -= 1
+                if(u.poisoning > 0) u.poisoning -= 1
+                user.cd14 == 3
+                user.steps += 1
+                u.steps += 1
+                msg.send(`"${u.nick}" не получает урона, так как его защита выше атаки "${user.nick}". Следующим ходит — "${u.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+                if(user.del11 == 0) {
+                  var hp = user.hp
+                  var atk = user.atk
+                  var procent = 20
+                  var resulthp = hp / 100 * procent
+                  var resultatk = atk / 100 * procent
+                  user.duelhp -= resulthp
+                  user.duelatk -= resultatk
+                  user.del11 == -1
+                  msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.del11 == 0) {
+                  var hp1 = u.hp
+                  var atk1 = u.atk
+                  var procent = 20
+                  var resulthp1 = hp1 / 100 * procent
+                  var resultatk1 = atk1 / 100 * procent
+                  u.duelhp -= resulthp1
+                  u.duelatk -= resultatk1
+                  u.del11 == -1
+                  msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(user.del12 == 0) {
+                  var def = user.def
+                  var procent = 20
+                  var resultdef = def / 100 * procent
+                  user.dueldef -= resultdef
+                  user.del12 == -1
+                  msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.del12 == 0) {
+                  var def1 = u.def
+                  var procent = 20
+                  var resultdef1 = def1 / 100 * procent
+                  u.dueldef -= resultdef1
+                  u.del12 == -1
+                  msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(user.spikes == 0) {
+                  user.spikes -= 1
+                  msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.spikes == 0) {
+                  u.spikes -= 1
+                  msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+              }
+              else {
+                var uduelhp = u.duelhp
+                var procent10 = 10
+                var resultheal = uduelhp / 100 * procent10
+                var resultdamage = resultheal - u.dueldef
+                user.duelhp += resultheal
+                u.duelhp -= resultdamage
+                if(user.cd11 > 0) user.cd11 -= 1
+                if(user.del11 > 0) user.del11 -= 1
+                if(user.cd12 > 0) user.cd12 -= 1
+                if(user.del12 > 0) user.del12 -= 1
+                if(user.cd13 > 0) user.cd13 -= 1
+                if(user.cd14 > 0) user.cd14 -= 1
+                if(user.cd15 > 0) user.cd15 -= 1
+                if(user.spikes > 0) user.spikes -= 1
+                if(user.cd16 > 0) user.cd16 -= 1
+                if(user.cd21 > 0) user.cd21 -= 1
+                if(user.cd22 > 0) user.cd22 -= 1
+                if(user.cd31 > 0) user.cd31 -= 1
+                if(user.cd32 > 0) user.cd32 -= 1
+                if(user.cd33 > 0) user.cd33 -= 1
+                if(user.cd34 > 0) user.cd34 -= 1
+                if(user.cd35 > 0) user.cd35 -= 1
+                if(user.cd36 > 0) user.cd36 -= 1
+                if(user.cd37 > 0) user.cd37 -= 1
+                if(u.cd11 > 0) u.cd11 -= 1
+                if(u.del11 > 0) u.del11 -= 1
+                if(u.cd12 > 0) u.cd12 -= 1
+                if(u.del12 > 0) u.del12 -= 1
+                if(u.cd13 > 0) u.cd13 -= 1
+                if(u.cd14 > 0) u.cd14 -= 1
+                if(u.cd15 > 0) u.cd15 -= 1
+                if(u.spikes > 0) u.spikes -= 1
+                if(u.cd16 > 0) u.cd16 -= 1
+                if(u.clinch > 0) u.clinch == -1
+                if(u.cd21 > 0) u.cd21 -= 1
+                if(u.cd22 > 0) u.cd22 -= 1
+                if(u.cd31 > 0) u.cd31 -= 1
+                if(u.cd32 > 0) u.cd32 -= 1
+                if(u.cd33 > 0) u.cd33 -= 1
+                if(u.cd34 > 0) u.cd34 -= 1
+                if(u.cd35 > 0) u.cd35 -= 1
+                if(u.cd36 > 0) u.cd36 -= 1
+                if(u.cd37 > 0) u.cd37 -= 1
+                if(user.burn > 0) user.burn -= 1
+                if(u.burn > 0) u.burn -= 1
+                if(user.poison > 0) user.poison -= 1
+                if(u.poison > 0) u.poison -= 1
+                if(user.poisoning > 0) user.poisoning -= 1
+                if(u.poisoning > 0) u.poisoning -= 1
+                user.cd14 == 3
+                user.steps += 1
+                u.steps += 1
+                msg.send(`"${u.nick}" получает ⚔${resultdamage} урона. "${user.nick}" восстанавливает 💚"${resultheal}" злоровья. Следующим ходит — "${u.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+                if(u.duelhp < 1) {
+                  var plata1 = u.money
+                  var procentplata = 10
+                  var resultplata1 = plata1 / 100 * procentplata
+                  user.duel = false
+                  u.duel = false
+                  u.predictionduel = false
+                  user.predictduel = false
+                  user.steps = 0
+                  u.steps = 0
+                  user.timer = 0
+                  u.timer = 0
+                  user.duelhp = 0
+                  user.duelatk = 0
+                  user.dueldef = 0
+                  u.duelhp = 0
+                  u.duelatk = 0
+                  u.dueldef = 0
+                  user.money += resultplata1
+                  u.money -= resultplata1
+                  user.cd11 = 0,
+                  user.del11 = -1,
+                  user.cd12 = 0,
+                  user.del12 = -1,
+                  user.cd13 = 0,
+                  user.cd14 = 0,
+                  user.cd15 = 0,
+                  user.spikes = -1,
+                  user.cd16 = 0,
+                  user.clinch = -1,
+                  user.cd21 = 0,
+                  user.cd22 = 0,
+                  user.nakopleniye = 0,
+                  user.el1 = 0,
+                  user.burn = 0,
+                  user.el2 = 0,
+                  user.el3 = 0,
+                  user.cd31 = 0,
+                  user.poison = 0,
+                  user.cd32 = 0,
+                  user.cd33 = 0,
+                  user.cd34 = 0,
+                  user.invisible = false,
+                  user.cd35 = 0,
+                  user.cd36 = 0,
+                  user.cd37 = 0,
+                  user.poisoning = 0
+                  u.cd11 = 0,
+                  u.del11 = -1,
+                  u.cd12 = 0,
+                  u.del12 = -1,
+                  u.cd13 = 0,
+                  u.cd14 = 0,
+                  u.cd15 = 0,
+                  u.spikes = -1,
+                  u.cd16 = 0,
+                  u.clinch = -1,
+                  u.cd21 = 0,
+                  u.cd22 = 0,
+                  u.nakopleniye = 0,
+                  u.el1 = 0,
+                  u.burn = 0,
+                  u.el2 = 0,
+                  u.el3 = 0,
+                  u.cd31 = 0,
+                  u.poison = 0,
+                  u.cd32 = 0,
+                  u.cd33 = 0,
+                  u.cd34 = 0,
+                  u.invisible = false,
+                  u.cd35 = 0,
+                  u.cd36 = 0,
+                  u.cd37 = 0,
+                  u.poisoning = 0
+                  msg.send(`"${user.nick}" победил "${u.nick}" в дуэли. Со счёта "${u.nick}" списано ${resultplata}💵 и начислено на счёт "${user.nick}"`)
+                }
+                if(user.duelhp < 1) {
+                  var plata2 = user.money
+                  var procentplata = 10
+                  var resultplata2 = plata2 / 100 * procentplata
+                  user.duel = false
+                  u.duel = false
+                  u.predictionduel = false
+                  user.predictduel = false
+                  user.steps = 0
+                  u.steps = 0
+                  user.timer = 0
+                  u.timer = 0
+                  user.duelhp = 0
+                  user.duelatk = 0
+                  user.dueldef = 0
+                  u.duelhp = 0
+                  u.duelatk = 0
+                  u.dueldef = 0
+                  u.money += resultplata2
+                  user.money -= resultplata2
+                  user.cd11 = 0,
+                  user.del11 = -1,
+                  user.cd12 = 0,
+                  user.del12 = -1,
+                  user.cd13 = 0,
+                  user.cd14 = 0,
+                  user.cd15 = 0,
+                  user.spikes = -1,
+                  user.cd16 = 0,
+                  user.clinch = -1,
+                  user.cd21 = 0,
+                  user.cd22 = 0,
+                  user.nakopleniye = 0,
+                  user.el1 = 0,
+                  user.burn = 0,
+                  user.el2 = 0,
+                  user.el3 = 0,
+                  user.cd31 = 0,
+                  user.poison = 0,
+                  user.cd32 = 0,
+                  user.cd33 = 0,
+                  user.cd34 = 0,
+                  user.invisible = false,
+                  user.cd35 = 0,
+                  user.cd36 = 0,
+                  user.cd37 = 0,
+                  user.poisoning = 0
+                  u.cd11 = 0,
+                  u.del11 = -1,
+                  u.cd12 = 0,
+                  u.del12 = -1,
+                  u.cd13 = 0,
+                  u.cd14 = 0,
+                  u.cd15 = 0,
+                  u.spikes = -1,
+                  u.cd16 = 0,
+                  u.clinch = -1,
+                  u.cd21 = 0,
+                  u.cd22 = 0,
+                  u.nakopleniye = 0,
+                  u.el1 = 0,
+                  u.burn = 0,
+                  u.el2 = 0,
+                  u.el3 = 0,
+                  u.cd31 = 0,
+                  u.poison = 0,
+                  u.cd32 = 0,
+                  u.cd33 = 0,
+                  u.cd34 = 0,
+                  u.invisible = false,
+                  u.cd35 = 0,
+                  u.cd36 = 0,
+                  u.cd37 = 0,
+                  u.poisoning = 0
+                  msg.send(`"${u.nick}" победил "${user.nick}" в дуэли. Со счёта "${user.nick}" списано ${resultplata2}💵 и начислено на счёт "${u.nick}"`)
+                }
+                if(user.del11 == 0) {
+                  var hp = user.hp
+                  var atk = user.atk
+                  var procent = 20
+                  var resulthp = hp / 100 * procent
+                  var resultatk = atk / 100 * procent
+                  user.duelhp -= resulthp
+                  user.duelatk -= resultatk
+                  user.del11 == -1
+                  msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.del11 == 0) {
+                  var hp1 = u.hp
+                  var atk1 = u.atk
+                  var procent = 20
+                  var resulthp1 = hp1 / 100 * procent
+                  var resultatk1 = atk1 / 100 * procent
+                  u.duelhp -= resulthp1
+                  u.duelatk -= resultatk1
+                  u.del11 == -1
+                  msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(user.del12 == 0) {
+                  var def = user.def
+                  var procent = 20
+                  var resultdef = def / 100 * procent
+                  user.dueldef -= resultdef
+                  user.del12 == -1
+                  msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.del12 == 0) {
+                  var def1 = u.def
+                  var procent = 20
+                  var resultdef1 = def1 / 100 * procent
+                  u.dueldef -= resultdef1
+                  u.del12 == -1
+                  msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(user.spikes == 0) {
+                  user.spikes -= 1
+                  msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.spikes == 0) {
+                  u.spikes -= 1
+                  msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  })
+
+  vk.updates.hear(/^☦$/i, msg => {
+    user = users.filter(x => x.id === msg.senderId)[0]
+    const u = users.filter(x => x.id === msg.replyMessage.senderId)[0]
+    if(!msg.hasReplyMessage) return msg.send('Необходимо переслать сообщение')
+    if(user.duel == false) return msg.send ('В данный момент вы не в дуэли')
+    if(u.duel == false) return msg.send ('В данный момент вы не в дуэли')
+    if(user.steps > 100) return msg.send ('Ходы дуэли превысили 100. Победитель не определён')
+    if(u.steps > 100) return msg.send ('Ходы дуэли превысили 100. Победитель не определён')
+    if (user.steps % 2 == 0) {
+      return msg.send ('Сейчас не твой ход')
+    }
+    else {
+      if(user.control > 0) {
+        msg.send (`Невозможно применить умение. Осталось ходов в контроле — ${user.control}`);
+      }
+      else{
+        var uhp = u.hp
+        var procent = 15
+        var kara = uhp / 100 * procent
+        if(u.duelhp > kara) {
+          return msg.send(`Здоровье "${u.nick}" больше 15%, невозможно использовать кару`)
+        }
+        else {
+          u.duelhp -= kara
+          msg.send(`"${user.nick}" применяет "кару" на "${u.nick}" и наносит ⚔"${kara}" урона`)
+          if(u.duelhp < 1) {
+            var plata1 = u.money
+            var procentplata = 10
+            var resultplata1 = plata1 / 100 * procentplata
+            user.duel = false
+            u.duel = false
+            u.predictionduel = false
+            user.predictduel = false
+            user.steps = 0
+            u.steps = 0
+            user.timer = 0
+            u.timer = 0
+            user.duelhp = 0
+            user.duelatk = 0
+            user.dueldef = 0
+            u.duelhp = 0
+            u.duelatk = 0
+            u.dueldef = 0
+            user.money += resultplata1
+            u.money -= resultplata1
+            user.cd11 = 0,
+            user.del11 = -1,
+            user.cd12 = 0,
+            user.del12 = -1,
+            user.cd13 = 0,
+            user.cd14 = 0,
+            user.cd15 = 0,
+            user.spikes = -1,
+            user.cd16 = 0,
+            user.clinch = -1,
+            user.cd21 = 0,
+            user.cd22 = 0,
+            user.nakopleniye = 0,
+            user.el1 = 0,
+            user.burn = 0,
+            user.el2 = 0,
+            user.el3 = 0,
+            user.cd31 = 0,
+            user.poison = 0,
+            user.cd32 = 0,
+            user.cd33 = 0,
+            user.cd34 = 0,
+            user.invisible = false,
+            user.cd35 = 0,
+            user.cd36 = 0,
+            user.cd37 = 0,
+            user.poisoning = 0
+            u.cd11 = 0,
+            u.del11 = -1,
+            u.cd12 = 0,
+            u.del12 = -1,
+            u.cd13 = 0,
+            u.cd14 = 0,
+            u.cd15 = 0,
+            u.spikes = -1,
+            u.cd16 = 0,
+            u.clinch = -1,
+            u.cd21 = 0,
+            u.cd22 = 0,
+            u.nakopleniye = 0,
+            u.el1 = 0,
+            u.burn = 0,
+            u.el2 = 0,
+            u.el3 = 0,
+            u.cd31 = 0,
+            u.poison = 0,
+            u.cd32 = 0,
+            u.cd33 = 0,
+            u.cd34 = 0,
+            u.invisible = false,
+            u.cd35 = 0,
+            u.cd36 = 0,
+            u.cd37 = 0,
+            u.poisoning = 0
+            msg.send(`"${user.nick}" победил "${u.nick}" в дуэли. Со счёта "${u.nick}" списано ${resultplata}💵 и начислено на счёт "${user.nick}"`)
+          }
+        }
+      }
+    }
+  })
+
+  vk.updates.hear(/^⚙$/i, msg => {
+    user = users.filter(x => x.id === msg.senderId)[0]
+    const u = users.filter(x => x.id === msg.replyMessage.senderId)[0]
+    if(!msg.hasReplyMessage) return msg.send('Необходимо переслать сообщение')
+    if(user.duel == false) return msg.send ('В данный момент вы не в дуэли')
+    if(u.duel == false) return msg.send ('В данный момент вы не в дуэли')
+    if(user.steps > 100) return msg.send ('Ходы дуэли превысили 100. Победитель не определён')
+    if(u.steps > 100) return msg.send ('Ходы дуэли превысили 100. Победитель не определён')
+    if (user.steps % 2 == 0) {
+      return msg.send ('Сейчас не твой ход')
+    }
+    else {
+      if(user.control > 0) {
+        msg.send (`Невозможно применить умение. Осталось ходов в контроле — ${user.control}`);
+      }
+      else{
+        if(u.clinch > 0) {
+          if(user.cd11 > 0) user.cd11 -= 1
+          if(user.del11 > 0) user.del11 -= 1
+          if(user.cd12 > 0) user.cd12 -= 1
+          if(user.del12 > 0) user.del12 -= 1
+          if(user.cd13 > 0) user.cd13 -= 1
+          if(user.cd14 > 0) user.cd14 -= 1
+          if(user.cd15 > 0) user.cd15 -= 1
+          if(user.spikes > 0) user.spikes -= 1
+          if(user.cd16 > 0) user.cd16 -= 1
+          if(user.cd21 > 0) user.cd21 -= 1
+          if(user.cd22 > 0) user.cd22 -= 1
+          if(user.cd31 > 0) user.cd31 -= 1
+          if(user.cd32 > 0) user.cd32 -= 1
+          if(user.cd33 > 0) user.cd33 -= 1
+          if(user.cd34 > 0) user.cd34 -= 1
+          if(user.cd35 > 0) user.cd35 -= 1
+          if(user.cd36 > 0) user.cd36 -= 1
+          if(user.cd37 > 0) user.cd37 -= 1
+          if(u.cd11 > 0) u.cd11 -= 1
+          if(u.del11 > 0) u.del11 -= 1
+          if(u.cd12 > 0) u.cd12 -= 1
+          if(u.del12 > 0) u.del12 -= 1
+          if(u.cd13 > 0) u.cd13 -= 1
+          if(u.cd14 > 0) u.cd14 -= 1
+          if(u.cd15 > 0) u.cd15 -= 1
+          if(u.spikes > 0) u.spikes -= 1
+          if(u.cd16 > 0) u.cd16 -= 1
+          if(u.clinch > 0) u.clinch == -1
+          if(u.cd21 > 0) u.cd21 -= 1
+          if(u.cd22 > 0) u.cd22 -= 1
+          if(u.cd31 > 0) u.cd31 -= 1
+          if(u.cd32 > 0) u.cd32 -= 1
+          if(u.cd33 > 0) u.cd33 -= 1
+          if(u.cd34 > 0) u.cd34 -= 1
+          if(u.cd35 > 0) u.cd35 -= 1
+          if(u.cd36 > 0) u.cd36 -= 1
+          if(u.cd37 > 0) u.cd37 -= 1
+          if(user.burn > 0) user.burn -= 1
+          if(u.burn > 0) u.burn -= 1
+          if(user.poison > 0) user.poison -= 1
+          if(u.poison > 0) u.poison -= 1
+          if(user.poisoning > 0) user.poisoning -= 1
+          if(u.poisoning > 0) u.poisoning -= 1
+          user.spikes == 4
+          user.cd15 == 7
+          user.steps += 1
+          u.steps += 1
+          msg.send(`"${user.nick}" активировал "шипы". Следующий ход делает "${u.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+          if(user.del11 == 0) {
+            var hp = user.hp
+            var atk = user.atk
+            var procent = 20
+            var resulthp = hp / 100 * procent
+            var resultatk = atk / 100 * procent
+            user.duelhp -= resulthp
+            user.duelatk -= resultatk
+            user.del11 == -1
+            msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+          }
+          if(u.del11 == 0) {
+            var hp1 = u.hp
+            var atk1 = u.atk
+            var procent = 20
+            var resulthp1 = hp1 / 100 * procent
+            var resultatk1 = atk1 / 100 * procent
+            u.duelhp -= resulthp1
+            u.duelatk -= resultatk1
+            u.del11 == -1
+            msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+          }
+          if(user.del12 == 0) {
+            var def = user.def
+            var procent = 20
+            var resultdef = def / 100 * procent
+            user.dueldef -= resultdef
+            user.del12 == -1
+            msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+          }
+          if(u.del12 == 0) {
+            var def1 = u.def
+            var procent = 20
+            var resultdef1 = def1 / 100 * procent
+            u.dueldef -= resultdef1
+            u.del12 == -1
+            msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+          }
+          if(user.spikes == 0) {
+            user.spikes -= 1
+            msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+          }
+          if(u.spikes == 0) {
+            u.spikes -= 1
+            msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+          }
+        }
+        else {
+          if(u.spikes > 0) {
+            if(u.contol > 0) {
+              if(user.cd11 > 0) user.cd11 -= 2
+              if(user.del11 > 0) user.del11 -= 2
+              if(user.cd12 > 0) user.cd12 -= 2
+              if(user.del12 > 0) user.del12 -= 2
+              if(user.cd13 > 0) user.cd13 -= 2
+              if(user.cd14 > 0) user.cd14 -= 2
+              if(user.cd15 > 0) user.cd15 -= 2
+              if(user.spikes > 0) user.spikes -= 2
+              if(user.cd16 > 0) user.cd16 -= 2
+              if(user.cd21 > 0) user.cd21 -= 2
+              if(user.cd22 > 0) user.cd22 -= 2
+              if(user.cd31 > 0) user.cd31 -= 2
+              if(user.cd32 > 0) user.cd32 -= 2
+              if(user.cd33 > 0) user.cd33 -= 2
+              if(user.cd34 > 0) user.cd34 -= 2
+              if(user.cd35 > 0) user.cd35 -= 2
+              if(user.cd36 > 0) user.cd36 -= 2
+              if(user.cd37 > 0) user.cd37 -= 2
+              if(u.cd11 > 0) u.cd11 -= 2
+              if(u.del11 > 0) u.del11 -= 2
+              if(u.cd12 > 0) u.cd12 -= 2
+              if(u.del12 > 0) u.del12 -= 2
+              if(u.cd13 > 0) u.cd13 -= 2
+              if(u.cd14 > 0) u.cd14 -= 2
+              if(u.cd15 > 0) u.cd15 -= 2
+              if(u.spikes > 0) u.spikes -= 2
+              if(u.cd16 > 0) u.cd16 -= 2
+              if(u.clinch > 0) u.clinch == -1
+              if(u.cd21 > 0) u.cd21 -= 2
+              if(u.cd22 > 0) u.cd22 -= 2
+              if(u.cd31 > 0) u.cd31 -= 2
+              if(u.cd32 > 0) u.cd32 -= 2
+              if(u.cd33 > 0) u.cd33 -= 2
+              if(u.cd34 > 0) u.cd34 -= 2
+              if(u.cd35 > 0) u.cd35 -= 2
+              if(u.cd36 > 0) u.cd36 -= 2
+              if(u.cd37 > 0) u.cd37 -= 2
+              if(user.burn > 0) user.burn -= 2
+              if(u.burn > 0) u.burn -= 2
+              if(user.poison > 0) user.poison -= 2
+              if(u.poison > 0) u.poison -= 2
+              if(user.poisoning > 0) user.poisoning -= 2
+              if(u.poisoning > 0) u.poisoning -= 2
+              user.spikes == 4
+              user.cd15 == 7
+              user.steps += 2
+              u.steps += 2
+              u.control -= 2
+              msg.send(`"${user.nick}" активировал "шипы". Следующий ход делает "${user.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+              if(user.del11 == 0) {
+                var hp = user.hp
+                var atk = user.atk
+                var procent = 20
+                var resulthp = hp / 100 * procent
+                var resultatk = atk / 100 * procent
+                user.duelhp -= resulthp
+                user.duelatk -= resultatk
+                user.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del11 == 0) {
+                var hp1 = u.hp
+                var atk1 = u.atk
+                var procent = 20
+                var resulthp1 = hp1 / 100 * procent
+                var resultatk1 = atk1 / 100 * procent
+                u.duelhp -= resulthp1
+                u.duelatk -= resultatk1
+                u.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.del12 == 0) {
+                var def = user.def
+                var procent = 20
+                var resultdef = def / 100 * procent
+                user.dueldef -= resultdef
+                user.del12 == -1
+                msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del12 == 0) {
+                var def1 = u.def
+                var procent = 20
+                var resultdef1 = def1 / 100 * procent
+                u.dueldef -= resultdef1
+                u.del12 == -1
+                msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.spikes == 0) {
+                user.spikes -= 1
+                msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.spikes == 0) {
+                u.spikes -= 1
+                msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+            }
+            else {
+              if(user.cd11 > 0) user.cd11 -= 1
+              if(user.del11 > 0) user.del11 -= 1
+              if(user.cd12 > 0) user.cd12 -= 1
+              if(user.del12 > 0) user.del12 -= 1
+              if(user.cd13 > 0) user.cd13 -= 1
+              if(user.cd14 > 0) user.cd14 -= 1
+              if(user.cd15 > 0) user.cd15 -= 1
+              if(user.spikes > 0) user.spikes -= 1
+              if(user.cd16 > 0) user.cd16 -= 1
+              if(user.cd21 > 0) user.cd21 -= 1
+              if(user.cd22 > 0) user.cd22 -= 1
+              if(user.cd31 > 0) user.cd31 -= 1
+              if(user.cd32 > 0) user.cd32 -= 1
+              if(user.cd33 > 0) user.cd33 -= 1
+              if(user.cd34 > 0) user.cd34 -= 1
+              if(user.cd35 > 0) user.cd35 -= 1
+              if(user.cd36 > 0) user.cd36 -= 1
+              if(user.cd37 > 0) user.cd37 -= 1
+              if(u.cd11 > 0) u.cd11 -= 1
+              if(u.del11 > 0) u.del11 -= 1
+              if(u.cd12 > 0) u.cd12 -= 1
+              if(u.del12 > 0) u.del12 -= 1
+              if(u.cd13 > 0) u.cd13 -= 1
+              if(u.cd14 > 0) u.cd14 -= 1
+              if(u.cd15 > 0) u.cd15 -= 1
+              if(u.spikes > 0) u.spikes -= 1
+              if(u.cd16 > 0) u.cd16 -= 1
+              if(u.clinch > 0) u.clinch == -1
+              if(u.cd21 > 0) u.cd21 -= 1
+              if(u.cd22 > 0) u.cd22 -= 1
+              if(u.cd31 > 0) u.cd31 -= 1
+              if(u.cd32 > 0) u.cd32 -= 1
+              if(u.cd33 > 0) u.cd33 -= 1
+              if(u.cd34 > 0) u.cd34 -= 1
+              if(u.cd35 > 0) u.cd35 -= 1
+              if(u.cd36 > 0) u.cd36 -= 1
+              if(u.cd37 > 0) u.cd37 -= 1
+              if(user.burn > 0) user.burn -= 1
+              if(u.burn > 0) u.burn -= 1
+              if(user.poison > 0) user.poison -= 1
+              if(u.poison > 0) u.poison -= 1
+              if(user.poisoning > 0) user.poisoning -= 1
+              if(u.poisoning > 0) u.poisoning -= 1
+              user.spikes == 4
+              user.cd15 == 7
+              user.steps += 1
+              u.steps += 1
+              msg.send(`"${user.nick}" активировал "шипы". Следующий ход делает "${u.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+              if(user.del11 == 0) {
+                var hp = user.hp
+                var atk = user.atk
+                var procent = 20
+                var resulthp = hp / 100 * procent
+                var resultatk = atk / 100 * procent
+                user.duelhp -= resulthp
+                user.duelatk -= resultatk
+                user.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del11 == 0) {
+                var hp1 = u.hp
+                var atk1 = u.atk
+                var procent = 20
+                var resulthp1 = hp1 / 100 * procent
+                var resultatk1 = atk1 / 100 * procent
+                u.duelhp -= resulthp1
+                u.duelatk -= resultatk1
+                u.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.del12 == 0) {
+                var def = user.def
+                var procent = 20
+                var resultdef = def / 100 * procent
+                user.dueldef -= resultdef
+                user.del12 == -1
+                msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del12 == 0) {
+                var def1 = u.def
+                var procent = 20
+                var resultdef1 = def1 / 100 * procent
+                u.dueldef -= resultdef1
+                u.del12 == -1
+                msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.spikes == 0) {
+                user.spikes -= 1
+                msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.spikes == 0) {
+                u.spikes -= 1
+                msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+            }
+          }
+          else {
+            if(u.contol > 0) {
+              if(user.cd11 > 0) user.cd11 -= 2
+              if(user.del11 > 0) user.del11 -= 2
+              if(user.cd12 > 0) user.cd12 -= 2
+              if(user.del12 > 0) user.del12 -= 2
+              if(user.cd13 > 0) user.cd13 -= 2
+              if(user.cd14 > 0) user.cd14 -= 2
+              if(user.cd15 > 0) user.cd15 -= 2
+              if(user.spikes > 0) user.spikes -= 2
+              if(user.cd16 > 0) user.cd16 -= 2
+              if(user.cd21 > 0) user.cd21 -= 2
+              if(user.cd22 > 0) user.cd22 -= 2
+              if(user.cd31 > 0) user.cd31 -= 2
+              if(user.cd32 > 0) user.cd32 -= 2
+              if(user.cd33 > 0) user.cd33 -= 2
+              if(user.cd34 > 0) user.cd34 -= 2
+              if(user.cd35 > 0) user.cd35 -= 2
+              if(user.cd36 > 0) user.cd36 -= 2
+              if(user.cd37 > 0) user.cd37 -= 2
+              if(u.cd11 > 0) u.cd11 -= 2
+              if(u.del11 > 0) u.del11 -= 2
+              if(u.cd12 > 0) u.cd12 -= 2
+              if(u.del12 > 0) u.del12 -= 2
+              if(u.cd13 > 0) u.cd13 -= 2
+              if(u.cd14 > 0) u.cd14 -= 2
+              if(u.cd15 > 0) u.cd15 -= 2
+              if(u.spikes > 0) u.spikes -= 2
+              if(u.cd16 > 0) u.cd16 -= 2
+              if(u.clinch > 0) u.clinch == -1
+              if(u.cd21 > 0) u.cd21 -= 2
+              if(u.cd22 > 0) u.cd22 -= 2
+              if(u.cd31 > 0) u.cd31 -= 2
+              if(u.cd32 > 0) u.cd32 -= 2
+              if(u.cd33 > 0) u.cd33 -= 2
+              if(u.cd34 > 0) u.cd34 -= 2
+              if(u.cd35 > 0) u.cd35 -= 2
+              if(u.cd36 > 0) u.cd36 -= 2
+              if(u.cd37 > 0) u.cd37 -= 2
+              if(user.burn > 0) user.burn -= 2
+              if(u.burn > 0) u.burn -= 2
+              if(user.poison > 0) user.poison -= 2
+              if(u.poison > 0) u.poison -= 2
+              if(user.poisoning > 0) user.poisoning -= 2
+              if(u.poisoning > 0) u.poisoning -= 2
+              user.spikes == 4
+              user.cd15 == 7
+              user.steps += 2
+              u.steps += 2
+              u.control -= 2
+              msg.send(`"${user.nick}" активировал "шипы". Следующий ход делает "${user.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+              if(user.del11 == 0) {
+                var hp = user.hp
+                var atk = user.atk
+                var procent = 20
+                var resulthp = hp / 100 * procent
+                var resultatk = atk / 100 * procent
+                user.duelhp -= resulthp
+                user.duelatk -= resultatk
+                user.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del11 == 0) {
+                var hp1 = u.hp
+                var atk1 = u.atk
+                var procent = 20
+                var resulthp1 = hp1 / 100 * procent
+                var resultatk1 = atk1 / 100 * procent
+                u.duelhp -= resulthp1
+                u.duelatk -= resultatk1
+                u.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.del12 == 0) {
+                var def = user.def
+                var procent = 20
+                var resultdef = def / 100 * procent
+                user.dueldef -= resultdef
+                user.del12 == -1
+                msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del12 == 0) {
+                var def1 = u.def
+                var procent = 20
+                var resultdef1 = def1 / 100 * procent
+                u.dueldef -= resultdef1
+                u.del12 == -1
+                msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.spikes == 0) {
+                user.spikes -= 1
+                msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.spikes == 0) {
+                u.spikes -= 1
+                msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+            }
+            else {
+              if(user.cd11 > 0) user.cd11 -= 1
+              if(user.del11 > 0) user.del11 -= 1
+              if(user.cd12 > 0) user.cd12 -= 1
+              if(user.del12 > 0) user.del12 -= 1
+              if(user.cd13 > 0) user.cd13 -= 1
+              if(user.cd14 > 0) user.cd14 -= 1
+              if(user.cd15 > 0) user.cd15 -= 1
+              if(user.spikes > 0) user.spikes -= 1
+              if(user.cd16 > 0) user.cd16 -= 1
+              if(user.cd21 > 0) user.cd21 -= 1
+              if(user.cd22 > 0) user.cd22 -= 1
+              if(user.cd31 > 0) user.cd31 -= 1
+              if(user.cd32 > 0) user.cd32 -= 1
+              if(user.cd33 > 0) user.cd33 -= 1
+              if(user.cd34 > 0) user.cd34 -= 1
+              if(user.cd35 > 0) user.cd35 -= 1
+              if(user.cd36 > 0) user.cd36 -= 1
+              if(user.cd37 > 0) user.cd37 -= 1
+              if(u.cd11 > 0) u.cd11 -= 1
+              if(u.del11 > 0) u.del11 -= 1
+              if(u.cd12 > 0) u.cd12 -= 1
+              if(u.del12 > 0) u.del12 -= 1
+              if(u.cd13 > 0) u.cd13 -= 1
+              if(u.cd14 > 0) u.cd14 -= 1
+              if(u.cd15 > 0) u.cd15 -= 1
+              if(u.spikes > 0) u.spikes -= 1
+              if(u.cd16 > 0) u.cd16 -= 1
+              if(u.clinch > 0) u.clinch == -1
+              if(u.cd21 > 0) u.cd21 -= 1
+              if(u.cd22 > 0) u.cd22 -= 1
+              if(u.cd31 > 0) u.cd31 -= 1
+              if(u.cd32 > 0) u.cd32 -= 1
+              if(u.cd33 > 0) u.cd33 -= 1
+              if(u.cd34 > 0) u.cd34 -= 1
+              if(u.cd35 > 0) u.cd35 -= 1
+              if(u.cd36 > 0) u.cd36 -= 1
+              if(u.cd37 > 0) u.cd37 -= 1
+              if(user.burn > 0) user.burn -= 1
+              if(u.burn > 0) u.burn -= 1
+              if(user.poison > 0) user.poison -= 1
+              if(u.poison > 0) u.poison -= 1
+              if(user.poisoning > 0) user.poisoning -= 1
+              if(u.poisoning > 0) u.poisoning -= 1
+              user.spikes == 4
+              user.cd15 == 7
+              user.steps += 1
+              u.steps += 1
+              msg.send(`"${user.nick}" активировал "шипы". Следующий ход делает "${u.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+              if(user.del11 == 0) {
+                var hp = user.hp
+                var atk = user.atk
+                var procent = 20
+                var resulthp = hp / 100 * procent
+                var resultatk = atk / 100 * procent
+                user.duelhp -= resulthp
+                user.duelatk -= resultatk
+                user.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del11 == 0) {
+                var hp1 = u.hp
+                var atk1 = u.atk
+                var procent = 20
+                var resulthp1 = hp1 / 100 * procent
+                var resultatk1 = atk1 / 100 * procent
+                u.duelhp -= resulthp1
+                u.duelatk -= resultatk1
+                u.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.del12 == 0) {
+                var def = user.def
+                var procent = 20
+                var resultdef = def / 100 * procent
+                user.dueldef -= resultdef
+                user.del12 == -1
+                msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del12 == 0) {
+                var def1 = u.def
+                var procent = 20
+                var resultdef1 = def1 / 100 * procent
+                u.dueldef -= resultdef1
+                u.del12 == -1
+                msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.spikes == 0) {
+                user.spikes -= 1
+                msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.spikes == 0) {
+                u.spikes -= 1
+                msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+            }
+          }
+        }
+      }
+    }
+  })
+
+  vk.updates.hear(/^⚔$/i, msg => {
+    user = users.filter(x => x.id === msg.senderId)[0]
+    const u = users.filter(x => x.id === msg.replyMessage.senderId)[0]
+    if(!msg.hasReplyMessage) return msg.send('Необходимо переслать сообщение')
+    if(user.duel == false) return msg.send ('В данный момент вы не в дуэли')
+    if(u.duel == false) return msg.send ('В данный момент вы не в дуэли')
+    if(user.steps > 100) return msg.send ('Ходы дуэли превысили 100. Победитель не определён')
+    if(u.steps > 100) return msg.send ('Ходы дуэли превысили 100. Победитель не определён')
+    if (user.steps % 2 == 0) {
+      return msg.send ('Сейчас не твой ход')
+    }
+    else {
+      if(user.control > 0) {
+        msg.send (`Невозможно применить умение. Осталось ходов в контроле — ${user.control}`);
+      }
+      else{
+        if(u.clinch > 0) {
+          if(user.cd11 > 0) user.cd11 -= 1
+          if(user.del11 > 0) user.del11 -= 1
+          if(user.cd12 > 0) user.cd12 -= 1
+          if(user.del12 > 0) user.del12 -= 1
+          if(user.cd13 > 0) user.cd13 -= 1
+          if(user.cd14 > 0) user.cd14 -= 1
+          if(user.cd15 > 0) user.cd15 -= 1
+          if(user.spikes > 0) user.spikes -= 1
+          if(user.cd16 > 0) user.cd16 -= 1
+          if(user.cd21 > 0) user.cd21 -= 1
+          if(user.cd22 > 0) user.cd22 -= 1
+          if(user.cd31 > 0) user.cd31 -= 1
+          if(user.cd32 > 0) user.cd32 -= 1
+          if(user.cd33 > 0) user.cd33 -= 1
+          if(user.cd34 > 0) user.cd34 -= 1
+          if(user.cd35 > 0) user.cd35 -= 1
+          if(user.cd36 > 0) user.cd36 -= 1
+          if(user.cd37 > 0) user.cd37 -= 1
+          if(u.cd11 > 0) u.cd11 -= 1
+          if(u.del11 > 0) u.del11 -= 1
+          if(u.cd12 > 0) u.cd12 -= 1
+          if(u.del12 > 0) u.del12 -= 1
+          if(u.cd13 > 0) u.cd13 -= 1
+          if(u.cd14 > 0) u.cd14 -= 1
+          if(u.cd15 > 0) u.cd15 -= 1
+          if(u.spikes > 0) u.spikes -= 1
+          if(u.cd16 > 0) u.cd16 -= 1
+          if(u.clinch > 0) u.clinch == -1
+          if(u.cd21 > 0) u.cd21 -= 1
+          if(u.cd22 > 0) u.cd22 -= 1
+          if(u.cd31 > 0) u.cd31 -= 1
+          if(u.cd32 > 0) u.cd32 -= 1
+          if(u.cd33 > 0) u.cd33 -= 1
+          if(u.cd34 > 0) u.cd34 -= 1
+          if(u.cd35 > 0) u.cd35 -= 1
+          if(u.cd36 > 0) u.cd36 -= 1
+          if(u.cd37 > 0) u.cd37 -= 1
+          if(user.burn > 0) user.burn -= 1
+          if(u.burn > 0) u.burn -= 1
+          if(user.poison > 0) user.poison -= 1
+          if(u.poison > 0) u.poison -= 1
+          if(user.poisoning > 0) user.poisoning -= 1
+          if(u.poisoning > 0) u.poisoning -= 1
+          user.clinch == 1
+          user.cd16 == 7
+          user.steps += 1
+          u.steps += 1
+          msg.send(`"${user.nick}" активировал "клинч". Следующий ход делает "${u.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+          if(user.del11 == 0) {
+            var hp = user.hp
+            var atk = user.atk
+            var procent = 20
+            var resulthp = hp / 100 * procent
+            var resultatk = atk / 100 * procent
+            user.duelhp -= resulthp
+            user.duelatk -= resultatk
+            user.del11 == -1
+            msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+          }
+          if(u.del11 == 0) {
+            var hp1 = u.hp
+            var atk1 = u.atk
+            var procent = 20
+            var resulthp1 = hp1 / 100 * procent
+            var resultatk1 = atk1 / 100 * procent
+            u.duelhp -= resulthp1
+            u.duelatk -= resultatk1
+            u.del11 == -1
+            msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+          }
+          if(user.del12 == 0) {
+            var def = user.def
+            var procent = 20
+            var resultdef = def / 100 * procent
+            user.dueldef -= resultdef
+            user.del12 == -1
+            msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+          }
+          if(u.del12 == 0) {
+            var def1 = u.def
+            var procent = 20
+            var resultdef1 = def1 / 100 * procent
+            u.dueldef -= resultdef1
+            u.del12 == -1
+            msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+          }
+          if(user.spikes == 0) {
+            user.spikes -= 1
+            msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+          }
+          if(u.spikes == 0) {
+            u.spikes -= 1
+            msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+          }
+        }
+        else {
+          if(u.spikes > 0) {
+            if(u.contol > 0) {
+              if(user.cd11 > 0) user.cd11 -= 2
+              if(user.del11 > 0) user.del11 -= 2
+              if(user.cd12 > 0) user.cd12 -= 2
+              if(user.del12 > 0) user.del12 -= 2
+              if(user.cd13 > 0) user.cd13 -= 2
+              if(user.cd14 > 0) user.cd14 -= 2
+              if(user.cd15 > 0) user.cd15 -= 2
+              if(user.spikes > 0) user.spikes -= 2
+              if(user.cd16 > 0) user.cd16 -= 2
+              if(user.cd21 > 0) user.cd21 -= 2
+              if(user.cd22 > 0) user.cd22 -= 2
+              if(user.cd31 > 0) user.cd31 -= 2
+              if(user.cd32 > 0) user.cd32 -= 2
+              if(user.cd33 > 0) user.cd33 -= 2
+              if(user.cd34 > 0) user.cd34 -= 2
+              if(user.cd35 > 0) user.cd35 -= 2
+              if(user.cd36 > 0) user.cd36 -= 2
+              if(user.cd37 > 0) user.cd37 -= 2
+              if(u.cd11 > 0) u.cd11 -= 2
+              if(u.del11 > 0) u.del11 -= 2
+              if(u.cd12 > 0) u.cd12 -= 2
+              if(u.del12 > 0) u.del12 -= 2
+              if(u.cd13 > 0) u.cd13 -= 2
+              if(u.cd14 > 0) u.cd14 -= 2
+              if(u.cd15 > 0) u.cd15 -= 2
+              if(u.spikes > 0) u.spikes -= 2
+              if(u.cd16 > 0) u.cd16 -= 2
+              if(u.clinch > 0) u.clinch == -1
+              if(u.cd21 > 0) u.cd21 -= 2
+              if(u.cd22 > 0) u.cd22 -= 2
+              if(u.cd31 > 0) u.cd31 -= 2
+              if(u.cd32 > 0) u.cd32 -= 2
+              if(u.cd33 > 0) u.cd33 -= 2
+              if(u.cd34 > 0) u.cd34 -= 2
+              if(u.cd35 > 0) u.cd35 -= 2
+              if(u.cd36 > 0) u.cd36 -= 2
+              if(u.cd37 > 0) u.cd37 -= 2
+              if(user.burn > 0) user.burn -= 2
+              if(u.burn > 0) u.burn -= 2
+              if(user.poison > 0) user.poison -= 2
+              if(u.poison > 0) u.poison -= 2
+              if(user.poisoning > 0) user.poisoning -= 2
+              if(u.poisoning > 0) u.poisoning -= 2
+              user.clinch == 1
+              user.cd16 == 7
+              user.steps += 2
+              u.steps += 2
+              u.control -= 2
+              msg.send(`"${user.nick}" активировал "клинч". Следующий ход делает "${user.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+              if(user.del11 == 0) {
+                var hp = user.hp
+                var atk = user.atk
+                var procent = 20
+                var resulthp = hp / 100 * procent
+                var resultatk = atk / 100 * procent
+                user.duelhp -= resulthp
+                user.duelatk -= resultatk
+                user.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del11 == 0) {
+                var hp1 = u.hp
+                var atk1 = u.atk
+                var procent = 20
+                var resulthp1 = hp1 / 100 * procent
+                var resultatk1 = atk1 / 100 * procent
+                u.duelhp -= resulthp1
+                u.duelatk -= resultatk1
+                u.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.del12 == 0) {
+                var def = user.def
+                var procent = 20
+                var resultdef = def / 100 * procent
+                user.dueldef -= resultdef
+                user.del12 == -1
+                msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del12 == 0) {
+                var def1 = u.def
+                var procent = 20
+                var resultdef1 = def1 / 100 * procent
+                u.dueldef -= resultdef1
+                u.del12 == -1
+                msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.spikes == 0) {
+                user.spikes -= 1
+                msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.spikes == 0) {
+                u.spikes -= 1
+                msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+            }
+            else {
+              if(user.cd11 > 0) user.cd11 -= 1
+              if(user.del11 > 0) user.del11 -= 1
+              if(user.cd12 > 0) user.cd12 -= 1
+              if(user.del12 > 0) user.del12 -= 1
+              if(user.cd13 > 0) user.cd13 -= 1
+              if(user.cd14 > 0) user.cd14 -= 1
+              if(user.cd15 > 0) user.cd15 -= 1
+              if(user.spikes > 0) user.spikes -= 1
+              if(user.cd16 > 0) user.cd16 -= 1
+              if(user.cd21 > 0) user.cd21 -= 1
+              if(user.cd22 > 0) user.cd22 -= 1
+              if(user.cd31 > 0) user.cd31 -= 1
+              if(user.cd32 > 0) user.cd32 -= 1
+              if(user.cd33 > 0) user.cd33 -= 1
+              if(user.cd34 > 0) user.cd34 -= 1
+              if(user.cd35 > 0) user.cd35 -= 1
+              if(user.cd36 > 0) user.cd36 -= 1
+              if(user.cd37 > 0) user.cd37 -= 1
+              if(u.cd11 > 0) u.cd11 -= 1
+              if(u.del11 > 0) u.del11 -= 1
+              if(u.cd12 > 0) u.cd12 -= 1
+              if(u.del12 > 0) u.del12 -= 1
+              if(u.cd13 > 0) u.cd13 -= 1
+              if(u.cd14 > 0) u.cd14 -= 1
+              if(u.cd15 > 0) u.cd15 -= 1
+              if(u.spikes > 0) u.spikes -= 1
+              if(u.cd16 > 0) u.cd16 -= 1
+              if(u.clinch > 0) u.clinch == -1
+              if(u.cd21 > 0) u.cd21 -= 1
+              if(u.cd22 > 0) u.cd22 -= 1
+              if(u.cd31 > 0) u.cd31 -= 1
+              if(u.cd32 > 0) u.cd32 -= 1
+              if(u.cd33 > 0) u.cd33 -= 1
+              if(u.cd34 > 0) u.cd34 -= 1
+              if(u.cd35 > 0) u.cd35 -= 1
+              if(u.cd36 > 0) u.cd36 -= 1
+              if(u.cd37 > 0) u.cd37 -= 1
+              if(user.burn > 0) user.burn -= 1
+              if(u.burn > 0) u.burn -= 1
+              if(user.poison > 0) user.poison -= 1
+              if(u.poison > 0) u.poison -= 1
+              if(user.poisoning > 0) user.poisoning -= 1
+              if(u.poisoning > 0) u.poisoning -= 1
+              user.clinch == 1
+              user.cd16 == 7
+              user.steps += 1
+              u.steps += 1
+              msg.send(`"${user.nick}" активировал "клинч". Следующий ход делает "${u.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+              if(user.del11 == 0) {
+                var hp = user.hp
+                var atk = user.atk
+                var procent = 20
+                var resulthp = hp / 100 * procent
+                var resultatk = atk / 100 * procent
+                user.duelhp -= resulthp
+                user.duelatk -= resultatk
+                user.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del11 == 0) {
+                var hp1 = u.hp
+                var atk1 = u.atk
+                var procent = 20
+                var resulthp1 = hp1 / 100 * procent
+                var resultatk1 = atk1 / 100 * procent
+                u.duelhp -= resulthp1
+                u.duelatk -= resultatk1
+                u.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.del12 == 0) {
+                var def = user.def
+                var procent = 20
+                var resultdef = def / 100 * procent
+                user.dueldef -= resultdef
+                user.del12 == -1
+                msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del12 == 0) {
+                var def1 = u.def
+                var procent = 20
+                var resultdef1 = def1 / 100 * procent
+                u.dueldef -= resultdef1
+                u.del12 == -1
+                msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.spikes == 0) {
+                user.spikes -= 1
+                msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.spikes == 0) {
+                u.spikes -= 1
+                msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+            }
+          }
+          else {
+            if(u.contol > 0) {
+              if(user.cd11 > 0) user.cd11 -= 2
+              if(user.del11 > 0) user.del11 -= 2
+              if(user.cd12 > 0) user.cd12 -= 2
+              if(user.del12 > 0) user.del12 -= 2
+              if(user.cd13 > 0) user.cd13 -= 2
+              if(user.cd14 > 0) user.cd14 -= 2
+              if(user.cd15 > 0) user.cd15 -= 2
+              if(user.spikes > 0) user.spikes -= 2
+              if(user.cd16 > 0) user.cd16 -= 2
+              if(user.cd21 > 0) user.cd21 -= 2
+              if(user.cd22 > 0) user.cd22 -= 2
+              if(user.cd31 > 0) user.cd31 -= 2
+              if(user.cd32 > 0) user.cd32 -= 2
+              if(user.cd33 > 0) user.cd33 -= 2
+              if(user.cd34 > 0) user.cd34 -= 2
+              if(user.cd35 > 0) user.cd35 -= 2
+              if(user.cd36 > 0) user.cd36 -= 2
+              if(user.cd37 > 0) user.cd37 -= 2
+              if(u.cd11 > 0) u.cd11 -= 2
+              if(u.del11 > 0) u.del11 -= 2
+              if(u.cd12 > 0) u.cd12 -= 2
+              if(u.del12 > 0) u.del12 -= 2
+              if(u.cd13 > 0) u.cd13 -= 2
+              if(u.cd14 > 0) u.cd14 -= 2
+              if(u.cd15 > 0) u.cd15 -= 2
+              if(u.spikes > 0) u.spikes -= 2
+              if(u.cd16 > 0) u.cd16 -= 2
+              if(u.clinch > 0) u.clinch == -1
+              if(u.cd21 > 0) u.cd21 -= 2
+              if(u.cd22 > 0) u.cd22 -= 2
+              if(u.cd31 > 0) u.cd31 -= 2
+              if(u.cd32 > 0) u.cd32 -= 2
+              if(u.cd33 > 0) u.cd33 -= 2
+              if(u.cd34 > 0) u.cd34 -= 2
+              if(u.cd35 > 0) u.cd35 -= 2
+              if(u.cd36 > 0) u.cd36 -= 2
+              if(u.cd37 > 0) u.cd37 -= 2
+              if(user.burn > 0) user.burn -= 2
+              if(u.burn > 0) u.burn -= 2
+              if(user.poison > 0) user.poison -= 2
+              if(u.poison > 0) u.poison -= 2
+              if(user.poisoning > 0) user.poisoning -= 2
+              if(u.poisoning > 0) u.poisoning -= 2
+              user.clinch == 1
+              user.cd16 == 7
+              user.steps += 2
+              u.steps += 2
+              u.control -= 2
+              msg.send(`"${user.nick}" активировал "клинч". Следующий ход делает "${user.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+              if(user.del11 == 0) {
+                var hp = user.hp
+                var atk = user.atk
+                var procent = 20
+                var resulthp = hp / 100 * procent
+                var resultatk = atk / 100 * procent
+                user.duelhp -= resulthp
+                user.duelatk -= resultatk
+                user.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del11 == 0) {
+                var hp1 = u.hp
+                var atk1 = u.atk
+                var procent = 20
+                var resulthp1 = hp1 / 100 * procent
+                var resultatk1 = atk1 / 100 * procent
+                u.duelhp -= resulthp1
+                u.duelatk -= resultatk1
+                u.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.del12 == 0) {
+                var def = user.def
+                var procent = 20
+                var resultdef = def / 100 * procent
+                user.dueldef -= resultdef
+                user.del12 == -1
+                msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del12 == 0) {
+                var def1 = u.def
+                var procent = 20
+                var resultdef1 = def1 / 100 * procent
+                u.dueldef -= resultdef1
+                u.del12 == -1
+                msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.spikes == 0) {
+                user.spikes -= 1
+                msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.spikes == 0) {
+                u.spikes -= 1
+                msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+            }
+            else {
+              if(user.cd11 > 0) user.cd11 -= 1
+              if(user.del11 > 0) user.del11 -= 1
+              if(user.cd12 > 0) user.cd12 -= 1
+              if(user.del12 > 0) user.del12 -= 1
+              if(user.cd13 > 0) user.cd13 -= 1
+              if(user.cd14 > 0) user.cd14 -= 1
+              if(user.cd15 > 0) user.cd15 -= 1
+              if(user.spikes > 0) user.spikes -= 1
+              if(user.cd16 > 0) user.cd16 -= 1
+              if(user.cd21 > 0) user.cd21 -= 1
+              if(user.cd22 > 0) user.cd22 -= 1
+              if(user.cd31 > 0) user.cd31 -= 1
+              if(user.cd32 > 0) user.cd32 -= 1
+              if(user.cd33 > 0) user.cd33 -= 1
+              if(user.cd34 > 0) user.cd34 -= 1
+              if(user.cd35 > 0) user.cd35 -= 1
+              if(user.cd36 > 0) user.cd36 -= 1
+              if(user.cd37 > 0) user.cd37 -= 1
+              if(u.cd11 > 0) u.cd11 -= 1
+              if(u.del11 > 0) u.del11 -= 1
+              if(u.cd12 > 0) u.cd12 -= 1
+              if(u.del12 > 0) u.del12 -= 1
+              if(u.cd13 > 0) u.cd13 -= 1
+              if(u.cd14 > 0) u.cd14 -= 1
+              if(u.cd15 > 0) u.cd15 -= 1
+              if(u.spikes > 0) u.spikes -= 1
+              if(u.cd16 > 0) u.cd16 -= 1
+              if(u.clinch > 0) u.clinch == -1
+              if(u.cd21 > 0) u.cd21 -= 1
+              if(u.cd22 > 0) u.cd22 -= 1
+              if(u.cd31 > 0) u.cd31 -= 1
+              if(u.cd32 > 0) u.cd32 -= 1
+              if(u.cd33 > 0) u.cd33 -= 1
+              if(u.cd34 > 0) u.cd34 -= 1
+              if(u.cd35 > 0) u.cd35 -= 1
+              if(u.cd36 > 0) u.cd36 -= 1
+              if(u.cd37 > 0) u.cd37 -= 1
+              if(user.burn > 0) user.burn -= 1
+              if(u.burn > 0) u.burn -= 1
+              if(user.poison > 0) user.poison -= 1
+              if(u.poison > 0) u.poison -= 1
+              if(user.poisoning > 0) user.poisoning -= 1
+              if(u.poisoning > 0) u.poisoning -= 1
+              user.clinch == 1
+              user.cd16 == 7
+              user.steps += 1
+              u.steps += 1
+              msg.send(`"${user.nick}" активировал "клинч". Следующий ход делает "${u.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+              if(user.del11 == 0) {
+                var hp = user.hp
+                var atk = user.atk
+                var procent = 20
+                var resulthp = hp / 100 * procent
+                var resultatk = atk / 100 * procent
+                user.duelhp -= resulthp
+                user.duelatk -= resultatk
+                user.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del11 == 0) {
+                var hp1 = u.hp
+                var atk1 = u.atk
+                var procent = 20
+                var resulthp1 = hp1 / 100 * procent
+                var resultatk1 = atk1 / 100 * procent
+                u.duelhp -= resulthp1
+                u.duelatk -= resultatk1
+                u.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.del12 == 0) {
+                var def = user.def
+                var procent = 20
+                var resultdef = def / 100 * procent
+                user.dueldef -= resultdef
+                user.del12 == -1
+                msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del12 == 0) {
+                var def1 = u.def
+                var procent = 20
+                var resultdef1 = def1 / 100 * procent
+                u.dueldef -= resultdef1
+                u.del12 == -1
+                msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.spikes == 0) {
+                user.spikes -= 1
+                msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.spikes == 0) {
+                u.spikes -= 1
+                msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+            }
+          }
+        }
+      }
+    }
+  })
+
+  vk.updates.hear(/^АТК$/i, msg => {
+    user = users.filter(x => x.id === msg.senderId)[0]
+    const u = users.filter(x => x.id === msg.replyMessage.senderId)[0]
+    if(!msg.hasReplyMessage) return msg.send('Необходимо переслать сообщение')
+    if(user.duel == false) return msg.send ('В данный момент вы не в дуэли')
+    if(u.duel == false) return msg.send ('В данный момент вы не в дуэли')
+    if(user.steps > 100) return msg.send ('Ходы дуэли превысили 100. Победитель не определён')
+    if(u.steps > 100) return msg.send ('Ходы дуэли превысили 100. Победитель не определён')
+    if (user.steps % 2 == 0) {
+      return msg.send ('Сейчас не твой ход')
+    }
+    else {
+      if(user.control > 0) {
+        msg.send (`Невозможно применить умение. Осталось ходов в контроле — ${user.control}`);
+      }
+      else{
+        if(u.clinch > 0) {
+          if(user.duelatk < u.dueldef) {
+            if(user.cd11 > 0) user.cd11 -= 1
+            if(user.del11 > 0) user.del11 -= 1
+            if(user.cd12 > 0) user.cd12 -= 1
+            if(user.del12 > 0) user.del12 -= 1
+            if(user.cd13 > 0) user.cd13 -= 1
+            if(user.cd14 > 0) user.cd14 -= 1
+            if(user.cd15 > 0) user.cd15 -= 1
+            if(user.spikes > 0) user.spikes -= 1
+            if(user.cd16 > 0) user.cd16 -= 1
+            if(user.cd21 > 0) user.cd21 -= 1
+            if(user.cd22 > 0) user.cd22 -= 1
+            if(user.cd31 > 0) user.cd31 -= 1
+            if(user.cd32 > 0) user.cd32 -= 1
+            if(user.cd33 > 0) user.cd33 -= 1
+            if(user.cd34 > 0) user.cd34 -= 1
+            if(user.cd35 > 0) user.cd35 -= 1
+            if(user.cd36 > 0) user.cd36 -= 1
+            if(user.cd37 > 0) user.cd37 -= 1
+            if(u.cd11 > 0) u.cd11 -= 1
+            if(u.del11 > 0) u.del11 -= 1
+            if(u.cd12 > 0) u.cd12 -= 1
+            if(u.del12 > 0) u.del12 -= 1
+            if(u.cd13 > 0) u.cd13 -= 1
+            if(u.cd14 > 0) u.cd14 -= 1
+            if(u.cd15 > 0) u.cd15 -= 1
+            if(u.spikes > 0) u.spikes -= 1
+            if(u.cd16 > 0) u.cd16 -= 1
+            if(u.clinch > 0) u.clinch == -1
+            if(u.cd21 > 0) u.cd21 -= 1
+            if(u.cd22 > 0) u.cd22 -= 1
+            if(u.cd31 > 0) u.cd31 -= 1
+            if(u.cd32 > 0) u.cd32 -= 1
+            if(u.cd33 > 0) u.cd33 -= 1
+            if(u.cd34 > 0) u.cd34 -= 1
+            if(u.cd35 > 0) u.cd35 -= 1
+            if(u.cd36 > 0) u.cd36 -= 1
+            if(u.cd37 > 0) u.cd37 -= 1
+            if(user.burn > 0) user.burn -= 1
+            if(u.burn > 0) u.burn -= 1
+            if(user.poison > 0) user.poison -= 1
+            if(u.poison > 0) u.poison -= 1
+            if(user.poisoning > 0) user.poisoning -= 1
+            if(u.poisoning > 0) u.poisoning -= 1
+            user.steps += 1
+            u.steps += 1
+            msg.send(`"${u.nick}" не получает урона, так как активировал "клинч", "${user.nick}" получает ⚔0 урона, так как атака "${user.nick}" меньше защиты "${u.nick}". Следующим ходит — "${u.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+            if(user.del11 == 0) {
+              var hp = user.hp
+              var atk = user.atk
+              var procent = 20
+              var resulthp = hp / 100 * procent
+              var resultatk = atk / 100 * procent
+              user.duelhp -= resulthp
+              user.duelatk -= resultatk
+              user.del11 == -1
+              msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+            }
+            if(u.del11 == 0) {
+              var hp1 = u.hp
+              var atk1 = u.atk
+              var procent = 20
+              var resulthp1 = hp1 / 100 * procent
+              var resultatk1 = atk1 / 100 * procent
+              u.duelhp -= resulthp1
+              u.duelatk -= resultatk1
+              u.del11 == -1
+              msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+            }
+            if(user.del12 == 0) {
+              var def = user.def
+              var procent = 20
+              var resultdef = def / 100 * procent
+              user.dueldef -= resultdef
+              user.del12 == -1
+              msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+            }
+            if(u.del12 == 0) {
+              var def1 = u.def
+              var procent = 20
+              var resultdef1 = def1 / 100 * procent
+              u.dueldef -= resultdef1
+              u.del12 == -1
+              msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+            }
+            if(user.spikes == 0) {
+              user.spikes -= 1
+              msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+            }
+            if(u.spikes == 0) {
+              u.spikes -= 1
+              msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+            }
+          }
+          else {
+            var atk = user.duelatk
+            var udef = u.dueldef
+            var result = atk - udef
+            user.duelhp -= result
+            if(user.cd11 > 0) user.cd11 -= 1
+            if(user.del11 > 0) user.del11 -= 1
+            if(user.cd12 > 0) user.cd12 -= 1
+            if(user.del12 > 0) user.del12 -= 1
+            if(user.cd13 > 0) user.cd13 -= 1
+            if(user.cd14 > 0) user.cd14 -= 1
+            if(user.cd15 > 0) user.cd15 -= 1
+            if(user.spikes > 0) user.spikes -= 1
+            if(user.cd16 > 0) user.cd16 -= 1
+            if(user.cd21 > 0) user.cd21 -= 1
+            if(user.cd22 > 0) user.cd22 -= 1
+            if(user.cd31 > 0) user.cd31 -= 1
+            if(user.cd32 > 0) user.cd32 -= 1
+            if(user.cd33 > 0) user.cd33 -= 1
+            if(user.cd34 > 0) user.cd34 -= 1
+            if(user.cd35 > 0) user.cd35 -= 1
+            if(user.cd36 > 0) user.cd36 -= 1
+            if(user.cd37 > 0) user.cd37 -= 1
+            if(u.cd11 > 0) u.cd11 -= 1
+            if(u.del11 > 0) u.del11 -= 1
+            if(u.cd12 > 0) u.cd12 -= 1
+            if(u.del12 > 0) u.del12 -= 1
+            if(u.cd13 > 0) u.cd13 -= 1
+            if(u.cd14 > 0) u.cd14 -= 1
+            if(u.cd15 > 0) u.cd15 -= 1
+            if(u.spikes > 0) u.spikes -= 1
+            if(u.cd16 > 0) u.cd16 -= 1
+            if(u.clinch > 0) u.clinch == -1
+            if(u.cd21 > 0) u.cd21 -= 1
+            if(u.cd22 > 0) u.cd22 -= 1
+            if(u.cd31 > 0) u.cd31 -= 1
+            if(u.cd32 > 0) u.cd32 -= 1
+            if(u.cd33 > 0) u.cd33 -= 1
+            if(u.cd34 > 0) u.cd34 -= 1
+            if(u.cd35 > 0) u.cd35 -= 1
+            if(u.cd36 > 0) u.cd36 -= 1
+            if(u.cd37 > 0) u.cd37 -= 1
+            if(user.burn > 0) user.burn -= 1
+            if(u.burn > 0) u.burn -= 1
+            if(user.poison > 0) user.poison -= 1
+            if(u.poison > 0) u.poison -= 1
+            if(user.poisoning > 0) user.poisoning -= 1
+            if(u.poisoning > 0) u.poisoning -= 1
+            user.steps += 1
+            u.steps += 1
+            msg.send(`"${u.nick}" не получает урона, "${user.nick}" получает ⚔${result} урона, так как "${u.nick}" активировал "клинч". Следующим ходит — "${u.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+            if(user.duelhp < 1) {
+              var plata2 = user.money
+              var procentplata = 10
+              var resultplata2 = plata2 / 100 * procentplata
+              user.duel = false
+              u.duel = false
+              u.predictionduel = false
+              user.predictduel = false
+              user.steps = 0
+              u.steps = 0
+              user.timer = 0
+              u.timer = 0
+              user.duelhp = 0
+              user.duelatk = 0
+              user.dueldef = 0
+              u.duelhp = 0
+              u.duelatk = 0
+              u.dueldef = 0
+              u.money += resultplata2
+              user.money -= resultplata2
+              user.cd11 = 0,
+              user.del11 = -1,
+              user.cd12 = 0,
+              user.del12 = -1,
+              user.cd13 = 0,
+              user.cd14 = 0,
+              user.cd15 = 0,
+              user.spikes = -1,
+              user.cd16 = 0,
+              user.clinch = -1,
+              user.cd21 = 0,
+              user.cd22 = 0,
+              user.nakopleniye = 0,
+              user.el1 = 0,
+              user.burn = 0,
+              user.el2 = 0,
+              user.el3 = 0,
+              user.cd31 = 0,
+              user.poison = 0,
+              user.cd32 = 0,
+              user.cd33 = 0,
+              user.cd34 = 0,
+              user.invisible = false,
+              user.cd35 = 0,
+              user.cd36 = 0,
+              user.cd37 = 0,
+              user.poisoning = 0
+              u.cd11 = 0,
+              u.del11 = -1,
+              u.cd12 = 0,
+              u.del12 = -1,
+              u.cd13 = 0,
+              u.cd14 = 0,
+              u.cd15 = 0,
+              u.spikes = -1,
+              u.cd16 = 0,
+              u.clinch = -1,
+              u.cd21 = 0,
+              u.cd22 = 0,
+              u.nakopleniye = 0,
+              u.el1 = 0,
+              u.burn = 0,
+              u.el2 = 0,
+              u.el3 = 0,
+              u.cd31 = 0,
+              u.poison = 0,
+              u.cd32 = 0,
+              u.cd33 = 0,
+              u.cd34 = 0,
+              u.invisible = false,
+              u.cd35 = 0,
+              u.cd36 = 0,
+              u.cd37 = 0,
+              u.poisoning = 0
+              msg.send(`"${u.nick}" победил "${user.nick}" в дуэли. Со счёта "${user.nick}" списано ${resultplata2}💵 и начислено на счёт "${u.nick}"`)
+            }
+            if(user.del11 == 0) {
+              var hp = user.hp
+              var atk = user.atk
+              var procent = 20
+              var resulthp = hp / 100 * procent
+              var resultatk = atk / 100 * procent
+              user.duelhp -= resulthp
+              user.duelatk -= resultatk
+              user.del11 == -1
+              msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+            }
+            if(u.del11 == 0) {
+              var hp1 = u.hp
+              var atk1 = u.atk
+              var procent = 20
+              var resulthp1 = hp1 / 100 * procent
+              var resultatk1 = atk1 / 100 * procent
+              u.duelhp -= resulthp1
+              u.duelatk -= resultatk1
+              u.del11 == -1
+              msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+            }
+            if(user.del12 == 0) {
+              var def = user.def
+              var procent = 20
+              var resultdef = def / 100 * procent
+              user.dueldef -= resultdef
+              user.del12 == -1
+              msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+            }
+            if(u.del12 == 0) {
+              var def1 = u.def
+              var procent = 20
+              var resultdef1 = def1 / 100 * procent
+              u.dueldef -= resultdef1
+              u.del12 == -1
+              msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+            }
+            if(user.spikes == 0) {
+              user.spikes -= 1
+              msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+            }
+            if(u.spikes == 0) {
+              u.spikes -= 1
+              msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+            }
+          }
+        }
+        else {
+          if(u.spikes > 0) {
+            if(u.control > 0) {
+              if(u.dueldef > user.duelatk) {
+                if(user.cd11 > 0) user.cd11 -= 2
+                if(user.del11 > 0) user.del11 -= 2
+                if(user.cd12 > 0) user.cd12 -= 2
+                if(user.del12 > 0) user.del12 -= 2
+                if(user.cd13 > 0) user.cd13 -= 2
+                if(user.cd14 > 0) user.cd14 -= 2
+                if(user.cd15 > 0) user.cd15 -= 2
+                if(user.spikes > 0) user.spikes -= 2
+                if(user.cd16 > 0) user.cd16 -= 2
+                if(user.cd21 > 0) user.cd21 -= 2
+                if(user.cd22 > 0) user.cd22 -= 2
+                if(user.cd31 > 0) user.cd31 -= 2
+                if(user.cd32 > 0) user.cd32 -= 2
+                if(user.cd33 > 0) user.cd33 -= 2
+                if(user.cd34 > 0) user.cd34 -= 2
+                if(user.cd35 > 0) user.cd35 -= 2
+                if(user.cd36 > 0) user.cd36 -= 2
+                if(user.cd37 > 0) user.cd37 -= 2
+                if(u.cd11 > 0) u.cd11 -= 2
+                if(u.del11 > 0) u.del11 -= 2
+                if(u.cd12 > 0) u.cd12 -= 2
+                if(u.del12 > 0) u.del12 -= 2
+                if(u.cd13 > 0) u.cd13 -= 2
+                if(u.cd14 > 0) u.cd14 -= 2
+                if(u.cd15 > 0) u.cd15 -= 2
+                if(u.spikes > 0) u.spikes -= 2
+                if(u.cd16 > 0) u.cd16 -= 2
+                if(u.clinch > 0) u.clinch == -1
+                if(u.cd21 > 0) u.cd21 -= 2
+                if(u.cd22 > 0) u.cd22 -= 2
+                if(u.cd31 > 0) u.cd31 -= 2
+                if(u.cd32 > 0) u.cd32 -= 2
+                if(u.cd33 > 0) u.cd33 -= 2
+                if(u.cd34 > 0) u.cd34 -= 2
+                if(u.cd35 > 0) u.cd35 -= 2
+                if(u.cd36 > 0) u.cd36 -= 2
+                if(u.cd37 > 0) u.cd37 -= 2
+                if(user.burn > 0) user.burn -= 2
+                if(u.burn > 0) u.burn -= 2
+                if(user.poison > 0) user.poison -= 2
+                if(u.poison > 0) u.poison -= 2
+                if(user.poisoning > 0) user.poisoning -= 2
+                if(u.poisoning > 0) u.poisoning -= 2
+                user.steps += 2
+                u.steps += 2
+                u.control -= 2
+                msg.send(`"${u.nick}" не получает урона, так как его защита выше атаки "${user.nick}". Следующим ходит — "${user.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+                if(user.del11 == 0) {
+                  var hp = user.hp
+                  var atk = user.atk
+                  var procent = 20
+                  var resulthp = hp / 100 * procent
+                  var resultatk = atk / 100 * procent
+                  user.duelhp -= resulthp
+                  user.duelatk -= resultatk
+                  user.del11 == -1
+                  msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.del11 == 0) {
+                  var hp1 = u.hp
+                  var atk1 = u.atk
+                  var procent = 20
+                  var resulthp1 = hp1 / 100 * procent
+                  var resultatk1 = atk1 / 100 * procent
+                  u.duelhp -= resulthp1
+                  u.duelatk -= resultatk1
+                  u.del11 == -1
+                  msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(user.del12 == 0) {
+                  var def = user.def
+                  var procent = 20
+                  var resultdef = def / 100 * procent
+                  user.dueldef -= resultdef
+                  user.del12 == -1
+                  msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.del12 == 0) {
+                  var def1 = u.def
+                  var procent = 20
+                  var resultdef1 = def1 / 100 * procent
+                  u.dueldef -= resultdef1
+                  u.del12 == -1
+                  msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(user.spikes == 0) {
+                  user.spikes -= 1
+                  msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.spikes == 0) {
+                  u.spikes -= 1
+                  msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+              }
+              else {
+              var atk = user.duelatk
+              var udef = u.dueldef
+              var result = atk - udef
+              var spikes = result / 2
+              u.duelhp -= result
+              user.duelhp -= spikes
+              if(user.cd11 > 0) user.cd11 -= 2
+              if(user.del11 > 0) user.del11 -= 2
+              if(user.cd12 > 0) user.cd12 -= 2
+              if(user.del12 > 0) user.del12 -= 2
+              if(user.cd13 > 0) user.cd13 -= 2
+              if(user.cd14 > 0) user.cd14 -= 2
+              if(user.cd15 > 0) user.cd15 -= 2
+              if(user.spikes > 0) user.spikes -= 2
+              if(user.cd16 > 0) user.cd16 -= 2
+              if(user.cd21 > 0) user.cd21 -= 2
+              if(user.cd22 > 0) user.cd22 -= 2
+              if(user.cd31 > 0) user.cd31 -= 2
+              if(user.cd32 > 0) user.cd32 -= 2
+              if(user.cd33 > 0) user.cd33 -= 2
+              if(user.cd34 > 0) user.cd34 -= 2
+              if(user.cd35 > 0) user.cd35 -= 2
+              if(user.cd36 > 0) user.cd36 -= 2
+              if(user.cd37 > 0) user.cd37 -= 2
+              if(u.cd11 > 0) u.cd11 -= 2
+              if(u.del11 > 0) u.del11 -= 2
+              if(u.cd12 > 0) u.cd12 -= 2
+              if(u.del12 > 0) u.del12 -= 2
+              if(u.cd13 > 0) u.cd13 -= 2
+              if(u.cd14 > 0) u.cd14 -= 2
+              if(u.cd15 > 0) u.cd15 -= 2
+              if(u.spikes > 0) u.spikes -= 2
+              if(u.cd16 > 0) u.cd16 -= 2
+              if(u.clinch > 0) u.clinch == -1
+              if(u.cd21 > 0) u.cd21 -= 2
+              if(u.cd22 > 0) u.cd22 -= 2
+              if(u.cd31 > 0) u.cd31 -= 2
+              if(u.cd32 > 0) u.cd32 -= 2
+              if(u.cd33 > 0) u.cd33 -= 2
+              if(u.cd34 > 0) u.cd34 -= 2
+              if(u.cd35 > 0) u.cd35 -= 2
+              if(u.cd36 > 0) u.cd36 -= 2
+              if(u.cd37 > 0) u.cd37 -= 2
+              if(user.burn > 0) user.burn -= 2
+              if(u.burn > 0) u.burn -= 2
+              if(user.poison > 0) user.poison -= 2
+              if(u.poison > 0) u.poison -= 2
+              if(user.poisoning > 0) user.poisoning -= 2
+              if(u.poisoning > 0) u.poisoning -= 2
+              user.steps += 2
+              u.steps += 2
+              u.control -= 2
+              msg.send(`"${u.nick}" получает ⚔${result} урона. "${user.nick}" получает ⚔${spikes} урона, так как у "${u.nick}" активны "шипы". Следующим ходит — "${user.nick}". "${u.nick}", вам осталось ${u.control} ходов в контроле\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+              if(u.duelhp < 1) {
+                var plata1 = u.money
+                var procentplata = 10
+                var resultplata1 = plata1 / 100 * procentplata
+                user.duel = false
+                u.duel = false
+                u.predictionduel = false
+                user.predictduel = false
+                user.steps = 0
+                u.steps = 0
+                user.timer = 0
+                u.timer = 0
+                user.duelhp = 0
+                user.duelatk = 0
+                user.dueldef = 0
+                u.duelhp = 0
+                u.duelatk = 0
+                u.dueldef = 0
+                user.money += resultplata1
+                u.money -= resultplata1
+                user.cd11 = 0,
+                user.del11 = -1,
+                user.cd12 = 0,
+                user.del12 = -1,
+                user.cd13 = 0,
+                user.cd14 = 0,
+                user.cd15 = 0,
+                user.spikes = -1,
+                user.cd16 = 0,
+                user.clinch = -1,
+                user.cd21 = 0,
+                user.cd22 = 0,
+                user.nakopleniye = 0,
+                user.el1 = 0,
+                user.burn = 0,
+                user.el2 = 0,
+                user.el3 = 0,
+                user.cd31 = 0,
+                user.poison = 0,
+                user.cd32 = 0,
+                user.cd33 = 0,
+                user.cd34 = 0,
+                user.invisible = false,
+                user.cd35 = 0,
+                user.cd36 = 0,
+                user.cd37 = 0,
+                user.poisoning = 0
+                u.cd11 = 0,
+                u.del11 = -1,
+                u.cd12 = 0,
+                u.del12 = -1,
+                u.cd13 = 0,
+                u.cd14 = 0,
+                u.cd15 = 0,
+                u.spikes = -1,
+                u.cd16 = 0,
+                u.clinch = -1,
+                u.cd21 = 0,
+                u.cd22 = 0,
+                u.nakopleniye = 0,
+                u.el1 = 0,
+                u.burn = 0,
+                u.el2 = 0,
+                u.el3 = 0,
+                u.cd31 = 0,
+                u.poison = 0,
+                u.cd32 = 0,
+                u.cd33 = 0,
+                u.cd34 = 0,
+                u.invisible = false,
+                u.cd35 = 0,
+                u.cd36 = 0,
+                u.cd37 = 0,
+                u.poisoning = 0
+                msg.send(`"${user.nick}" победил "${u.nick}" в дуэли. Со счёта "${u.nick}" списано ${resultplata}💵 и начислено на счёт "${user.nick}"`)
+              }
+              if(user.duelhp < 1) {
+                var plata2 = user.money
+                var procentplata = 10
+                var resultplata2 = plata2 / 100 * procentplata
+                user.duel = false
+                u.duel = false
+                u.predictionduel = false
+                user.predictduel = false
+                user.steps = 0
+                u.steps = 0
+                user.timer = 0
+                u.timer = 0
+                user.duelhp = 0
+                user.duelatk = 0
+                user.dueldef = 0
+                u.duelhp = 0
+                u.duelatk = 0
+                u.dueldef = 0
+                u.money += resultplata2
+                user.money -= resultplata2
+                user.cd11 = 0,
+                user.del11 = -1,
+                user.cd12 = 0,
+                user.del12 = -1,
+                user.cd13 = 0,
+                user.cd14 = 0,
+                user.cd15 = 0,
+                user.spikes = -1,
+                user.cd16 = 0,
+                user.clinch = -1,
+                user.cd21 = 0,
+                user.cd22 = 0,
+                user.nakopleniye = 0,
+                user.el1 = 0,
+                user.burn = 0,
+                user.el2 = 0,
+                user.el3 = 0,
+                user.cd31 = 0,
+                user.poison = 0,
+                user.cd32 = 0,
+                user.cd33 = 0,
+                user.cd34 = 0,
+                user.invisible = false,
+                user.cd35 = 0,
+                user.cd36 = 0,
+                user.cd37 = 0,
+                user.poisoning = 0
+                u.cd11 = 0,
+                u.del11 = -1,
+                u.cd12 = 0,
+                u.del12 = -1,
+                u.cd13 = 0,
+                u.cd14 = 0,
+                u.cd15 = 0,
+                u.spikes = -1,
+                u.cd16 = 0,
+                u.clinch = -1,
+                u.cd21 = 0,
+                u.cd22 = 0,
+                u.nakopleniye = 0,
+                u.el1 = 0,
+                u.burn = 0,
+                u.el2 = 0,
+                u.el3 = 0,
+                u.cd31 = 0,
+                u.poison = 0,
+                u.cd32 = 0,
+                u.cd33 = 0,
+                u.cd34 = 0,
+                u.invisible = false,
+                u.cd35 = 0,
+                u.cd36 = 0,
+                u.cd37 = 0,
+                u.poisoning = 0
+                msg.send(`"${u.nick}" победил "${user.nick}" в дуэли. Со счёта "${user.nick}" списано ${resultplata2}💵 и начислено на счёт "${u.nick}"`)
+              }
+              if(user.del11 == 0) {
+                var hp = user.hp
+                var atk = user.atk
+                var procent = 20
+                var resulthp = hp / 100 * procent
+                var resultatk = atk / 100 * procent
+                user.duelhp -= resulthp
+                user.duelatk -= resultatk
+                user.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del11 == 0) {
+                var hp1 = u.hp
+                var atk1 = u.atk
+                var procent = 20
+                var resulthp1 = hp1 / 100 * procent
+                var resultatk1 = atk1 / 100 * procent
+                u.duelhp -= resulthp1
+                u.duelatk -= resultatk1
+                u.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.del12 == 0) {
+                var def = user.def
+                var procent = 20
+                var resultdef = def / 100 * procent
+                user.dueldef -= resultdef
+                user.del12 == -1
+                msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del12 == 0) {
+                var def1 = u.def
+                var procent = 20
+                var resultdef1 = def1 / 100 * procent
+                u.dueldef -= resultdef1
+                u.del12 == -1
+                msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.spikes == 0) {
+                user.spikes -= 1
+                msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.spikes == 0) {
+                u.spikes -= 1
+                msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              }
+            }
+            else {
+              var atk = user.duelatk
+              var udef = u.dueldef
+              var result = atk - udef
+              var spikes = result / 2
+              u.duelhp -= result
+              user.duelhp -= spikes
+              if(user.cd11 > 0) user.cd11 -= 1
+              if(user.del11 > 0) user.del11 -= 1
+              if(user.cd12 > 0) user.cd12 -= 1
+              if(user.del12 > 0) user.del12 -= 1
+              if(user.cd13 > 0) user.cd13 -= 1
+              if(user.cd14 > 0) user.cd14 -= 1
+              if(user.cd15 > 0) user.cd15 -= 1
+              if(user.spikes > 0) user.spikes -= 1
+              if(user.cd16 > 0) user.cd16 -= 1
+              if(user.cd21 > 0) user.cd21 -= 1
+              if(user.cd22 > 0) user.cd22 -= 1
+              if(user.cd31 > 0) user.cd31 -= 1
+              if(user.cd32 > 0) user.cd32 -= 1
+              if(user.cd33 > 0) user.cd33 -= 1
+              if(user.cd34 > 0) user.cd34 -= 1
+              if(user.cd35 > 0) user.cd35 -= 1
+              if(user.cd36 > 0) user.cd36 -= 1
+              if(user.cd37 > 0) user.cd37 -= 1
+              if(u.cd11 > 0) u.cd11 -= 1
+              if(u.del11 > 0) u.del11 -= 1
+              if(u.cd12 > 0) u.cd12 -= 1
+              if(u.del12 > 0) u.del12 -= 1
+              if(u.cd13 > 0) u.cd13 -= 1
+              if(u.cd14 > 0) u.cd14 -= 1
+              if(u.cd15 > 0) u.cd15 -= 1
+              if(u.spikes > 0) u.spikes -= 1
+              if(u.cd16 > 0) u.cd16 -= 1
+              if(u.clinch > 0) u.clinch == -1
+              if(u.cd21 > 0) u.cd21 -= 1
+              if(u.cd22 > 0) u.cd22 -= 1
+              if(u.cd31 > 0) u.cd31 -= 1
+              if(u.cd32 > 0) u.cd32 -= 1
+              if(u.cd33 > 0) u.cd33 -= 1
+              if(u.cd34 > 0) u.cd34 -= 1
+              if(u.cd35 > 0) u.cd35 -= 1
+              if(u.cd36 > 0) u.cd36 -= 1
+              if(u.cd37 > 0) u.cd37 -= 1
+              if(user.burn > 0) user.burn -= 1
+              if(u.burn > 0) u.burn -= 1
+              if(user.poison > 0) user.poison -= 1
+              if(u.poison > 0) u.poison -= 1
+              if(user.poisoning > 0) user.poisoning -= 1
+              if(u.poisoning > 0) u.poisoning -= 1
+              user.steps += 1
+              u.steps += 1
+              msg.send(`"${u.nick}" получает ⚔${result} урона. "${user.nick}" получает ⚔${spikes} урона, так как у "${u.nick}" активны "шипы". Следующим ходит — "${u.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+              if(u.duelhp < 1) {
+                var plata1 = u.money
+                var procentplata = 10
+                var resultplata1 = plata1 / 100 * procentplata
+                user.duel = false
+                u.duel = false
+                u.predictionduel = false
+                user.predictduel = false
+                user.steps = 0
+                u.steps = 0
+                user.timer = 0
+                u.timer = 0
+                user.duelhp = 0
+                user.duelatk = 0
+                user.dueldef = 0
+                u.duelhp = 0
+                u.duelatk = 0
+                u.dueldef = 0
+                user.money += resultplata1
+                u.money -= resultplata1
+                user.cd11 = 0,
+                user.del11 = -1,
+                user.cd12 = 0,
+                user.del12 = -1,
+                user.cd13 = 0,
+                user.cd14 = 0,
+                user.cd15 = 0,
+                user.spikes = -1,
+                user.cd16 = 0,
+                user.clinch = -1,
+                user.cd21 = 0,
+                user.cd22 = 0,
+                user.nakopleniye = 0,
+                user.el1 = 0,
+                user.burn = 0,
+                user.el2 = 0,
+                user.el3 = 0,
+                user.cd31 = 0,
+                user.poison = 0,
+                user.cd32 = 0,
+                user.cd33 = 0,
+                user.cd34 = 0,
+                user.invisible = false,
+                user.cd35 = 0,
+                user.cd36 = 0,
+                user.cd37 = 0,
+                user.poisoning = 0
+                u.cd11 = 0,
+                u.del11 = -1,
+                u.cd12 = 0,
+                u.del12 = -1,
+                u.cd13 = 0,
+                u.cd14 = 0,
+                u.cd15 = 0,
+                u.spikes = -1,
+                u.cd16 = 0,
+                u.clinch = -1,
+                u.cd21 = 0,
+                u.cd22 = 0,
+                u.nakopleniye = 0,
+                u.el1 = 0,
+                u.burn = 0,
+                u.el2 = 0,
+                u.el3 = 0,
+                u.cd31 = 0,
+                u.poison = 0,
+                u.cd32 = 0,
+                u.cd33 = 0,
+                u.cd34 = 0,
+                u.invisible = false,
+                u.cd35 = 0,
+                u.cd36 = 0,
+                u.cd37 = 0,
+                u.poisoning = 0
+                msg.send(`"${user.nick}" победил "${u.nick}" в дуэли. Со счёта "${u.nick}" списано ${resultplata}💵 и начислено на счёт "${user.nick}"`)
+              }
+              if(user.duelhp < 1) {
+                var plata2 = user.money
+                var procentplata = 10
+                var resultplata2 = plata2 / 100 * procentplata
+                user.duel = false
+                u.duel = false
+                u.predictionduel = false
+                user.predictduel = false
+                user.steps = 0
+                u.steps = 0
+                user.timer = 0
+                u.timer = 0
+                user.duelhp = 0
+                user.duelatk = 0
+                user.dueldef = 0
+                u.duelhp = 0
+                u.duelatk = 0
+                u.dueldef = 0
+                u.money += resultplata2
+                user.money -= resultplata2
+                user.cd11 = 0,
+                user.del11 = -1,
+                user.cd12 = 0,
+                user.del12 = -1,
+                user.cd13 = 0,
+                user.cd14 = 0,
+                user.cd15 = 0,
+                user.spikes = -1,
+                user.cd16 = 0,
+                user.clinch = -1,
+                user.cd21 = 0,
+                user.cd22 = 0,
+                user.nakopleniye = 0,
+                user.el1 = 0,
+                user.burn = 0,
+                user.el2 = 0,
+                user.el3 = 0,
+                user.cd31 = 0,
+                user.poison = 0,
+                user.cd32 = 0,
+                user.cd33 = 0,
+                user.cd34 = 0,
+                user.invisible = false,
+                user.cd35 = 0,
+                user.cd36 = 0,
+                user.cd37 = 0,
+                user.poisoning = 0
+                u.cd11 = 0,
+                u.del11 = -1,
+                u.cd12 = 0,
+                u.del12 = -1,
+                u.cd13 = 0,
+                u.cd14 = 0,
+                u.cd15 = 0,
+                u.spikes = -1,
+                u.cd16 = 0,
+                u.clinch = -1,
+                u.cd21 = 0,
+                u.cd22 = 0,
+                u.nakopleniye = 0,
+                u.el1 = 0,
+                u.burn = 0,
+                u.el2 = 0,
+                u.el3 = 0,
+                u.cd31 = 0,
+                u.poison = 0,
+                u.cd32 = 0,
+                u.cd33 = 0,
+                u.cd34 = 0,
+                u.invisible = false,
+                u.cd35 = 0,
+                u.cd36 = 0,
+                u.cd37 = 0,
+                u.poisoning = 0
+                msg.send(`"${u.nick}" победил "${user.nick}" в дуэли. Со счёта "${user.nick}" списано ${resultplata2}💵 и начислено на счёт "${u.nick}"`)
+              }
+              if(user.del11 == 0) {
+                var hp = user.hp
+                var atk = user.atk
+                var procent = 20
+                var resulthp = hp / 100 * procent
+                var resultatk = atk / 100 * procent
+                user.duelhp -= resulthp
+                user.duelatk -= resultatk
+                user.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del11 == 0) {
+                var hp1 = u.hp
+                var atk1 = u.atk
+                var procent = 20
+                var resulthp1 = hp1 / 100 * procent
+                var resultatk1 = atk1 / 100 * procent
+                u.duelhp -= resulthp1
+                u.duelatk -= resultatk1
+                u.del11 == -1
+                msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.del12 == 0) {
+                var def = user.def
+                var procent = 20
+                var resultdef = def / 100 * procent
+                user.dueldef -= resultdef
+                user.del12 == -1
+                msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.del12 == 0) {
+                var def1 = u.def
+                var procent = 20
+                var resultdef1 = def1 / 100 * procent
+                u.dueldef -= resultdef1
+                u.del12 == -1
+                msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(user.spikes == 0) {
+                user.spikes -= 1
+                msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+              if(u.spikes == 0) {
+                u.spikes -= 1
+                msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+              }
+            }
+          }
+          else {
+            if(u.control > 0) {
+              if(u.dueldef > user.duelatk) {
+                if(user.cd11 > 0) user.cd11 -= 2
+                if(user.del11 > 0) user.del11 -= 2
+                if(user.cd12 > 0) user.cd12 -= 2
+                if(user.del12 > 0) user.del12 -= 2
+                if(user.cd13 > 0) user.cd13 -= 2
+                if(user.cd14 > 0) user.cd14 -= 2
+                if(user.cd15 > 0) user.cd15 -= 2
+                if(user.spikes > 0) user.spikes -= 2
+                if(user.cd16 > 0) user.cd16 -= 2
+                if(user.cd21 > 0) user.cd21 -= 2
+                if(user.cd22 > 0) user.cd22 -= 2
+                if(user.cd31 > 0) user.cd31 -= 2
+                if(user.cd32 > 0) user.cd32 -= 2
+                if(user.cd33 > 0) user.cd33 -= 2
+                if(user.cd34 > 0) user.cd34 -= 2
+                if(user.cd35 > 0) user.cd35 -= 2
+                if(user.cd36 > 0) user.cd36 -= 2
+                if(user.cd37 > 0) user.cd37 -= 2
+                if(u.cd11 > 0) u.cd11 -= 2
+                if(u.del11 > 0) u.del11 -= 2
+                if(u.cd12 > 0) u.cd12 -= 2
+                if(u.del12 > 0) u.del12 -= 2
+                if(u.cd13 > 0) u.cd13 -= 2
+                if(u.cd14 > 0) u.cd14 -= 2
+                if(u.cd15 > 0) u.cd15 -= 2
+                if(u.spikes > 0) u.spikes -= 2
+                if(u.cd16 > 0) u.cd16 -= 2
+                if(u.clinch > 0) u.clinch == -1
+                if(u.cd21 > 0) u.cd21 -= 2
+                if(u.cd22 > 0) u.cd22 -= 2
+                if(u.cd31 > 0) u.cd31 -= 2
+                if(u.cd32 > 0) u.cd32 -= 2
+                if(u.cd33 > 0) u.cd33 -= 2
+                if(u.cd34 > 0) u.cd34 -= 2
+                if(u.cd35 > 0) u.cd35 -= 2
+                if(u.cd36 > 0) u.cd36 -= 2
+                if(u.cd37 > 0) u.cd37 -= 2
+                if(user.burn > 0) user.burn -= 2
+                if(u.burn > 0) u.burn -= 2
+                if(user.poison > 0) user.poison -= 2
+                if(u.poison > 0) u.poison -= 2
+                if(user.poisoning > 0) user.poisoning -= 2
+                if(u.poisoning > 0) u.poisoning -= 2
+                user.steps += 2
+                u.steps += 2
+                u.control -= 2
+                msg.send(`"${u.nick}" не получает урона, так как его защита выше атаки "${user.nick}". Следующим ходит — "${user.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+                if(user.del11 == 0) {
+                  var hp = user.hp
+                  var atk = user.atk
+                  var procent = 20
+                  var resulthp = hp / 100 * procent
+                  var resultatk = atk / 100 * procent
+                  user.duelhp -= resulthp
+                  user.duelatk -= resultatk
+                  user.del11 == -1
+                  msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.del11 == 0) {
+                  var hp1 = u.hp
+                  var atk1 = u.atk
+                  var procent = 20
+                  var resulthp1 = hp1 / 100 * procent
+                  var resultatk1 = atk1 / 100 * procent
+                  u.duelhp -= resulthp1
+                  u.duelatk -= resultatk1
+                  u.del11 == -1
+                  msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(user.del12 == 0) {
+                  var def = user.def
+                  var procent = 20
+                  var resultdef = def / 100 * procent
+                  user.dueldef -= resultdef
+                  user.del12 == -1
+                  msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.del12 == 0) {
+                  var def1 = u.def
+                  var procent = 20
+                  var resultdef1 = def1 / 100 * procent
+                  u.dueldef -= resultdef1
+                  u.del12 == -1
+                  msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(user.spikes == 0) {
+                  user.spikes -= 1
+                  msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.spikes == 0) {
+                  u.spikes -= 1
+                  msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+              }
+              else {
+                var atk = user.duelatk
+                var udef = u.dueldef
+                var result = atk - udef
+                u.duelhp -= result
+                if(user.cd11 > 0) user.cd11 -= 2
+                if(user.del11 > 0) user.del11 -= 2
+                if(user.cd12 > 0) user.cd12 -= 2
+                if(user.del12 > 0) user.del12 -= 2
+                if(user.cd13 > 0) user.cd13 -= 2
+                if(user.cd14 > 0) user.cd14 -= 2
+                if(user.cd15 > 0) user.cd15 -= 2
+                if(user.spikes > 0) user.spikes -= 2
+                if(user.cd16 > 0) user.cd16 -= 2
+                if(user.cd21 > 0) user.cd21 -= 2
+                if(user.cd22 > 0) user.cd22 -= 2
+                if(user.cd31 > 0) user.cd31 -= 2
+                if(user.cd32 > 0) user.cd32 -= 2
+                if(user.cd33 > 0) user.cd33 -= 2
+                if(user.cd34 > 0) user.cd34 -= 2
+                if(user.cd35 > 0) user.cd35 -= 2
+                if(user.cd36 > 0) user.cd36 -= 2
+                if(user.cd37 > 0) user.cd37 -= 2
+                if(u.cd11 > 0) u.cd11 -= 2
+                if(u.del11 > 0) u.del11 -= 2
+                if(u.cd12 > 0) u.cd12 -= 2
+                if(u.del12 > 0) u.del12 -= 2
+                if(u.cd13 > 0) u.cd13 -= 2
+                if(u.cd14 > 0) u.cd14 -= 2
+                if(u.cd15 > 0) u.cd15 -= 2
+                if(u.spikes > 0) u.spikes -= 2
+                if(u.cd16 > 0) u.cd16 -= 2
+                if(u.clinch > 0) u.clinch == -1
+                if(u.cd21 > 0) u.cd21 -= 2
+                if(u.cd22 > 0) u.cd22 -= 2
+                if(u.cd31 > 0) u.cd31 -= 2
+                if(u.cd32 > 0) u.cd32 -= 2
+                if(u.cd33 > 0) u.cd33 -= 2
+                if(u.cd34 > 0) u.cd34 -= 2
+                if(u.cd35 > 0) u.cd35 -= 2
+                if(u.cd36 > 0) u.cd36 -= 2
+                if(u.cd37 > 0) u.cd37 -= 2
+                if(user.burn > 0) user.burn -= 2
+                if(u.burn > 0) u.burn -= 2
+                if(user.poison > 0) user.poison -= 2
+                if(u.poison > 0) u.poison -= 2
+                if(user.poisoning > 0) user.poisoning -= 2
+                if(u.poisoning > 0) u.poisoning -= 2
+                user.steps += 2
+                u.steps += 2
+                u.control -= 2
+                msg.send(`"${u.nick}" получает ⚔${result} урона. Следующим ходит — "${u.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+                if(u.duelhp < 1) {
+                  var plata1 = u.money
+                  var procentplata = 10
+                  var resultplata1 = plata1 / 100 * procentplata
+                  user.duel = false
+                  u.duel = false
+                  u.predictionduel = false
+                  user.predictduel = false
+                  user.steps = 0
+                  u.steps = 0
+                  user.timer = 0
+                  u.timer = 0
+                  user.duelhp = 0
+                  user.duelatk = 0
+                  user.dueldef = 0
+                  u.duelhp = 0
+                  u.duelatk = 0
+                  u.dueldef = 0
+                  user.money += resultplata1
+                  u.money -= resultplata1
+                  user.cd11 = 0,
+                  user.del11 = -1,
+                  user.cd12 = 0,
+                  user.del12 = -1,
+                  user.cd13 = 0,
+                  user.cd14 = 0,
+                  user.cd15 = 0,
+                  user.spikes = -1,
+                  user.cd16 = 0,
+                  user.clinch = -1,
+                  user.cd21 = 0,
+                  user.cd22 = 0,
+                  user.nakopleniye = 0,
+                  user.el1 = 0,
+                  user.burn = 0,
+                  user.el2 = 0,
+                  user.el3 = 0,
+                  user.cd31 = 0,
+                  user.poison = 0,
+                  user.cd32 = 0,
+                  user.cd33 = 0,
+                  user.cd34 = 0,
+                  user.invisible = false,
+                  user.cd35 = 0,
+                  user.cd36 = 0,
+                  user.cd37 = 0,
+                  user.poisoning = 0
+                  u.cd11 = 0,
+                  u.del11 = -1,
+                  u.cd12 = 0,
+                  u.del12 = -1,
+                  u.cd13 = 0,
+                  u.cd14 = 0,
+                  u.cd15 = 0,
+                  u.spikes = -1,
+                  u.cd16 = 0,
+                  u.clinch = -1,
+                  u.cd21 = 0,
+                  u.cd22 = 0,
+                  u.nakopleniye = 0,
+                  u.el1 = 0,
+                  u.burn = 0,
+                  u.el2 = 0,
+                  u.el3 = 0,
+                  u.cd31 = 0,
+                  u.poison = 0,
+                  u.cd32 = 0,
+                  u.cd33 = 0,
+                  u.cd34 = 0,
+                  u.invisible = false,
+                  u.cd35 = 0,
+                  u.cd36 = 0,
+                  u.cd37 = 0,
+                  u.poisoning = 0
+                  msg.send(`"${user.nick}" победил "${u.nick}" в дуэли. Со счёта "${u.nick}" списано ${resultplata}💵 и начислено на счёт "${user.nick}"`)
+                }
+                if(user.duelhp < 1) {
+                  var plata2 = user.money
+                  var procentplata = 10
+                  var resultplata2 = plata2 / 100 * procentplata
+                  user.duel = false
+                  u.duel = false
+                  u.predictionduel = false
+                  user.predictduel = false
+                  user.steps = 0
+                  u.steps = 0
+                  user.timer = 0
+                  u.timer = 0
+                  user.duelhp = 0
+                  user.duelatk = 0
+                  user.dueldef = 0
+                  u.duelhp = 0
+                  u.duelatk = 0
+                  u.dueldef = 0
+                  u.money += resultplata2
+                  user.money -= resultplata2
+                  user.cd11 = 0,
+                  user.del11 = -1,
+                  user.cd12 = 0,
+                  user.del12 = -1,
+                  user.cd13 = 0,
+                  user.cd14 = 0,
+                  user.cd15 = 0,
+                  user.spikes = -1,
+                  user.cd16 = 0,
+                  user.clinch = -1,
+                  user.cd21 = 0,
+                  user.cd22 = 0,
+                  user.nakopleniye = 0,
+                  user.el1 = 0,
+                  user.burn = 0,
+                  user.el2 = 0,
+                  user.el3 = 0,
+                  user.cd31 = 0,
+                  user.poison = 0,
+                  user.cd32 = 0,
+                  user.cd33 = 0,
+                  user.cd34 = 0,
+                  user.invisible = false,
+                  user.cd35 = 0,
+                  user.cd36 = 0,
+                  user.cd37 = 0,
+                  user.poisoning = 0
+                  u.cd11 = 0,
+                  u.del11 = -1,
+                  u.cd12 = 0,
+                  u.del12 = -1,
+                  u.cd13 = 0,
+                  u.cd14 = 0,
+                  u.cd15 = 0,
+                  u.spikes = -1,
+                  u.cd16 = 0,
+                  u.clinch = -1,
+                  u.cd21 = 0,
+                  u.cd22 = 0,
+                  u.nakopleniye = 0,
+                  u.el1 = 0,
+                  u.burn = 0,
+                  u.el2 = 0,
+                  u.el3 = 0,
+                  u.cd31 = 0,
+                  u.poison = 0,
+                  u.cd32 = 0,
+                  u.cd33 = 0,
+                  u.cd34 = 0,
+                  u.invisible = false,
+                  u.cd35 = 0,
+                  u.cd36 = 0,
+                  u.cd37 = 0,
+                  u.poisoning = 0
+                  msg.send(`"${u.nick}" победил "${user.nick}" в дуэли. Со счёта "${user.nick}" списано ${resultplata2}💵 и начислено на счёт "${u.nick}"`)
+                }
+                if(user.del11 == 0) {
+                  var hp = user.hp
+                  var atk = user.atk
+                  var procent = 20
+                  var resulthp = hp / 100 * procent
+                  var resultatk = atk / 100 * procent
+                  user.duelhp -= resulthp
+                  user.duelatk -= resultatk
+                  user.del11 == -1
+                  msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.del11 == 0) {
+                  var hp1 = u.hp
+                  var atk1 = u.atk
+                  var procent = 20
+                  var resulthp1 = hp1 / 100 * procent
+                  var resultatk1 = atk1 / 100 * procent
+                  u.duelhp -= resulthp1
+                  u.duelatk -= resultatk1
+                  u.del11 == -1
+                  msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(user.del12 == 0) {
+                  var def = user.def
+                  var procent = 20
+                  var resultdef = def / 100 * procent
+                  user.dueldef -= resultdef
+                  user.del12 == -1
+                  msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.del12 == 0) {
+                  var def1 = u.def
+                  var procent = 20
+                  var resultdef1 = def1 / 100 * procent
+                  u.dueldef -= resultdef1
+                  u.del12 == -1
+                  msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(user.spikes == 0) {
+                  user.spikes -= 1
+                  msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.spikes == 0) {
+                  u.spikes -= 1
+                  msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+              }
+            }
+            else {
+              if(u.dueldef > user.duelatk) {
+                if(user.cd11 > 0) user.cd11 -= 1
+                if(user.del11 > 0) user.del11 -= 1
+                if(user.cd12 > 0) user.cd12 -= 1
+                if(user.del12 > 0) user.del12 -= 1
+                if(user.cd13 > 0) user.cd13 -= 1
+                if(user.cd14 > 0) user.cd14 -= 1
+                if(user.cd15 > 0) user.cd15 -= 1
+                if(user.spikes > 0) user.spikes -= 1
+                if(user.cd16 > 0) user.cd16 -= 1
+                if(user.cd21 > 0) user.cd21 -= 1
+                if(user.cd22 > 0) user.cd22 -= 1
+                if(user.cd31 > 0) user.cd31 -= 1
+                if(user.cd32 > 0) user.cd32 -= 1
+                if(user.cd33 > 0) user.cd33 -= 1
+                if(user.cd34 > 0) user.cd34 -= 1
+                if(user.cd35 > 0) user.cd35 -= 1
+                if(user.cd36 > 0) user.cd36 -= 1
+                if(user.cd37 > 0) user.cd37 -= 1
+                if(u.cd11 > 0) u.cd11 -= 1
+                if(u.del11 > 0) u.del11 -= 1
+                if(u.cd12 > 0) u.cd12 -= 1
+                if(u.del12 > 0) u.del12 -= 1
+                if(u.cd13 > 0) u.cd13 -= 1
+                if(u.cd14 > 0) u.cd14 -= 1
+                if(u.cd15 > 0) u.cd15 -= 1
+                if(u.spikes > 0) u.spikes -= 1
+                if(u.cd16 > 0) u.cd16 -= 1
+                if(u.clinch > 0) u.clinch == -1
+                if(u.cd21 > 0) u.cd21 -= 1
+                if(u.cd22 > 0) u.cd22 -= 1
+                if(u.cd31 > 0) u.cd31 -= 1
+                if(u.cd32 > 0) u.cd32 -= 1
+                if(u.cd33 > 0) u.cd33 -= 1
+                if(u.cd34 > 0) u.cd34 -= 1
+                if(u.cd35 > 0) u.cd35 -= 1
+                if(u.cd36 > 0) u.cd36 -= 1
+                if(u.cd37 > 0) u.cd37 -= 1
+                if(user.burn > 0) user.burn -= 1
+                if(u.burn > 0) u.burn -= 1
+                if(user.poison > 0) user.poison -= 1
+                if(u.poison > 0) u.poison -= 1
+                if(user.poisoning > 0) user.poisoning -= 1
+                if(u.poisoning > 0) u.poisoning -= 1
+                user.steps += 1
+                u.steps += 1
+                msg.send(`"${u.nick}" не получает урона, так как его защита выше атаки "${user.nick}". Следующим ходит — "${u.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+                if(user.del11 == 0) {
+                  var hp = user.hp
+                  var atk = user.atk
+                  var procent = 20
+                  var resulthp = hp / 100 * procent
+                  var resultatk = atk / 100 * procent
+                  user.duelhp -= resulthp
+                  user.duelatk -= resultatk
+                  user.del11 == -1
+                  msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.del11 == 0) {
+                  var hp1 = u.hp
+                  var atk1 = u.atk
+                  var procent = 20
+                  var resulthp1 = hp1 / 100 * procent
+                  var resultatk1 = atk1 / 100 * procent
+                  u.duelhp -= resulthp1
+                  u.duelatk -= resultatk1
+                  u.del11 == -1
+                  msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(user.del12 == 0) {
+                  var def = user.def
+                  var procent = 20
+                  var resultdef = def / 100 * procent
+                  user.dueldef -= resultdef
+                  user.del12 == -1
+                  msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.del12 == 0) {
+                  var def1 = u.def
+                  var procent = 20
+                  var resultdef1 = def1 / 100 * procent
+                  u.dueldef -= resultdef1
+                  u.del12 == -1
+                  msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(user.spikes == 0) {
+                  user.spikes -= 1
+                  msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.spikes == 0) {
+                  u.spikes -= 1
+                  msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+              }
+              else {
+                var atk = user.duelatk
+                var udef = u.dueldef
+                var result = atk - udef
+                u.duelhp -= result
+                if(user.cd11 > 0) user.cd11 -= 1
+                if(user.del11 > 0) user.del11 -= 1
+                if(user.cd12 > 0) user.cd12 -= 1
+                if(user.del12 > 0) user.del12 -= 1
+                if(user.cd13 > 0) user.cd13 -= 1
+                if(user.cd14 > 0) user.cd14 -= 1
+                if(user.cd15 > 0) user.cd15 -= 1
+                if(user.spikes > 0) user.spikes -= 1
+                if(user.cd16 > 0) user.cd16 -= 1
+                if(user.cd21 > 0) user.cd21 -= 1
+                if(user.cd22 > 0) user.cd22 -= 1
+                if(user.cd31 > 0) user.cd31 -= 1
+                if(user.cd32 > 0) user.cd32 -= 1
+                if(user.cd33 > 0) user.cd33 -= 1
+                if(user.cd34 > 0) user.cd34 -= 1
+                if(user.cd35 > 0) user.cd35 -= 1
+                if(user.cd36 > 0) user.cd36 -= 1
+                if(user.cd37 > 0) user.cd37 -= 1
+                if(u.cd11 > 0) u.cd11 -= 1
+                if(u.del11 > 0) u.del11 -= 1
+                if(u.cd12 > 0) u.cd12 -= 1
+                if(u.del12 > 0) u.del12 -= 1
+                if(u.cd13 > 0) u.cd13 -= 1
+                if(u.cd14 > 0) u.cd14 -= 1
+                if(u.cd15 > 0) u.cd15 -= 1
+                if(u.spikes > 0) u.spikes -= 1
+                if(u.cd16 > 0) u.cd16 -= 1
+                if(u.clinch > 0) u.clinch == -1
+                if(u.cd21 > 0) u.cd21 -= 1
+                if(u.cd22 > 0) u.cd22 -= 1
+                if(u.cd31 > 0) u.cd31 -= 1
+                if(u.cd32 > 0) u.cd32 -= 1
+                if(u.cd33 > 0) u.cd33 -= 1
+                if(u.cd34 > 0) u.cd34 -= 1
+                if(u.cd35 > 0) u.cd35 -= 1
+                if(u.cd36 > 0) u.cd36 -= 1
+                if(u.cd37 > 0) u.cd37 -= 1
+                if(user.burn > 0) user.burn -= 1
+                if(u.burn > 0) u.burn -= 1
+                if(user.poison > 0) user.poison -= 1
+                if(u.poison > 0) u.poison -= 1
+                if(user.poisoning > 0) user.poisoning -= 1
+                if(u.poisoning > 0) u.poisoning -= 1
+                user.steps += 1
+                u.steps += 1
+                msg.send(`"${u.nick}" получает ⚔${result} урона. Следующим ходит — "${u.nick}"\n"${user.nick}": ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`)
+                if(u.duelhp < 1) {
+                  var plata1 = u.money
+                  var procentplata = 10
+                  var resultplata1 = plata1 / 100 * procentplata
+                  user.duel = false
+                  u.duel = false
+                  u.predictionduel = false
+                  user.predictduel = false
+                  user.steps = 0
+                  u.steps = 0
+                  user.timer = 0
+                  u.timer = 0
+                  user.duelhp = 0
+                  user.duelatk = 0
+                  user.dueldef = 0
+                  u.duelhp = 0
+                  u.duelatk = 0
+                  u.dueldef = 0
+                  user.money += resultplata1
+                  u.money -= resultplata1
+                  user.cd11 = 0,
+                  user.del11 = -1,
+                  user.cd12 = 0,
+                  user.del12 = -1,
+                  user.cd13 = 0,
+                  user.cd14 = 0,
+                  user.cd15 = 0,
+                  user.spikes = -1,
+                  user.cd16 = 0,
+                  user.clinch = -1,
+                  user.cd21 = 0,
+                  user.cd22 = 0,
+                  user.nakopleniye = 0,
+                  user.el1 = 0,
+                  user.burn = 0,
+                  user.el2 = 0,
+                  user.el3 = 0,
+                  user.cd31 = 0,
+                  user.poison = 0,
+                  user.cd32 = 0,
+                  user.cd33 = 0,
+                  user.cd34 = 0,
+                  user.invisible = false,
+                  user.cd35 = 0,
+                  user.cd36 = 0,
+                  user.cd37 = 0,
+                  user.poisoning = 0
+                  u.cd11 = 0,
+                  u.del11 = -1,
+                  u.cd12 = 0,
+                  u.del12 = -1,
+                  u.cd13 = 0,
+                  u.cd14 = 0,
+                  u.cd15 = 0,
+                  u.spikes = -1,
+                  u.cd16 = 0,
+                  u.clinch = -1,
+                  u.cd21 = 0,
+                  u.cd22 = 0,
+                  u.nakopleniye = 0,
+                  u.el1 = 0,
+                  u.burn = 0,
+                  u.el2 = 0,
+                  u.el3 = 0,
+                  u.cd31 = 0,
+                  u.poison = 0,
+                  u.cd32 = 0,
+                  u.cd33 = 0,
+                  u.cd34 = 0,
+                  u.invisible = false,
+                  u.cd35 = 0,
+                  u.cd36 = 0,
+                  u.cd37 = 0,
+                  u.poisoning = 0
+                  msg.send(`"${user.nick}" победил "${u.nick}" в дуэли. Со счёта "${u.nick}" списано ${resultplata}💵 и начислено на счёт "${user.nick}"`)
+                }
+                if(user.duelhp < 1) {
+                  var plata2 = user.money
+                  var procentplata = 10
+                  var resultplata2 = plata2 / 100 * procentplata
+                  user.duel = false
+                  u.duel = false
+                  u.predictionduel = false
+                  user.predictduel = false
+                  user.steps = 0
+                  u.steps = 0
+                  user.timer = 0
+                  u.timer = 0
+                  user.duelhp = 0
+                  user.duelatk = 0
+                  user.dueldef = 0
+                  u.duelhp = 0
+                  u.duelatk = 0
+                  u.dueldef = 0
+                  u.money += resultplata2
+                  user.money -= resultplata2
+                  user.cd11 = 0,
+                  user.del11 = -1,
+                  user.cd12 = 0,
+                  user.del12 = -1,
+                  user.cd13 = 0,
+                  user.cd14 = 0,
+                  user.cd15 = 0,
+                  user.spikes = -1,
+                  user.cd16 = 0,
+                  user.clinch = -1,
+                  user.cd21 = 0,
+                  user.cd22 = 0,
+                  user.nakopleniye = 0,
+                  user.el1 = 0,
+                  user.burn = 0,
+                  user.el2 = 0,
+                  user.el3 = 0,
+                  user.cd31 = 0,
+                  user.poison = 0,
+                  user.cd32 = 0,
+                  user.cd33 = 0,
+                  user.cd34 = 0,
+                  user.invisible = false,
+                  user.cd35 = 0,
+                  user.cd36 = 0,
+                  user.cd37 = 0,
+                  user.poisoning = 0
+                  u.cd11 = 0,
+                  u.del11 = -1,
+                  u.cd12 = 0,
+                  u.del12 = -1,
+                  u.cd13 = 0,
+                  u.cd14 = 0,
+                  u.cd15 = 0,
+                  u.spikes = -1,
+                  u.cd16 = 0,
+                  u.clinch = -1,
+                  u.cd21 = 0,
+                  u.cd22 = 0,
+                  u.nakopleniye = 0,
+                  u.el1 = 0,
+                  u.burn = 0,
+                  u.el2 = 0,
+                  u.el3 = 0,
+                  u.cd31 = 0,
+                  u.poison = 0,
+                  u.cd32 = 0,
+                  u.cd33 = 0,
+                  u.cd34 = 0,
+                  u.invisible = false,
+                  u.cd35 = 0,
+                  u.cd36 = 0,
+                  u.cd37 = 0,
+                  u.poisoning = 0
+                  msg.send(`"${u.nick}" победил "${user.nick}" в дуэли. Со счёта "${user.nick}" списано ${resultplata2}💵 и начислено на счёт "${u.nick}"`)
+                }
+                if(user.del11 == 0) {
+                  var hp = user.hp
+                  var atk = user.atk
+                  var procent = 20
+                  var resulthp = hp / 100 * procent
+                  var resultatk = atk / 100 * procent
+                  user.duelhp -= resulthp
+                  user.duelatk -= resultatk
+                  user.del11 == -1
+                  msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${user.nick}" уменьшены до ❤${user.duelhp} ⚔${user.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.del11 == 0) {
+                  var hp1 = u.hp
+                  var atk1 = u.atk
+                  var procent = 20
+                  var resulthp1 = hp1 / 100 * procent
+                  var resultatk1 = atk1 / 100 * procent
+                  u.duelhp -= resulthp1
+                  u.duelatk -= resultatk1
+                  u.del11 == -1
+                  msg.send (`Действие ярости закончилось закончилось. Здоровье и атака "${u.nick}" уменьшены до ❤${u.duelhp} ⚔${u.duelatk}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(user.del12 == 0) {
+                  var def = user.def
+                  var procent = 20
+                  var resultdef = def / 100 * procent
+                  user.dueldef -= resultdef
+                  user.del12 == -1
+                  msg.send(`Действие щита у "${user.nick}" закончилось. Защита "${user.nick}" снижена до 🛡${user.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.del12 == 0) {
+                  var def1 = u.def
+                  var procent = 20
+                  var resultdef1 = def1 / 100 * procent
+                  u.dueldef -= resultdef1
+                  u.del12 == -1
+                  msg.send(`Действие щита у "${u.nick}" закончилось. Защита "${u.nick}" снижена до 🛡${u.dueldef}\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(user.spikes == 0) {
+                  user.spikes -= 1
+                  msg.send(`Действие шипов у "${user.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+                if(u.spikes == 0) {
+                  u.spikes -= 1
+                  msg.send(`Действие шипов у "${u.nick}" закончилось\n"${user.nick}": ❤"${user.duelhp}" 🛡"${user.dueldef}"\n "${u.nick}": ❤"${u.duelhp}" 🛡"${u.dueldef}"`)
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  })
+
 vk.updates.hear(/^Начать$/i, async (context) => {
   await vk.api.messages.send({
     peer_id: context.peerId,
