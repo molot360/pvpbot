@@ -128,7 +128,7 @@
 		"cd13": 0,
 		"cd14": 0,
 		"cd15": 0,
-		"spikes": false,
+		"spikes": -1,
 		"cd16": 0,
 		"clinch": -1,
 		"cd21": 0,
