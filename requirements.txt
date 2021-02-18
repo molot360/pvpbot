@@ -1,2 +1,0 @@
-@vk-io/hear
-vk-io@4.0.0-rc.30
