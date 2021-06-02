@@ -802,11 +802,11 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
       user.predictduel = false 
     }
 
-    vk.updates.hear(/^(.*) ⚔Принять$/i, async (context) => {
+    vk.updates.hear(/^(.*) ⚔Принять$/i, msg => {
       if(user.nick == "Игрок") return msg.send (`Невозможное действие. Установите себе ник`)
-      if(context.senderId != user.id) return
-      if(context.$match[1] != '[club202302035|@eswep]') return
-      if(context.messagePayload != "project RQ") return
+      if(msg.senderId != user.id) return
+      if(msg.$match[1] != '[club202302035|@eswep]') return
+      if(msg.messagePayload != "project RQ") return
       user.duel = true
       u.duel = true
       user.duelhp = user.hp
@@ -822,7 +822,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
       user.steps += 1
       if (user.clas.id == 1) {
         vk.api.messages.send({
-          peer_id: context.peerId,
+          peer_id: msg.peerId,
           message: `@id${user.id}(${user.nick}) принял дуэль от @id${u.id}(${u.nick}). Первый ход делает @id${user.id}(${user.nick})`,
           disable_mentions: 1,
           keyboard: Keyboard.builder()
@@ -879,7 +879,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
       }
       if (user.clas.id == 2) {
         vk.api.messages.send({
-          peer_id: context.peerId,
+          peer_id: msg.peerId,
           message: `@id${user.id}(${user.nick}) принял дуэль от @id${u.id}(${u.nick}). Первый ход делает @id${user.id}(${user.nick})`,
           disable_mentions: 1,
           keyboard: Keyboard.builder()
@@ -930,7 +930,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
       }
       if (user.clas.id == 3) {
       vk.api.messages.send({
-        peer_id: context.peerId,
+        peer_id: msg.peerId,
         message: `@id${user.id}(${user.nick}) принял дуэль от @id${u.id}(${u.nick}). Первый ход делает @id${user.id}(${user.nick})`,
         disable_mentions: 1,
         keyboard: Keyboard.builder()
@@ -1079,7 +1079,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
       msg.send(`@id${u.id}(${u.nick}) отклонил дуэль от @id${user.id}(${user.nick})`)
     })
   
-  vk.updates.hear(/^(.*) 😈$/i, async (context) => {
+  vk.updates.hear(/^(.*) 😈$/i, msg => {
     if(user.duel == false) return msg.send ('В данный момент вы не в дуэли')
     if(u.duel == false) return msg.send ('В данный момент вы не в дуэли')
     if(user.steps > 100 || u.steps > 100) {
@@ -1232,7 +1232,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
           u.steps += 1
           if (u.clas.id == 1) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `Здоровье и атака @id${user.id}(${user.nick}) увеличены до ❤${user.duelhp} ⚔${user.duelatk}. Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
@@ -1289,7 +1289,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
           }
           if (u.clas.id == 2) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `Здоровье и атака @id${user.id}(${user.nick}) увеличены до ❤${user.duelhp} ⚔${user.duelatk}. Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
@@ -1340,7 +1340,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
           }
           if (u.clas.id == 3) {
           vk.api.messages.send({
-            peer_id: context.peerId,
+            peer_id: msg.peerId,
             message: `Здоровье и атака @id${user.id}(${user.nick}) увеличены до ❤${user.duelhp} ⚔${user.duelatk}. Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
             disable_mentions: 1,
             keyboard: Keyboard.builder()
@@ -1505,7 +1505,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.control -= 2
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `Здоровье и атака @id${user.id}(${user.nick}) увеличены до ❤${user.duelhp} ⚔${user.duelatk}. Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -1562,7 +1562,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `Здоровье и атака @id${user.id}(${user.nick}) увеличены до ❤${user.duelhp} ⚔${user.duelatk}. Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -1613,7 +1613,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `Здоровье и атака @id${user.id}(${user.nick}) увеличены до ❤${user.duelhp} ⚔${user.duelatk}. Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -1676,7 +1676,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (user.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `Здоровье и атака @id${user.id}(${user.nick}) увеличены до ❤${user.duelhp} ⚔${user.duelatk}. Следующий ход делает @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -1733,7 +1733,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (user.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `Здоровье и атака @id${user.id}(${user.nick}) увеличены до ❤${user.duelhp} ⚔${user.duelatk}. Следующий ход делает @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -1784,7 +1784,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (user.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `Здоровье и атака @id${user.id}(${user.nick}) увеличены до ❤${user.duelhp} ⚔${user.duelatk}. Следующий ход делает @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -1947,7 +1947,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               u.steps += 1
               if (u.clas.id == 1) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `Здоровье и атака @id${user.id}(${user.nick}) увеличены до ❤${user.duelhp} ⚔${user.duelatk}. Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -2004,7 +2004,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               }
               if (u.clas.id == 2) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `Здоровье и атака @id${user.id}(${user.nick}) увеличены до ❤${user.duelhp} ⚔${user.duelatk}. Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -2055,7 +2055,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               }
               if (u.clas.id == 3) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `Здоровье и атака @id${user.id}(${user.nick}) увеличены до ❤${user.duelhp} ⚔${user.duelatk}. Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -2220,7 +2220,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.control -= 2
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `Здоровье и атака @id${user.id}(${user.nick}) увеличены до ❤${user.duelhp} ⚔${user.duelatk}. Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -2277,7 +2277,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `Здоровье и атака @id${user.id}(${user.nick}) увеличены до ❤${user.duelhp} ⚔${user.duelatk}. Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -2328,7 +2328,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `Здоровье и атака @id${user.id}(${user.nick}) увеличены до ❤${user.duelhp} ⚔${user.duelatk}. Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -2391,7 +2391,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (user.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `Здоровье и атака @id${user.id}(${user.nick}) увеличены до ❤${user.duelhp} ⚔${user.duelatk}. Следующий ход делает @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -2448,7 +2448,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (user.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `Здоровье и атака @id${user.id}(${user.nick}) увеличены до ❤${user.duelhp} ⚔${user.duelatk}. Следующий ход делает @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -2499,7 +2499,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (user.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `Здоровье и атака @id${user.id}(${user.nick}) увеличены до ❤${user.duelhp} ⚔${user.duelatk}. Следующий ход делает @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -2662,7 +2662,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               u.steps += 1
               if (u.clas.id == 1) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `Здоровье и атака @id${user.id}(${user.nick}) увеличены до ❤${user.duelhp} ⚔${user.duelatk}. Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -2719,7 +2719,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               }
               if (u.clas.id == 2) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `Здоровье и атака @id${user.id}(${user.nick}) увеличены до ❤${user.duelhp} ⚔${user.duelatk}. Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -2770,7 +2770,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               }
               if (u.clas.id == 3) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `Здоровье и атака @id${user.id}(${user.nick}) увеличены до ❤${user.duelhp} ⚔${user.duelatk}. Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -3067,7 +3067,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
           u.steps += 1
           if (u.clas.id == 1) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `Защита @id${user.id}(${user.nick}) увеличена до 🛡"${user.dueldef}". Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
@@ -3124,7 +3124,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
           }
           if (u.clas.id == 2) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `Защита @id${user.id}(${user.nick}) увеличена до 🛡"${user.dueldef}". Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
@@ -3175,7 +3175,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
           }
           if (u.clas.id == 3) {
           vk.api.messages.send({
-            peer_id: context.peerId,
+            peer_id: msg.peerId,
             message: `Защита @id${user.id}(${user.nick}) увеличена до 🛡"${user.dueldef}". Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
             disable_mentions: 1,
             keyboard: Keyboard.builder()
@@ -3337,7 +3337,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.control -= 2
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `Защита @id${user.id}(${user.nick}) увеличена до 🛡"${user.dueldef}". Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -3394,7 +3394,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `Защита @id${user.id}(${user.nick}) увеличена до 🛡"${user.dueldef}". Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -3445,7 +3445,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `Защита @id${user.id}(${user.nick}) увеличена до 🛡"${user.dueldef}". Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -3508,7 +3508,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (user.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `Защита @id${user.id}(${user.nick}) увеличена до 🛡"${user.dueldef}". Следующий ход делает @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -3565,7 +3565,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (user.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `Защита @id${user.id}(${user.nick}) увеличена до 🛡"${user.dueldef}". Следующий ход делает @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -3616,7 +3616,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (user.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `Защита @id${user.id}(${user.nick}) увеличена до 🛡"${user.dueldef}". Следующий ход делает @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -3776,7 +3776,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               u.steps += 1
               if (u.clas.id == 1) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `Защита @id${user.id}(${user.nick}) увеличена до 🛡"${user.dueldef}". Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -3833,7 +3833,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               }
               if (u.clas.id == 2) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `Защита @id${user.id}(${user.nick}) увеличена до 🛡"${user.dueldef}". Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -3884,7 +3884,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               }
               if (u.clas.id == 3) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `Защита @id${user.id}(${user.nick}) увеличена до 🛡"${user.dueldef}". Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -4046,7 +4046,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.control -= 2
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `Защита @id${user.id}(${user.nick}) увеличена до 🛡"${user.dueldef}". Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -4103,7 +4103,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `Защита @id${user.id}(${user.nick}) увеличена до 🛡"${user.dueldef}". Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -4154,7 +4154,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `Защита @id${user.id}(${user.nick}) увеличена до 🛡"${user.dueldef}". Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -4217,7 +4217,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (user.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `Защита @id${user.id}(${user.nick}) увеличена до 🛡"${user.dueldef}". Следующий ход делает @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -4274,7 +4274,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (user.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `Защита @id${user.id}(${user.nick}) увеличена до 🛡"${user.dueldef}". Следующий ход делает @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -4325,7 +4325,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (user.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `Защита @id${user.id}(${user.nick}) увеличена до 🛡"${user.dueldef}". Следующий ход делает @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -4485,7 +4485,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               u.steps += 1
               if (u.clas.id == 1) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `Защита @id${user.id}(${user.nick}) увеличена до 🛡"${user.dueldef}". Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -4542,7 +4542,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               }
               if (u.clas.id == 2) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `Защита @id${user.id}(${user.nick}) увеличена до 🛡"${user.dueldef}". Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -4593,7 +4593,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               }
               if (u.clas.id == 3) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `Защита @id${user.id}(${user.nick}) увеличена до 🛡"${user.dueldef}". Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -4886,7 +4886,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             user.cd13 = 5
             if (u.clas.id == 1) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) не получает урона, так как активировал "клинч", @id${user.id}(${user.nick}) получает ⚔0 урона, так как атака @id${user.id}(${user.nick}) меньше защиты @id${u.id}(${u.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -4943,7 +4943,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 2) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) не получает урона, так как активировал "клинч", @id${user.id}(${user.nick}) получает ⚔0 урона, так как атака @id${user.id}(${user.nick}) меньше защиты @id${u.id}(${u.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -4994,7 +4994,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 3) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `@id${u.id}(${u.nick}) не получает урона, так как активировал "клинч", @id${user.id}(${user.nick}) получает ⚔0 урона, так как атака @id${user.id}(${user.nick}) меньше защиты @id${u.id}(${u.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
@@ -5152,7 +5152,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             u.steps += 1
             if (u.clas.id == 1) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) не получает урона, @id${user.id}(${user.nick}) получает ⚔${resulthpminusdef} урона, так как @id${u.id}(${u.nick}) активировал "клинч". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -5209,7 +5209,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 2) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) не получает урона, @id${user.id}(${user.nick}) получает ⚔${resulthpminusdef} урона, так как @id${u.id}(${u.nick}) активировал "клинч". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -5260,7 +5260,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 3) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `@id${u.id}(${u.nick}) не получает урона, @id${user.id}(${user.nick}) получает ⚔${resulthpminusdef} урона, так как @id${u.id}(${u.nick}) активировал "клинч". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
@@ -5585,7 +5585,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (u.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -5642,7 +5642,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -5693,7 +5693,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -5756,7 +5756,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.control -= 2
                     if (user.clas.id == 1) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -5813,7 +5813,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 2) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -5864,7 +5864,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 3) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -6029,7 +6029,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.control -= 2
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${resulthpminusdef} урона. ${user.nick}" получает ⚔${resultresulthpminusdefprocentspikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -6086,7 +6086,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${resulthpminusdef} урона. ${user.nick}" получает ⚔${resultresulthpminusdefprocentspikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -6137,7 +6137,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) получает ⚔${resulthpminusdef} урона. ${user.nick}" получает ⚔${resultresulthpminusdefprocentspikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -6200,7 +6200,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (user.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${resulthpminusdef} урона. ${user.nick}" получает ⚔${resultresulthpminusdefprocentspikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${user.id}(${user.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -6257,7 +6257,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (user.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${resulthpminusdef} урона. ${user.nick}" получает ⚔${resultresulthpminusdefprocentspikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${user.id}(${user.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -6308,7 +6308,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (user.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${resulthpminusdef} урона. ${user.nick}" получает ⚔${resultresulthpminusdefprocentspikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${user.id}(${user.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -6631,7 +6631,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.steps += 1
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -6688,7 +6688,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -6739,7 +6739,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -6900,7 +6900,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               u.steps += 1
               if (u.clas.id == 1) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) получает ⚔${resulthpminusdef} урона. ${user.nick}" получает ⚔${resultresulthpminusdefprocentspikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -6957,7 +6957,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               }
               if (u.clas.id == 2) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) получает ⚔${resulthpminusdef} урона. ${user.nick}" получает ⚔${resultresulthpminusdefprocentspikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -7008,7 +7008,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               }
               if (u.clas.id == 3) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) получает ⚔${resulthpminusdef} урона. ${user.nick}" получает ⚔${resultresulthpminusdefprocentspikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -7333,7 +7333,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (u.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -7390,7 +7390,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -7441,7 +7441,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -7504,7 +7504,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.control -= 2
                     if (user.clas.id == 1) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -7561,7 +7561,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 2) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -7612,7 +7612,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 3) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -7774,7 +7774,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (u.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${resulthpminusdef} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -7831,7 +7831,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${resulthpminusdef} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -7882,7 +7882,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${resulthpminusdef} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -7945,7 +7945,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.control -= 2
                     if (user.clas.id == 1) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) получает ⚔${resulthpminusdef} урона. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -8002,7 +8002,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 2) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) получает ⚔${resulthpminusdef} урона. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -8053,7 +8053,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 3) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${resulthpminusdef} урона. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -8376,7 +8376,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.steps += 1
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -8433,7 +8433,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -8484,7 +8484,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -8642,7 +8642,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.steps += 1
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${resulthpminusdef} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -8699,7 +8699,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${resulthpminusdef} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -8750,7 +8750,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) получает ⚔${resulthpminusdef} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -9208,7 +9208,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             u.steps += 1
             if (u.clas.id == 1) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) не получает урона, так как активировал "клинч", @id${user.id}(${user.nick}) получает ⚔0 урона, так как атака @id${user.id}(${user.nick}) меньше защиты @id${u.id}(${u.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -9265,7 +9265,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 2) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) не получает урона, так как активировал "клинч", @id${user.id}(${user.nick}) получает ⚔0 урона, так как атака @id${user.id}(${user.nick}) меньше защиты @id${u.id}(${u.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -9316,7 +9316,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 3) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `@id${u.id}(${u.nick}) не получает урона, так как активировал "клинч", @id${user.id}(${user.nick}) получает ⚔0 урона, так как атака @id${user.id}(${user.nick}) меньше защиты @id${u.id}(${u.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
@@ -9472,7 +9472,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             u.steps += 1
             if (u.clas.id == 1) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) не получает урона, @id${user.id}(${user.nick}) получает ⚔${result} урона, так как @id${u.id}(${u.nick}) активировал "клинч". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -9529,7 +9529,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 2) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) не получает урона, @id${user.id}(${user.nick}) получает ⚔${result} урона, так как @id${u.id}(${u.nick}) активировал "клинч". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -9580,7 +9580,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 3) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `@id${u.id}(${u.nick}) не получает урона, @id${user.id}(${user.nick}) получает ⚔${result} урона, так как @id${u.id}(${u.nick}) активировал "клинч". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
@@ -9905,7 +9905,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (u.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -9962,7 +9962,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -10013,7 +10013,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -10076,7 +10076,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.control -= 2
                     if (user.clas.id == 1) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -10133,7 +10133,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 2) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -10184,7 +10184,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 3) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -10354,7 +10354,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.control -= 2
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${resultdamage} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". @id${user.id}(${user.nick}) исцеляет ${resultheal}💚. Следующим ходит — @id${u.id}(${u.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -10411,7 +10411,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${resultdamage} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы".  @id${user.id}(${user.nick}) исцеляет ${resultheal}💚. Следующим ходит — @id${u.id}(${u.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -10462,7 +10462,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) получает ⚔${resultdamage} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы".  @id${user.id}(${user.nick}) исцеляет ${resultheal}💚. Следующим ходит — @id${u.id}(${u.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -10525,7 +10525,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (user.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${resultdamage} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы".  @id${user.id}(${user.nick}) исцеляет ${resultheal}💚. Следующим ходит — @id${user.id}(${user.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -10582,7 +10582,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (user.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${resultdamage} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы".  @id${user.id}(${user.nick}) исцеляет ${resultheal}💚. Следующим ходит — @id${user.id}(${user.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -10633,7 +10633,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (user.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${resultdamage} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы".  @id${user.id}(${user.nick}) исцеляет ${resultheal}💚. Следующим ходит — @id${user.id}(${user.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -10958,7 +10958,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (u.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -11015,7 +11015,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -11066,7 +11066,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -11129,7 +11129,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.control -= 2
                     if (user.clas.id == 1) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -11186,7 +11186,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 2) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -11237,7 +11237,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 3) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -11405,7 +11405,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               u.steps += 1
               if (u.clas.id == 1) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) получает ⚔${resultdamage} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы".  @id${user.id}(${user.nick}) исцеляет ${resultheal}💚. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -11462,7 +11462,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               }
               if (u.clas.id == 2) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) получает ⚔${resultdamage} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы".  @id${user.id}(${user.nick}) исцеляет ${resultheal}💚. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -11513,7 +11513,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               }
               if (u.clas.id == 3) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) получает ⚔${resultdamage} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы".  @id${user.id}(${user.nick}) исцеляет ${resultheal}💚. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -11838,7 +11838,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (u.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -11895,7 +11895,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -11946,7 +11946,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -12009,7 +12009,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.control -= 2
                     if (user.clas.id == 1) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -12066,7 +12066,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 2) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -12117,7 +12117,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 3) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -12285,7 +12285,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (u.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${resultdamage} урона.  @id${user.id}(${user.nick}) исцеляет ${resultheal}💚. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -12342,7 +12342,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${resultdamage} урона.  @id${user.id}(${user.nick}) исцеляет ${resultheal}💚. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -12393,7 +12393,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${resultdamage} урона.  @id${user.id}(${user.nick}) исцеляет ${resultheal}💚. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -12456,7 +12456,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.control -= 2
                     if (user.clas.id == 1) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) получает ⚔${resultdamage} урона.  @id${user.id}(${user.nick}) исцеляет ${resultheal}💚. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -12513,7 +12513,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 2) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) получает ⚔${resultdamage} урона.  @id${user.id}(${user.nick}) исцеляет ${resultheal}💚. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -12564,7 +12564,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 3) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${resultdamage} урона.  @id${user.id}(${user.nick}) исцеляет ${resultheal}💚. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -12887,7 +12887,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.steps += 1
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -12944,7 +12944,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -12995,7 +12995,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -13159,7 +13159,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.steps += 1
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${resultdamage} урона. @id${user.id}(${user.nick}) исцеляет ${resultheal}💚. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -13216,7 +13216,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${resultdamage} урона.  @id${user.id}(${user.nick}) исцеляет ${resultheal}💚. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -13267,7 +13267,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) получает ⚔${resultdamage} урона.  @id${user.id}(${user.nick}) исцеляет ${resultheal}💚. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -14003,7 +14003,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
           u.steps += 1
           if (u.clas.id == 1) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `@id${user.id}(${user.nick}) активировал "шипы". Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
@@ -14060,7 +14060,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
           }
           if (u.clas.id == 2) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `@id${user.id}(${user.nick}) активировал "шипы". Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
@@ -14111,7 +14111,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
           }
           if (u.clas.id == 3) {
           vk.api.messages.send({
-            peer_id: context.peerId,
+            peer_id: msg.peerId,
             message: `@id${user.id}(${user.nick}) активировал "шипы". Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
             disable_mentions: 1,
             keyboard: Keyboard.builder()
@@ -14269,7 +14269,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.control -= 2
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${user.id}(${user.nick}) активировал "шипы". Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -14326,7 +14326,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${user.id}(${user.nick}) активировал "шипы". Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -14377,7 +14377,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${user.id}(${user.nick}) активировал "шипы". Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -14440,7 +14440,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (user.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${user.id}(${user.nick}) активировал "шипы". Следующий ход делает @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -14497,7 +14497,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (user.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${user.id}(${user.nick}) активировал "шипы". Следующий ход делает @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -14548,7 +14548,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (user.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${user.id}(${user.nick}) активировал "шипы". Следующий ход делает @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -14704,7 +14704,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               u.steps += 1
               if (u.clas.id == 1) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${user.id}(${user.nick}) активировал "шипы". Следующий ход делает @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -14761,7 +14761,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               }
               if (u.clas.id == 2) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${user.id}(${user.nick}) активировал "шипы". Следующий ход делает @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -14812,7 +14812,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               }
               if (u.clas.id == 3) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${user.id}(${user.nick}) активировал "шипы". Следующий ход делает @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -14970,7 +14970,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.control -= 2
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${user.id}(${user.nick}) активировал "шипы". Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -15027,7 +15027,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${user.id}(${user.nick}) активировал "шипы". Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -15078,7 +15078,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${user.id}(${user.nick}) активировал "шипы". Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -15141,7 +15141,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (user.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${user.id}(${user.nick}) активировал "шипы". Следующий ход делает @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -15198,7 +15198,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (user.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${user.id}(${user.nick}) активировал "шипы". Следующий ход делает @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -15249,7 +15249,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (user.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${user.id}(${user.nick}) активировал "шипы". Следующий ход делает @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -15405,7 +15405,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               u.steps += 1
               if (u.clas.id == 1) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${user.id}(${user.nick}) активировал "шипы". Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -15462,7 +15462,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               }
               if (u.clas.id == 2) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${user.id}(${user.nick}) активировал "шипы". Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -15513,7 +15513,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               }
               if (u.clas.id == 3) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${user.id}(${user.nick}) активировал "шипы". Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -15805,7 +15805,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
         u.steps += 1
         if (u.clas.id == 1) {
           vk.api.messages.send({
-            peer_id: context.peerId,
+            peer_id: msg.peerId,
             message: `@id${user.id}(${user.nick}) активировал "клинч". Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
             disable_mentions: 1,
             keyboard: Keyboard.builder()
@@ -15862,7 +15862,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
         }
         if (u.clas.id == 2) {
           vk.api.messages.send({
-            peer_id: context.peerId,
+            peer_id: msg.peerId,
             message: `@id${user.id}(${user.nick}) активировал "клинч". Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
             disable_mentions: 1,
             keyboard: Keyboard.builder()
@@ -15913,7 +15913,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
         }
         if (u.clas.id == 3) {
         vk.api.messages.send({
-          peer_id: context.peerId,
+          peer_id: msg.peerId,
           message: `@id${user.id}(${user.nick}) активировал "клинч". Следующий ход делает @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
           disable_mentions: 1,
           keyboard: Keyboard.builder()
@@ -16200,7 +16200,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             u.steps += 1
             if (u.clas.id == 1) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) не получает урона, так как активировал "клинч", @id${user.id}(${user.nick}) получает ⚔0 урона, так как атака @id${user.id}(${user.nick}) меньше защиты @id${u.id}(${u.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -16257,7 +16257,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 2) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) не получает урона, так как активировал "клинч", @id${user.id}(${user.nick}) получает ⚔0 урона, так как атака @id${user.id}(${user.nick}) меньше защиты @id${u.id}(${u.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -16308,7 +16308,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 3) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `@id${u.id}(${u.nick}) не получает урона, так как активировал "клинч", @id${user.id}(${user.nick}) получает ⚔0 урона, так как атака @id${user.id}(${user.nick}) меньше защиты @id${u.id}(${u.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
@@ -16464,7 +16464,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             u.steps += 1
             if (u.clas.id == 1) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) не получает урона, @id${user.id}(${user.nick}) получает ⚔${result} урона, так как @id${u.id}(${u.nick}) активировал "клинч". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -16521,7 +16521,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 2) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) не получает урона, @id${user.id}(${user.nick}) получает ⚔${result} урона, так как @id${u.id}(${u.nick}) активировал "клинч". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -16572,7 +16572,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 3) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `@id${u.id}(${u.nick}) не получает урона, @id${user.id}(${user.nick}) получает ⚔${result} урона, так как @id${u.id}(${u.nick}) активировал "клинч". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
@@ -16896,7 +16896,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (u.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -16953,7 +16953,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -17004,7 +17004,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -17067,7 +17067,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.control -= 2
                     if (user.clas.id == 1) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -17124,7 +17124,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 2) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -17175,7 +17175,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 3) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -17337,7 +17337,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.control -= 2
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -17394,7 +17394,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -17445,7 +17445,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -17508,7 +17508,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (user.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${user.id}(${user.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -17565,7 +17565,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (user.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${user.id}(${user.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -17616,7 +17616,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (user.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${user.id}(${user.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -17940,7 +17940,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (u.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -17997,7 +17997,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -18048,7 +18048,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -18111,7 +18111,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.control -= 2
                     if (user.clas.id == 1) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -18168,7 +18168,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 2) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -18219,7 +18219,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 3) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -18379,7 +18379,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               u.steps += 1
               if (u.clas.id == 1) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -18436,7 +18436,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               }
               if (u.clas.id == 2) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -18487,7 +18487,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               }
               if (u.clas.id == 3) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -18811,7 +18811,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (u.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -18868,7 +18868,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -18919,7 +18919,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -18982,7 +18982,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.control -= 2
                     if (user.clas.id == 1) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -19039,7 +19039,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 2) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -19090,7 +19090,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 3) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -19250,7 +19250,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (u.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -19307,7 +19307,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -19358,7 +19358,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -19421,7 +19421,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.control -= 2
                     if (user.clas.id == 1) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -19478,7 +19478,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 2) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -19529,7 +19529,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 3) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -19851,7 +19851,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.steps += 1
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -19908,7 +19908,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -19959,7 +19959,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -20115,7 +20115,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.steps += 1
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -20172,7 +20172,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -20223,7 +20223,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -20790,7 +20790,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
           u.steps += 1
           if (u.clas.id == 1) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `Умение заблокировано, так как у @id${u.id}(${u.nick}) активирван "клинч"\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
@@ -20847,7 +20847,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
           }
           if (u.clas.id == 2) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `Умение заблокировано, так как у @id${u.id}(${u.nick}) активирван "клинч"\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
@@ -20898,7 +20898,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
           }
           if (u.clas.id == 3) {
           vk.api.messages.send({
-            peer_id: context.peerId,
+            peer_id: msg.peerId,
             message: `Умение заблокировано, так как у @id${u.id}(${u.nick}) активирван "клинч"\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
             disable_mentions: 1,
             keyboard: Keyboard.builder()
@@ -21004,7 +21004,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
           user.cd21 = 10
           if (user.clas.id == 1) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `@id${u.id}(${u.nick}) заморожен на 4 хода. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
@@ -21061,7 +21061,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
           }
           if (user.clas.id == 2) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `@id${u.id}(${u.nick}) заморожен на 4 хода. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
@@ -21112,7 +21112,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
           }
           if (user.clas.id == 3) {
           vk.api.messages.send({
-            peer_id: context.peerId,
+            peer_id: msg.peerId,
             message: `@id${u.id}(${u.nick}) заморожен на 4 хода. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
             disable_mentions: 1,
             keyboard: Keyboard.builder()
@@ -21361,7 +21361,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               u.control -= 2
               if (u.clas.id == 1) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${user.id}(${user.nick}) восстанавливает себе 💚"${stopheal}" здоровья. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -21418,7 +21418,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               }
               if (u.clas.id == 2) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${user.id}(${user.nick}) восстанавливает себе 💚"${stopheal}" здоровья. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -21469,7 +21469,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               }
               if (u.clas.id == 3) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${user.id}(${user.nick}) восстанавливает себе 💚"${stopheal}" здоровья. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -21532,7 +21532,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.control -= 2
                 if (user.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${user.id}(${user.nick}) восстанавливает себе 💚"${stopheal}" здоровья. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -21589,7 +21589,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (user.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${user.id}(${user.nick}) восстанавливает себе 💚"${stopheal}" здоровья. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -21640,7 +21640,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (user.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${user.id}(${user.nick}) восстанавливает себе 💚"${stopheal}" здоровья. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -21750,7 +21750,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             user.cd22 = 5
             if (u.clas.id == 1) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${user.id}(${user.nick}) восстанавливает себе 💚"${stopheal}" здоровья. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -21807,7 +21807,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 2) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${user.id}(${user.nick}) восстанавливает себе 💚"${stopheal}" здоровья. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -21858,7 +21858,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 3) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `@id${user.id}(${user.nick}) восстанавливает себе 💚"${stopheal}" здоровья. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
@@ -21970,7 +21970,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               u.control -= 2
               if (u.clas.id == 1) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${user.id}(${user.nick}) восстанавливает себе 💚"${user.duelatk}" здоровья. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -22027,7 +22027,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               }
               if (u.clas.id == 2) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${user.id}(${user.nick}) восстанавливает себе 💚"${user.duelatk}" здоровья. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -22078,7 +22078,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               }
               if (u.clas.id == 3) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${user.id}(${user.nick}) восстанавливает себе 💚"${user.duelatk}" здоровья. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -22141,7 +22141,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.control -= 2
                 if (user.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${user.id}(${user.nick}) восстанавливает себе 💚"${user.duelatk}" здоровья. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -22198,7 +22198,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (user.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${user.id}(${user.nick}) восстанавливает себе 💚"${user.duelatk}" здоровья. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -22249,7 +22249,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (user.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${user.id}(${user.nick}) восстанавливает себе 💚"${user.duelatk}" здоровья. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -22359,7 +22359,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             user.cd22 = 5
             if (u.clas.id == 1) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${user.id}(${user.nick}) восстанавливает себе 💚"${user.duelatk}" здоровья. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -22416,7 +22416,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 2) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${user.id}(${user.nick}) восстанавливает себе 💚"${user.duelatk}" здоровья. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -22467,7 +22467,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 3) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `@id${user.id}(${user.nick}) восстанавливает себе 💚"${user.duelatk}" здоровья. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
@@ -22711,7 +22711,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             u.steps += 1
             if (u.clas.id == 1) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) не получает урона, так как активировал "клинч", @id${user.id}(${user.nick}) получает ⚔0 урона, так как атака @id${user.id}(${user.nick}) меньше защиты @id${u.id}(${u.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -22768,7 +22768,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 2) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) не получает урона, так как активировал "клинч", @id${user.id}(${user.nick}) получает ⚔0 урона, так как атака @id${user.id}(${user.nick}) меньше защиты @id${u.id}(${u.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -22819,7 +22819,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 3) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `@id${u.id}(${u.nick}) не получает урона, так как активировал "клинч", @id${user.id}(${user.nick}) получает ⚔0 урона, так как атака @id${user.id}(${user.nick}) меньше защиты @id${u.id}(${u.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
@@ -22975,7 +22975,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             u.steps += 1
             if (u.clas.id == 1) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) не получает урона, @id${user.id}(${user.nick}) получает ⚔${result} урона, так как @id${u.id}(${u.nick}) активировал "клинч". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -23032,7 +23032,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 2) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) не получает урона, @id${user.id}(${user.nick}) получает ⚔${result} урона, так как @id${u.id}(${u.nick}) активировал "клинч". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -23083,7 +23083,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 3) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `@id${u.id}(${u.nick}) не получает урона, @id${user.id}(${user.nick}) получает ⚔${result} урона, так как @id${u.id}(${u.nick}) активировал "клинч". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
@@ -23408,7 +23408,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (u.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -23465,7 +23465,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -23516,7 +23516,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -23579,7 +23579,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.control -= 2
                     if (user.clas.id == 1) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -23636,7 +23636,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 2) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -23687,7 +23687,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 3) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -23850,7 +23850,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.control -= 2
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -23907,7 +23907,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -23958,7 +23958,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -24021,7 +24021,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (user.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${user.id}(${user.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -24078,7 +24078,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (user.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${user.id}(${user.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -24129,7 +24129,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (user.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${user.id}(${user.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -24454,7 +24454,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (u.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -24511,7 +24511,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -24562,7 +24562,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -24625,7 +24625,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.control -= 2
                     if (user.clas.id == 1) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -24682,7 +24682,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 2) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -24733,7 +24733,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 3) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -24894,7 +24894,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.steps += 1
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -24951,7 +24951,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -25002,7 +25002,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -25327,7 +25327,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (u.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -25384,7 +25384,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -25435,7 +25435,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -25498,7 +25498,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.control -= 2
                     if (user.clas.id == 1) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -25555,7 +25555,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 2) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -25606,7 +25606,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 3) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -25767,7 +25767,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (u.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -25824,7 +25824,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -25875,7 +25875,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -25938,7 +25938,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.control -= 2
                     if (user.clas.id == 1) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -25995,7 +25995,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 2) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -26046,7 +26046,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 3) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -26369,7 +26369,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.steps += 1
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -26426,7 +26426,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -26477,7 +26477,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -26634,7 +26634,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.steps += 1
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -26691,7 +26691,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -26742,7 +26742,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -27207,7 +27207,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             u.steps += 1
             if (u.clas.id == 1) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) не получает урона, так как активировал "клинч", @id${user.id}(${user.nick}) получает ⚔0 урона, так как атака @id${user.id}(${user.nick}) меньше защиты @id${u.id}(${u.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -27264,7 +27264,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 2) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) не получает урона, так как активировал "клинч", @id${user.id}(${user.nick}) получает ⚔0 урона, так как атака @id${user.id}(${user.nick}) меньше защиты @id${u.id}(${u.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -27315,7 +27315,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 3) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `@id${u.id}(${u.nick}) не получает урона, так как активировал "клинч", @id${user.id}(${user.nick}) получает ⚔0 урона, так как атака @id${user.id}(${user.nick}) меньше защиты @id${u.id}(${u.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
@@ -27471,7 +27471,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             u.steps += 1
             if (u.clas.id == 1) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) не получает урона, @id${user.id}(${user.nick}) получает ⚔${result} урона, так как @id${u.id}(${u.nick}) активировал "клинч". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -27528,7 +27528,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 2) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) не получает урона, @id${user.id}(${user.nick}) получает ⚔${result} урона, так как @id${u.id}(${u.nick}) активировал "клинч". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -27579,7 +27579,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 3) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `@id${u.id}(${u.nick}) не получает урона, @id${user.id}(${user.nick}) получает ⚔${result} урона, так как @id${u.id}(${u.nick}) активировал "клинч". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
@@ -27903,7 +27903,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (u.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -27960,7 +27960,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -28011,7 +28011,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -28074,7 +28074,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.control -= 2
                     if (user.clas.id == 1) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -28131,7 +28131,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 2) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -28182,7 +28182,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 3) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -28344,7 +28344,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.control -= 2
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -28401,7 +28401,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -28452,7 +28452,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -28515,7 +28515,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (user.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${user.id}(${user.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -28572,7 +28572,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (user.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${user.id}(${user.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -28623,7 +28623,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (user.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${user.id}(${user.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -28969,7 +28969,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (u.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -29026,7 +29026,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -29077,7 +29077,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -29140,7 +29140,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.control -= 2
                     if (user.clas.id == 1) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -29197,7 +29197,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 2) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -29248,7 +29248,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 3) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -29430,7 +29430,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -29487,7 +29487,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -29538,7 +29538,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -29862,7 +29862,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (u.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -29919,7 +29919,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -29970,7 +29970,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -30033,7 +30033,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.control -= 2
                     if (user.clas.id == 1) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -30090,7 +30090,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 2) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -30141,7 +30141,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 3) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -30301,7 +30301,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (u.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -30358,7 +30358,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -30409,7 +30409,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -30472,7 +30472,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.control -= 2
                     if (user.clas.id == 1) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -30529,7 +30529,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 2) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -30580,7 +30580,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 3) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -30924,7 +30924,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.steps += 1
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -30981,7 +30981,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -31032,7 +31032,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -31210,7 +31210,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -31267,7 +31267,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -31318,7 +31318,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -31776,7 +31776,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             u.steps += 1
             if (u.clas.id == 1) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) не получает урона, так как активировал "клинч", @id${user.id}(${user.nick}) получает ⚔0 урона, так как атака @id${user.id}(${user.nick}) меньше защиты @id${u.id}(${u.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -31833,7 +31833,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 2) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) не получает урона, так как активировал "клинч", @id${user.id}(${user.nick}) получает ⚔0 урона, так как атака @id${user.id}(${user.nick}) меньше защиты @id${u.id}(${u.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -31884,7 +31884,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 3) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `@id${u.id}(${u.nick}) не получает урона, так как активировал "клинч", @id${user.id}(${user.nick}) получает ⚔0 урона, так как атака @id${user.id}(${user.nick}) меньше защиты @id${u.id}(${u.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
@@ -32040,7 +32040,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             u.steps += 1
             if (u.clas.id == 1) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) не получает урона, @id${user.id}(${user.nick}) получает ⚔${result} урона, так как @id${u.id}(${u.nick}) активировал "клинч". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -32097,7 +32097,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 2) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) не получает урона, @id${user.id}(${user.nick}) получает ⚔${result} урона, так как @id${u.id}(${u.nick}) активировал "клинч". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -32148,7 +32148,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 3) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `@id${u.id}(${u.nick}) не получает урона, @id${user.id}(${user.nick}) получает ⚔${result} урона, так как @id${u.id}(${u.nick}) активировал "клинч". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
@@ -32472,7 +32472,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (u.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -32529,7 +32529,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -32580,7 +32580,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -32643,7 +32643,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.control -= 2
                     if (user.clas.id == 1) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -32700,7 +32700,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 2) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -32751,7 +32751,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 3) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -32913,7 +32913,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.control -= 2
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -32970,7 +32970,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -33021,7 +33021,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -33084,7 +33084,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (user.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${user.id}(${user.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -33141,7 +33141,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (user.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${user.id}(${user.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -33192,7 +33192,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (user.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${user.id}(${user.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -33533,7 +33533,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (u.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -33590,7 +33590,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -33641,7 +33641,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -33704,7 +33704,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.control -= 2
                     if (user.clas.id == 1) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -33761,7 +33761,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 2) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -33812,7 +33812,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 3) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -33989,7 +33989,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -34046,7 +34046,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -34097,7 +34097,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -34421,7 +34421,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (u.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -34478,7 +34478,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -34529,7 +34529,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -34592,7 +34592,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.control -= 2
                     if (user.clas.id == 1) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -34649,7 +34649,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 2) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -34700,7 +34700,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 3) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -34860,7 +34860,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (u.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -34917,7 +34917,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -34968,7 +34968,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -35031,7 +35031,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.control -= 2
                     if (user.clas.id == 1) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -35088,7 +35088,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 2) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -35139,7 +35139,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 3) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -35478,7 +35478,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.steps += 1
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -35535,7 +35535,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -35586,7 +35586,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -35759,7 +35759,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -35816,7 +35816,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -35867,7 +35867,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -36325,7 +36325,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             u.steps += 1
             if (u.clas.id == 1) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) не получает урона, так как активировал "клинч", @id${user.id}(${user.nick}) получает ⚔0 урона, так как атака @id${user.id}(${user.nick}) меньше защиты @id${u.id}(${u.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -36382,7 +36382,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 2) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) не получает урона, так как активировал "клинч", @id${user.id}(${user.nick}) получает ⚔0 урона, так как атака @id${user.id}(${user.nick}) меньше защиты @id${u.id}(${u.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -36433,7 +36433,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 3) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `@id${u.id}(${u.nick}) не получает урона, так как активировал "клинч", @id${user.id}(${user.nick}) получает ⚔0 урона, так как атака @id${user.id}(${user.nick}) меньше защиты @id${u.id}(${u.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
@@ -36589,7 +36589,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             u.steps += 1
             if (u.clas.id == 1) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) не получает урона, @id${user.id}(${user.nick}) получает ⚔${result} урона, так как @id${u.id}(${u.nick}) активировал "клинч". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -36646,7 +36646,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 2) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) не получает урона, @id${user.id}(${user.nick}) получает ⚔${result} урона, так как @id${u.id}(${u.nick}) активировал "клинч". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -36697,7 +36697,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 3) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `@id${u.id}(${u.nick}) не получает урона, @id${user.id}(${user.nick}) получает ⚔${result} урона, так как @id${u.id}(${u.nick}) активировал "клинч". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
@@ -37021,7 +37021,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (u.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -37078,7 +37078,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -37129,7 +37129,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -37192,7 +37192,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.control -= 2
                     if (user.clas.id == 1) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -37249,7 +37249,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 2) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -37300,7 +37300,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 3) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -37462,7 +37462,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.control -= 2
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -37519,7 +37519,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -37570,7 +37570,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -37633,7 +37633,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (user.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${user.id}(${user.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -37690,7 +37690,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (user.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${user.id}(${user.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -37741,7 +37741,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (user.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${user.id}(${user.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -38083,7 +38083,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (u.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -38140,7 +38140,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -38191,7 +38191,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -38254,7 +38254,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.control -= 2
                     if (user.clas.id == 1) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -38311,7 +38311,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 2) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -38362,7 +38362,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 3) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -38540,7 +38540,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -38597,7 +38597,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -38648,7 +38648,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -38972,7 +38972,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (u.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -39029,7 +39029,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -39080,7 +39080,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -39143,7 +39143,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.control -= 2
                     if (user.clas.id == 1) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -39200,7 +39200,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 2) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -39251,7 +39251,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 3) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -39411,7 +39411,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (u.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -39468,7 +39468,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -39519,7 +39519,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -39582,7 +39582,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.control -= 2
                     if (user.clas.id == 1) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -39639,7 +39639,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 2) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -39690,7 +39690,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 3) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -40030,7 +40030,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.steps += 1
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -40087,7 +40087,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -40138,7 +40138,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -40312,7 +40312,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -40369,7 +40369,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -40420,7 +40420,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -40955,7 +40955,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               u.control -= 2
               if (u.clas.id == 1) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) заражён ядом. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -41012,7 +41012,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               }
               if (u.clas.id == 2) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) заражём ядом. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -41063,7 +41063,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               }
               if (u.clas.id == 3) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) заражём ядом. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -41126,7 +41126,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.control -= 2
                 if (user.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) заражён ядом. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -41183,7 +41183,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (user.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) заражём ядом. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -41234,7 +41234,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (user.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) заражём ядом. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -41556,7 +41556,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             u.poison = 6
             if (u.clas.id == 1) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) заражён ядом. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -41613,7 +41613,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 2) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) заражём ядом. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -41664,7 +41664,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 3) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `@id${u.id}(${u.nick}) заражём ядом. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
@@ -42121,7 +42121,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             user.cd32 = 7
             if (u.clas.id == 1) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) не получает урона, так как активировал "клинч", @id${user.id}(${user.nick}) получает ⚔0 урона, так как атака @id${user.id}(${user.nick}) меньше защиты @id${u.id}(${u.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -42178,7 +42178,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 2) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) не получает урона, так как активировал "клинч", @id${user.id}(${user.nick}) получает ⚔0 урона, так как атака @id${user.id}(${user.nick}) меньше защиты @id${u.id}(${u.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -42229,7 +42229,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 3) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `@id${u.id}(${u.nick}) не получает урона, так как активировал "клинч", @id${user.id}(${user.nick}) получает ⚔0 урона, так как атака @id${user.id}(${user.nick}) меньше защиты @id${u.id}(${u.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
@@ -42384,7 +42384,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             user.duelhp -= result
             if (u.clas.id == 1) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) не получает урона, @id${user.id}(${user.nick}) получает ⚔${result} урона, так как @id${u.id}(${u.nick}) активировал "клинч". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -42441,7 +42441,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 2) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) не получает урона, @id${user.id}(${user.nick}) получает ⚔${result} урона, так как @id${u.id}(${u.nick}) активировал "клинч". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -42492,7 +42492,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 3) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `@id${u.id}(${u.nick}) не получает урона, @id${user.id}(${user.nick}) получает ⚔${result} урона, так как @id${u.id}(${u.nick}) активировал "клинч". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
@@ -42817,7 +42817,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (u.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -42874,7 +42874,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -42925,7 +42925,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -42988,7 +42988,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.control -= 2
                     if (user.clas.id == 1) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -43045,7 +43045,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 2) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -43096,7 +43096,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 3) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -43281,7 +43281,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.control -= 2
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -43338,7 +43338,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -43389,7 +43389,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -43452,7 +43452,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (user.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${user.id}(${user.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -43509,7 +43509,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (user.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${user.id}(${user.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -43560,7 +43560,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (user.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${user.id}(${user.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -43885,7 +43885,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (u.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -43942,7 +43942,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -43993,7 +43993,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -44056,7 +44056,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.control -= 2
                     if (user.clas.id == 1) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -44113,7 +44113,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 2) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -44164,7 +44164,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 3) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -44347,7 +44347,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               }
               if (u.clas.id == 1) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -44404,7 +44404,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               }
               if (u.clas.id == 2) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -44455,7 +44455,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               }
               if (u.clas.id == 3) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -44780,7 +44780,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (u.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -44837,7 +44837,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -44888,7 +44888,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -44951,7 +44951,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.control -= 2
                     if (user.clas.id == 1) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -45008,7 +45008,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 2) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -45059,7 +45059,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 3) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -45238,7 +45238,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (u.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -45295,7 +45295,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -45346,7 +45346,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -45409,7 +45409,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.control -= 2
                     if (user.clas.id == 1) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -45466,7 +45466,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 2) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -45517,7 +45517,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 3) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -45840,7 +45840,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 user.cd32 = 7
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -45897,7 +45897,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -45948,7 +45948,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -46123,7 +46123,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -46180,7 +46180,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -46231,7 +46231,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -46689,7 +46689,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
           u.steps += 1
           if (u.clas.id == 1) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `Умение заблокировано, так как у @id${u.id}(${u.nick}) активирван "клинч"\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
@@ -46746,7 +46746,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
           }
           if (u.clas.id == 2) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `Умение заблокировано, так как у @id${u.id}(${u.nick}) активирван "клинч"\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
@@ -46797,7 +46797,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
           }
           if (u.clas.id == 3) {
           vk.api.messages.send({
-            peer_id: context.peerId,
+            peer_id: msg.peerId,
             message: `Умение заблокировано, так как у @id${u.id}(${u.nick}) активирван "клинч"\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
             disable_mentions: 1,
             keyboard: Keyboard.builder()
@@ -46903,7 +46903,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
           user.cd33 = 10
           if (user.clas.id == 1) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `@id${u.id}(${u.nick}) оглушён на 4 хода. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
@@ -46960,7 +46960,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
           }
           if (user.clas.id == 2) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `@id${u.id}(${u.nick}) оглушён на 4 хода. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
@@ -47011,7 +47011,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
           }
           if (user.clas.id == 3) {
           vk.api.messages.send({
-            peer_id: context.peerId,
+            peer_id: msg.peerId,
             message: `@id${u.id}(${u.nick}) оглушён на 4 хода. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
             disable_mentions: 1,
             keyboard: Keyboard.builder()
@@ -47254,7 +47254,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
       user.cd36 = 0
       if (user.clas.id == 1) {
         vk.api.messages.send({
-          peer_id: context.peerId,
+          peer_id: msg.peerId,
           message: `@id${user.id}(${user.nick}) скрылся. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
           disable_mentions: 1,
           keyboard: Keyboard.builder()
@@ -47311,7 +47311,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
       }
       if (user.clas.id == 2) {
         vk.api.messages.send({
-          peer_id: context.peerId,
+          peer_id: msg.peerId,
           message: `@id${user.id}(${user.nick}) скрылся. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
           disable_mentions: 1,
           keyboard: Keyboard.builder()
@@ -47362,7 +47362,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
       }
       if (user.clas.id == 3) {
       vk.api.messages.send({
-        peer_id: context.peerId,
+        peer_id: msg.peerId,
         message: `@id${user.id}(${user.nick}) скрылся. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
         disable_mentions: 1,
         keyboard: Keyboard.builder()
@@ -47613,7 +47613,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               u.control -= 2
               if (u.clas.id == 1) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${user.id}(${user.nick}) восстанавливает себе 💚"${heal}" здоровья. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -47670,7 +47670,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               }
               if (u.clas.id == 2) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${user.id}(${user.nick}) восстанавливает себе 💚"${heal}" здоровья. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -47721,7 +47721,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               }
               if (u.clas.id == 3) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${user.id}(${user.nick}) восстанавливает себе 💚"${heal}" здоровья. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -47784,7 +47784,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.control -= 2
                 if (user.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${user.id}(${user.nick}) восстанавливает себе 💚"${heal}" здоровья. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -47841,7 +47841,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (user.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${user.id}(${user.nick}) восстанавливает себе 💚"${heal}" здоровья. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -47892,7 +47892,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (user.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${user.id}(${user.nick}) восстанавливает себе 💚"${heal}" здоровья. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -48006,7 +48006,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 1) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${user.id}(${user.nick}) восстанавливает себе 💚"${heal}" здоровья. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -48063,7 +48063,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 2) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${user.id}(${user.nick}) восстанавливает себе 💚"${heal}" здоровья. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -48114,7 +48114,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 3) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `@id${user.id}(${user.nick}) восстанавливает себе 💚"${heal}" здоровья. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
@@ -48359,7 +48359,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             user.cd36 = 7
             if (u.clas.id == 1) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) не получает урона, так как активировал "клинч", @id${user.id}(${user.nick}) получает ⚔0 урона, так как атака @id${user.id}(${user.nick}) меньше защиты @id${u.id}(${u.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -48416,7 +48416,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 2) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) не получает урона, так как активировал "клинч", @id${user.id}(${user.nick}) получает ⚔0 урона, так как атака @id${user.id}(${user.nick}) меньше защиты @id${u.id}(${u.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -48467,7 +48467,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 3) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `@id${u.id}(${u.nick}) не получает урона, так как активировал "клинч", @id${user.id}(${user.nick}) получает ⚔0 урона, так как атака @id${user.id}(${user.nick}) меньше защиты @id${u.id}(${u.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
@@ -48622,7 +48622,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             user.duelhp -= result
             if (u.clas.id == 1) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) не получает урона, @id${user.id}(${user.nick}) получает ⚔${result} урона, так как @id${u.id}(${u.nick}) активировал "клинч". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -48679,7 +48679,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 2) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) не получает урона, @id${user.id}(${user.nick}) получает ⚔${result} урона, так как @id${u.id}(${u.nick}) активировал "клинч". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -48730,7 +48730,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 3) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `@id${u.id}(${u.nick}) не получает урона, @id${user.id}(${user.nick}) получает ⚔${result} урона, так как @id${u.id}(${u.nick}) активировал "клинч". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
@@ -49055,7 +49055,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (u.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -49112,7 +49112,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -49163,7 +49163,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${unick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -49226,7 +49226,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.control -= 2
                     if (user.clas.id == 1) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -49283,7 +49283,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 2) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -49334,7 +49334,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 3) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -49497,7 +49497,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.control -= 2
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -49554,7 +49554,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -49605,7 +49605,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -49668,7 +49668,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (user.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${user.id}(${user.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -49725,7 +49725,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (user.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${user.id}(${user.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -49776,7 +49776,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (user.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${user.id}(${user.nick}).\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -50101,7 +50101,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (u.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -50158,7 +50158,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -50209,7 +50209,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -50272,7 +50272,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.control -= 2
                     if (user.clas.id == 1) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -50329,7 +50329,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 2) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -50380,7 +50380,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 3) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -50541,7 +50541,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               user.duelhp -= spikes
               if (u.clas.id == 1) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -50598,7 +50598,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               }
               if (u.clas.id == 2) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -50649,7 +50649,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               }
               if (u.clas.id == 3) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. @id${user.id}(${user.nick}) получает ⚔${spikes} урона, так как у @id${u.id}(${u.nick}) активны "шипы". Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -50974,7 +50974,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (u.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -51031,7 +51031,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -51082,7 +51082,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -51145,7 +51145,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.control -= 2
                     if (user.clas.id == 1) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -51202,7 +51202,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 2) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -51253,7 +51253,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 3) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -51414,7 +51414,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.control -= 2
                   if (u.clas.id == 1) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -51471,7 +51471,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 2) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -51522,7 +51522,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   }
                   if (u.clas.id == 3) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -51585,7 +51585,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.control -= 2
                     if (user.clas.id == 1) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -51642,7 +51642,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 2) {
                       vk.api.messages.send({
-                        peer_id: context.peerId,
+                        peer_id: msg.peerId,
                         message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                         disable_mentions: 1,
                         keyboard: Keyboard.builder()
@@ -51693,7 +51693,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     }
                     if (user.clas.id == 3) {
                     vk.api.messages.send({
-                      peer_id: context.peerId,
+                      peer_id: msg.peerId,
                       message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                       disable_mentions: 1,
                       keyboard: Keyboard.builder()
@@ -52016,7 +52016,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 user.cd36 = 7
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -52073,7 +52073,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -52124,7 +52124,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) не получает урона, так как его защита выше атаки @id${user.id}(${user.nick}). Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -52281,7 +52281,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.duelhp -= result
                 if (u.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -52338,7 +52338,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -52389,7 +52389,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (u.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${u.id}(${u.nick}) получает ⚔${result} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -52855,7 +52855,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               u.control -= 2
               if (u.clas.id == 1) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${user.id}(${user.nick}) наносит себе ⚔${result1} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -52912,7 +52912,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               }
               if (u.clas.id == 2) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${user.id}(${user.nick}) наносит себе ⚔${result1} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -52963,7 +52963,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               }
               if (u.clas.id == 3) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${user.id}(${user.nick}) наносит себе ⚔${result1} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -53026,7 +53026,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.control -= 2
                 if (user.clas.id == 1) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${user.id}(${user.nick}) наносит себе ⚔${result1} урона. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -53083,7 +53083,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (user.clas.id == 2) {
                   vk.api.messages.send({
-                    peer_id: context.peerId,
+                    peer_id: msg.peerId,
                     message: `@id${user.id}(${user.nick}) наносит себе ⚔${result1} урона. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                     disable_mentions: 1,
                     keyboard: Keyboard.builder()
@@ -53134,7 +53134,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 }
                 if (user.clas.id == 3) {
                 vk.api.messages.send({
-                  peer_id: context.peerId,
+                  peer_id: msg.peerId,
                   message: `@id${user.id}(${user.nick}) наносит себе ⚔${result1} урона. Следующим ходит — @id${user.id}(${user.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                   disable_mentions: 1,
                   keyboard: Keyboard.builder()
@@ -53248,7 +53248,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 1) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${user.id}(${user.nick}) наносит себе себе ⚔${result1} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -53305,7 +53305,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 2) {
               vk.api.messages.send({
-                peer_id: context.peerId,
+                peer_id: msg.peerId,
                 message: `@id${user.id}(${user.nick}) наносит себе ⚔${result1} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
                 disable_mentions: 1,
                 keyboard: Keyboard.builder()
@@ -53356,7 +53356,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             }
             if (u.clas.id == 3) {
             vk.api.messages.send({
-              peer_id: context.peerId,
+              peer_id: msg.peerId,
               message: `@id${user.id}(${user.nick}) наносит себе ⚔${result1} урона. Следующим ходит — @id${u.id}(${u.nick})\n@id${user.id}(${user.nick}): ❤"${user.duelhp}" ⚔"${user.duelatk}" 🛡"${user.dueldef}"\n @id${u.id}(${u.nick}): ❤"${u.duelhp}" ⚔"${u.duelatk}" 🛡"${u.dueldef}"`,
               disable_mentions: 1,
               keyboard: Keyboard.builder()
