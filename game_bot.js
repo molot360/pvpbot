@@ -804,9 +804,9 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
 
     vk.updates.hear(/^(.*) ⚔Принять$/i, async (context) => {
       if(user.nick == "Игрок") return msg.send (`Невозможное действие. Установите себе ник`)
-      if(msg.senderId != user.id) return
-      if(msg.$match[1] != '[club202302035|@eswep]') return
-      if(msg.messagePayload != "project RQ") return
+      if(context.senderId != user.id) return
+      if(context.$match[1] != '[club202302035|@eswep]') return
+      if(context.messagePayload != "project RQ") return
       user.duel = true
       u.duel = true
       user.duelhp = user.hp
