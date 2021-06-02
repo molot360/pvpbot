@@ -802,7 +802,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
       user.predictduel = false 
     }
 
-    vk.updates.hear(/^(.*) ⚔Принять$/i, msg => {
+    vk.updates.hear(/^(.*) ⚔Принять$/i, async (context) => {
       if(user.nick == "Игрок") return msg.send (`Невозможное действие. Установите себе ник`)
       if(msg.senderId != user.id) return
       if(msg.$match[1] != '[club202302035|@eswep]') return
@@ -1079,7 +1079,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
       msg.send(`@id${u.id}(${u.nick}) отклонил дуэль от @id${user.id}(${user.nick})`)
     })
   
-  vk.updates.hear(/^(.*) 😈$/i, msg => {
+  vk.updates.hear(/^(.*) 😈$/i, async (context) => {
     if(user.duel == false) return msg.send ('В данный момент вы не в дуэли')
     if(u.duel == false) return msg.send ('В данный момент вы не в дуэли')
     if(user.steps > 100 || u.steps > 100) {
