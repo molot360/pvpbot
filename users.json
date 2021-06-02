@@ -19,7 +19,7 @@
 			"name": "Ассасин",
 			"id": 3
 		},
-		"money": 89859,
+		"money": 10000,
 		"quest": 0,
 		"adm": false,
 		"predictionduel": false,
@@ -76,7 +76,7 @@
 			"name": "Маг",
 			"id": 2
 		},
-		"money": 784787,
+		"money": 100000,
 		"quest": 0,
 		"adm": true,
 		"predictionduel": false,
@@ -133,7 +133,7 @@
 			"name": "Воин",
 			"id": 1
 		},
-		"money": 856683,
+		"money": 100000,
 		"quest": 23,
 		"adm": true,
 		"predictionduel": false,
@@ -168,7 +168,6 @@
 		"cd36": 0,
 		"porezka": 4,
 		"cd37": 0,
-		"poisoning": -1,
-		"d14": 0
+		"poisoning": -1
 	}
 ]
