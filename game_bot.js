@@ -768,6 +768,8 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
   vk.updates.hear(/^!д$/i, async (context) => {
     let u = users.filter(x => x.id === context.senderId)[0]
     let user = users.filter(x => x.id === context.replyMessage.senderId)[0]
+    console.log(user.id)
+    console.log(u.id)
     if(u.nick == "Игрок") return context.send (`Невозможное действие. Установите себе ник`)
     if(!context.hasReplyMessage) return context.send('Для вызова дуэли необходимо переслать сообщение')
     if(u.id == user.id) return context.send('Нельзя вызвать на дуэль себя')
@@ -807,6 +809,8 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
       if(msg.senderId != user.id) return
       if(msg.$match[1] != '[club202302035|@eswep]') return
       if(msg.messagePayload != "project RQ") return
+      console.log(user.id)
+      console.log(u.id)
       user.duel = true
       u.duel = true
       user.duelhp = user.hp
