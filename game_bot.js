@@ -240,17 +240,12 @@ const classes = [
   vk.updates.hear(/^!ник (.*)/i, msg => {
     const user = users.filter(x => x.id === msg.senderId)[0]
     nick = msg.$match[1]
-    if(nick.length > 15) return msg.send(`Ник не может быть длиннее 15 символов`)
+    if(nick.length > 20) return msg.send(`Ник не может быть длиннее 20 символов`)
     if(user.money < 1000) return msg.send (`Не хватает ${1000 - user.money}💵 на смену ника`)
     if(msg.$match[1] == "Игрок") return msg.send (`Недопустимый ник`)
-    for (let i = 0; i < users.length; i++) {
-      if(user.nick == users[i].nick) return msg.send (`Этот ник уже занят`)
-      else {
-        user.nick = nick
-        user.money -= 1000
-        msg.send(`Вы сменили никнейм на "${nick}"`)
-      }
-    }
+    user.nick = nick
+    user.money -= 1000
+    msg.send(`Вы сменили никнейм на "${nick}"`)
   })
 
   vk.updates.hear(/^Адм/i, msg => {
