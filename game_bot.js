@@ -766,9 +766,9 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
   })
 
   vk.updates.hear(/^!д$/i, async (context) => {
-    var u = users.filter(x => x.id === context.senderId)[0]
-    var user = users.filter(x => x.id === context.replyMessage.senderId)[0]
-    if(user.nick == "Игрок") return context.send (`Невозможное действие. Установите себе ник`)
+    let u = users.filter(x => x.id === context.senderId)[0]
+    let user = users.filter(x => x.id === context.replyMessage.senderId)[0]
+    if(u.nick == "Игрок") return context.send (`Невозможное действие. Установите себе ник`)
     if(!context.hasReplyMessage) return context.send('Для вызова дуэли необходимо переслать сообщение')
     if(u.id == user.id) return context.send('Нельзя вызвать на дуэль себя')
     for (let i = 0; i < users.length; i++) {
@@ -803,7 +803,6 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
     }
 
     vk.updates.hear(/^(.*) ⚔Принять$/i, msg => {
-      if(u.nick == "Игрок") return msg.send (`Невозможное действие. Установите себе ник`)
       if(user.nick == "Игрок") return msg.send (`Невозможное действие. Установите себе ник`)
       if(msg.senderId != user.id) return
       if(msg.$match[1] != '[club202302035|@eswep]') return
@@ -991,8 +990,6 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
     vk.updates.hear(/^!с$/i, msg => {
       const user = users.filter(x => x.id === msg.senderId)[0]
       const u = users.filter(x => x.id === msg.replyMessage.senderId)[0]
-      console.log(user.duel)
-      console.log(u.duel)
       if(user.duel != true) return
       if(u.duel != true) return
       var plata2 = user.money
@@ -1075,7 +1072,6 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
     })
 
     vk.updates.hear(/^(.*) ✋🏻Отклонить$/i, msg => {
-      if(u.nick == "Игрок") return msg.send (`Невозможное действие. Установите себе ник`)
       if(user.nick == "Игрок") return msg.send (`Невозможное действие. Установите себе ник`)
       if(msg.senderId != user.id) return
       if(msg.$match[1] != '[club202302035|@eswep]') return
