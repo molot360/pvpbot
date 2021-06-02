@@ -47552,7 +47552,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
       user = constu
     }
     if(user.cd35 > 0) return msg.send(`Умение перезаряжается`)
-    if(u.poison > 2) return msg.send(`Невозможно применить умение`)
+    if(u.poison != 1) return msg.send(`Невозможно применить умение`)
     if(user.clas.id != 3) return msg.send(`Умение не принадлежит вашему классу`)
     if(u.nakopleniye > 0) {
       if(u.control > 0) u.nakopleniye = 0
