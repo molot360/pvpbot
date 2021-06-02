@@ -805,10 +805,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
     vk.updates.hear(/^(.*) ⚔Принять$/i, msg => {
       if(u.nick == "Игрок") return msg.send (`Невозможное действие. Установите себе ник`)
       if(user.nick == "Игрок") return msg.send (`Невозможное действие. Установите себе ник`)
-      if(u.id == user.id) return
-      if(user.id == u.id) return
-      if(user.predictduel == false) return
-      if(u.predictionduel == false) return
+      if(msg.senderId != user.id) return
       if(msg.$match[1] != '[club202302035|@eswep]') return
       if(msg.messagePayload != "project RQ") return
       user.duel = true
@@ -1080,10 +1077,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
     vk.updates.hear(/^(.*) ✋🏻Отклонить$/i, msg => {
       if(u.nick == "Игрок") return msg.send (`Невозможное действие. Установите себе ник`)
       if(user.nick == "Игрок") return msg.send (`Невозможное действие. Установите себе ник`)
-      if(user.id == u.id) return
-      if(u.id == user.id) return
-      if(u.predictduel == false) return
-      if(user.predictionduel == false) return
+      if(msg.senderId != user.id) return
       if(msg.$match[1] != '[club202302035|@eswep]') return
       if(msg.messagePayload != "project RQ") return
       msg.send(`@id${u.id}(${u.nick}) отклонил дуэль от @id${user.id}(${user.nick})`)
