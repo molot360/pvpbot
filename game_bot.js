@@ -215,9 +215,58 @@ const classes = [
     setTimeout(helpbeginners, 14400000)
   })
 })
+
+vk.updates.hear(/^!атк (.*)/i, msg => {
+  const user = users.filter(x => x.id === msg.senderId)[0]
+  const u = users.filter(x => x.id === msg.replyMessage.senderId)[0]
+  if(user.id != 492815523) return msg.send ('У вас нет доступа к этой команде')
+  u.atk = Number(msg.$match[1])
+  msg.send(`Атака "${u.nick}" изменена на ${u.atk}`)
+})
+
+vk.updates.hear(/^!хп (.*)/i, msg => {
+  const user = users.filter(x => x.id === msg.senderId)[0]
+  const u = users.filter(x => x.id === msg.replyMessage.senderId)[0]
+  if(user.id != 492815523) return msg.send ('У вас нет доступа к этой команде')
+  u.hp = Number(msg.$match[1])
+  msg.send(`ХП "${u.nick}" изменены на ${u.hp}`)
+})
+
+vk.updates.hear(/^!деф (.*)/i, msg => {
+  const user = users.filter(x => x.id === msg.senderId)[0]
+  const u = users.filter(x => x.id === msg.replyMessage.senderId)[0]
+  if(user.id != 492815523) return msg.send ('У вас нет доступа к этой команде')
+  u.def = Number(msg.$match[1])
+  msg.send(`Защита "${u.nick}" изменена на ${u.def}`)
+})
+
+vk.updates.hear(/^!атклвл (.*)/i, msg => {
+  const user = users.filter(x => x.id === msg.senderId)[0]
+  const u = users.filter(x => x.id === msg.replyMessage.senderId)[0]
+  if(user.id != 492815523) return msg.send ('У вас нет доступа к этой команде')
+  u.atklvl = Number(msg.$match[1])
+  msg.send(`Уровень атаки "${u.nick}" изменён на ${u.atklvl}`)
+})
+
+vk.updates.hear(/^!хплвл (.*)/i, msg => {
+  const user = users.filter(x => x.id === msg.senderId)[0]
+  const u = users.filter(x => x.id === msg.replyMessage.senderId)[0]
+  if(user.id != 492815523) return msg.send ('У вас нет доступа к этой команде')
+  u.hplvl = Number(msg.$match[1])
+  msg.send(`Уровень ХП "${u.nick}" изменён на ${u.hplvl}`)
+})
+
+vk.updates.hear(/^!дефлвл (.*)/i, msg => {
+  const user = users.filter(x => x.id === msg.senderId)[0]
+  const u = users.filter(x => x.id === msg.replyMessage.senderId)[0]
+  if(user.id != 492815523) return msg.send ('У вас нет доступа к этой команде')
+  u.deflvl = Number(msg.$match[1])
+  msg.send(`Уровень защиты "${u.nick}" изменён на ${u.deflvl}`)
+})
   
   vk.updates.hear(/^(.*) Классы$/i, msg => {
     const user = users.filter(x => x.id === msg.senderId)[0]
+    const u = users.filter(x => x.id === msg.replyMessage.senderId)[0]
     if(msg.$match[1] != '[club202302035|@eswep]') return
     if(msg.messagePayload != "project RQ") return
     if(user.nick == "Игрок") return msg.send (`Невозможное действие. Установите себе ник`)
@@ -429,11 +478,11 @@ const classes = [
     if(msg.messagePayload != "project RQ") return
     if(user.nick == "Игрок") return msg.send (`Невозможное действие. Установите себе ник`)
     if(user.clas.id == 1)
-    msg.send ('Умения класса Воин:\n\n😈|Ярость: на 20% увеличивает своё здоровье и атаку на 6 ходов. Перезарядка: 13 ходов\n\n🛡|Щит: увеличивает свой показатель брони на 20% на 5 ходов. Перезарядка: 9 ходов\n\n🖤|Чёрное сердце: наносит урон противнику в размере 20% от своего здоровья. Перезарядка: 5 ходов\n\n❣|Жажда крови: наносит урон противнику, равный 10% от его текущего здоровья и исцеляет себе столько же. Перезарядка: 3 ходов\n\n☦|Кара: добивает противника, если у него остаётся меньше, чем 15% здоровья. Перезарядка: 21 ход\n\n⚙|Шипы: возвращает противнику 50% урона от его атак на следующие 4 хода. Перезарядка: 7 ходов\n\n⚔|Клинч: блокирует следующий ход противника, и если это атака, то наносит урон, равный вашей атаке, если это контроль, то урон не наносится. Перезарядка: 7 ходов\n\nАТК|Атака: наносит урон, равный вашей атаке')                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+    msg.send ('Умения класса Воин:\n\n😈|Ярость: на 20% увеличивает своё здоровье и атаку на 6 ходов. Перезарядка: 13 ходов\n\n🛡|Щит: увеличивает свой показатель брони на 20% на 5 ходов. Перезарядка: 9 ходов\n\n🖤|Чёрное сердце: наносит урон противнику в размере 20% от своего здоровья. Перезарядка: 5 ходов\n\n❣|Жажда крови: наносит урон противнику, равный 10% от его текущего здоровья и исцеляет себе столько же. Перезарядка: 3 ходов\n\n☦|Кара: добивает противника, если у него остаётся меньше, чем 15% здоровья. Перезарядка: нет.\n\n⚙|Шипы: возвращает противнику 50% урона от его атак на следующие 4 хода. Перезарядка: 7 ходов\n\n⚔|Клинч: блокирует следующий ход противника если это контроль, а если это атака, то ещё и наносит (АТК) урона. Перезарядка: 7 ходов\n\nАТК|Атака: наносит урон, равный вашей атаке')                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
     if(user.clas.id == 2)
-    msg.send ('Умения класса Маг:\n\n❄|Оковы льда: на 4 хода запрещает врагу использовать умения. Перезарядка: 10 ходов\n\n💥|Накопление энергии: при использовании 3 раза подряд позволяет использовать 🔥, ⚡, 💧 3 раза, без передачи хода противнику\n\n🔥|Огонь: наносит урон противнику, равный вашей атаке\n\n⚡|Молния: наносит урон противнику, равный вашей атаке\n\n💧|Вода: наносит урон противнику, равный вашей атаке\n\n🍃|Исцеляет вам здоровье в размере вашей атаки. Перезарядка: 3 хода\n\nАТК|наносит урон противнику, равный вашей атаке\n\nМаг имеет комбинации из трёх умений, зависящие от последнего умения 🔥, ⚡ или 💧\nЕсли 🔥 последний, то поджигает противника на 3 хода, нанося урон, равный 70% вашей атаки\nЕсли ⚡ последний, то запрещает противнику использовать умения на 6 ходов\nЕсли 💧 последний, то обнуляет броню противника на 4 хода')
+    msg.send ('Умения класса Маг:\n\n❄|Оковы льда: на 4 хода запрещает врагу использовать умения. Перезарядка: 10 ходов\n\n💥|Накопление энергии: после 3-ёх применений запрещает противнику использовать умения в течение 6 ходов. Наносит (АТК) урона.\n\n🔥|Огонь: наносит урон противнику, равный вашей атаке\n\n⚡|Молния: наносит урон противнику, равный вашей атаке\n\n💧|Вода: наносит урон противнику, равный вашей атаке\n\n🍃|Исцеляет вам здоровье в размере вашей атаки. Перезарядка: 3 хода\n\nАТК|наносит урон противнику, равный вашей атаке\n\nМаг имеет комбинации из трёх умений, зависящие от последнего умения 🔥, ⚡ или 💧\nЕсли 🔥 последний, то поджигает противника на 3 хода, нанося урон, равный 70% вашей атаки\nЕсли ⚡ последний, то наносит (АТК * 2) урона дополнительно\nЕсли 💧 последний, то контролирует противника на 4 хода')
     if(user.clas.id == 3)
-    msg.send ('Умения класса Ассасин:\n\n🦠|Яд: заражает противника на 6 ходов, нанося урон, равный половине вашей атаки. Перезарядка: 13 ходов\n\n🔪|Смертельный удар: наносит урон противнику, равный АТК * 2. Если противник под действием яда, то наносится дополнительный урон, равный вашей атаке. Если противник атакован из невидимости, то урон от умения увеличивается в два раза. Перезарядка: 7 ходов\n\n💣|Отвлечение: запрещает противнику использовать умения на 2 хода. Перезарядка: 7 ходов\n\n👁‍🗨|Невидимость: позволяет уйти в невидимость на 2 хода и перезаряжает 🔪, 💣, 🗡. Перезарядка: 11 ходов\n\n🧬|Нарушение в ДНК: ассасин может исцелиться на последнем ходе действия яда, исцелив себе половину от чистого (без учёта брони и блокирующих умений) урона яда. Перезарядка: 13 ходов\n\n🗡|Сквозной удар: наносит противнику урон, равный вашей атаке и обнуляет его защиту на 4 хода. Перезарядка: 7 ходов\n\n💉|Отравление: ассасин отравляет себя на 3 хода, нанося каждый ход урон, равный своей атаке, когда эффект закончится — он исцелит себе в 2 раза больше здоровья, чем нанесённый себе урон. Перезарядка: 9 ходов\n\nАТК|Атака: наносит противнику урон, равный вашей  атаке')
+    msg.send ('Умения класса Ассасин:\n\n🦠|Яд: заражает противника на 6 ходов, нанося урон, равный половине вашей атаки. Перезарядка: 12 ходов\n\n🔪|Смертельный удар: наносит урон противнику, равный АТК * 2. Если противник под действием яда, то наносится дополнительный урон, равный вашей атаке. Если противник атакован из невидимости, то урон от умения увеличивается в два раза. Перезарядка: 7 ходов\n\n💣|Отвлечение: запрещает противнику использовать умения на 4 хода. Перезарядка: 10 ходов\n\n👁‍🗨|Невидимость: позволяет уйти в невидимость на 2 хода и перезаряжает 🔪, 💣, 🗡. Перезарядка: 10 ходов\n\n🧬|Нарушение в ДНК: ассасин может исцелиться на последнем ходе действия яда, исцелив себе половину от чистого (без учёта брони и блокирующих умений) урона яда. Перезарядка: 13 ходов\n\n🗡|Сквозной удар: наносит противнику урон, равный вашей атаке и обнуляет его защиту на 4 хода. Перезарядка: 7 ходов\n\n💉|Отравление: ассасин отравляет себя на 5 ходов, нанося каждый ход урон, равный своей атаке, когда эффект закончится — он исцелит себе в 2 раза больше здоровья, чем нанесённый себе урон. Перезарядка: 9 ходов\n\nАТК|Атака: наносит противнику урон, равный вашей  атаке')
   })
 
   vk.updates.hear(/^(.*) Улучшения$/i, msg => {
@@ -1820,7 +1869,7 @@ const classes = [
               if(user.del12 == 0) {
                 var def = user.def
                 var procent = 20
-                var resultdef = def / 100 * procent
+                 var resultdef = def / 100 * procent
                 user.dueldef -= resultdef
                 user.del12 = -1
                  
@@ -2089,7 +2138,7 @@ const classes = [
               if(user.del12 == 0) {
                 var def = user.def
                 var procent = 20
-                var resultdef = def / 100 * procent
+                 var resultdef = def / 100 * procent
                 user.dueldef -= resultdef
                 user.del12 = -1
                  
@@ -2535,7 +2584,7 @@ const classes = [
               if(user.del12 == 0) {
                 var def = user.def
                 var procent = 20
-                var resultdef = def / 100 * procent
+                 var resultdef = def / 100 * procent
                 user.dueldef -= resultdef
                 user.del12 = -1
                  
@@ -2804,7 +2853,7 @@ const classes = [
               if(user.del12 == 0) {
                 var def = user.def
                 var procent = 20
-                var resultdef = def / 100 * procent
+                 var resultdef = def / 100 * procent
                 user.dueldef -= resultdef
                 user.del12 = -1
                  
@@ -3013,7 +3062,7 @@ const classes = [
           if(u.poisoning > 0) u.poisoning -= 1
           var def = user.dueldef
           var procent = 20
-          var resultdef = def / 100 * procent
+           var resultdef = def / 100 * procent
           user.dueldef += resultdef
           user.del12 = 6
           user.cd12 = 9
@@ -3209,7 +3258,7 @@ const classes = [
           if(user.del12 == 0) {
             var def = user.def
             var procent = 20
-            var resultdef = def / 100 * procent
+             var resultdef = def / 100 * procent
             user.dueldef -= resultdef
             user.del12 = -1
              
@@ -3281,7 +3330,7 @@ const classes = [
               if(u.poisoning > 0) u.poisoning -= 2
               var def = user.dueldef
               var procent = 20
-              var resultdef = def / 100 * procent
+               var resultdef = def / 100 * procent
               user.dueldef += resultdef
               user.del12 = 6
               user.cd12 = 9
@@ -3652,7 +3701,7 @@ const classes = [
               if(user.del12 == 0) {
                 var def = user.def
                 var procent = 20
-                var resultdef = def / 100 * procent
+                 var resultdef = def / 100 * procent
                 user.dueldef -= resultdef
                 user.del12 = -1
                  
@@ -3722,7 +3771,7 @@ const classes = [
               if(u.poisoning > 0) u.poisoning -= 1
               var def = user.dueldef
               var procent = 20
-              var resultdef = def / 100 * procent
+               var resultdef = def / 100 * procent
               user.dueldef += resultdef
               user.del12 = 6
               user.cd12 = 9
@@ -3918,7 +3967,7 @@ const classes = [
               if(user.del12 == 0) {
                 var def = user.def
                 var procent = 20
-                var resultdef = def / 100 * procent
+                 var resultdef = def / 100 * procent
                 user.dueldef -= resultdef
                 user.del12 = -1
                  
@@ -3990,7 +4039,7 @@ const classes = [
               if(u.poisoning > 0) u.poisoning -= 2
               var def = user.dueldef
               var procent = 20
-              var resultdef = def / 100 * procent
+               var resultdef = def / 100 * procent
               user.dueldef += resultdef
               user.del12 = 6
               user.cd12 = 9
@@ -4361,7 +4410,7 @@ const classes = [
               if(user.del12 == 0) {
                 var def = user.def
                 var procent = 20
-                var resultdef = def / 100 * procent
+                 var resultdef = def / 100 * procent
                 user.dueldef -= resultdef
                 user.del12 = -1
                  
@@ -4431,7 +4480,7 @@ const classes = [
               if(u.poisoning > 0) u.poisoning -= 1
               var def = user.dueldef
               var procent = 20
-              var resultdef = def / 100 * procent
+               var resultdef = def / 100 * procent
               user.dueldef += resultdef
               user.del12 = 6
               user.cd12 = 9
@@ -4627,7 +4676,7 @@ const classes = [
               if(user.del12 == 0) {
                 var def = user.def
                 var procent = 20
-                var resultdef = def / 100 * procent
+                 var resultdef = def / 100 * procent
                 user.dueldef -= resultdef
                 user.del12 = -1
                  
@@ -5028,7 +5077,7 @@ const classes = [
             if(user.del12 == 0) {
               var def = user.def
               var procent = 20
-              var resultdef = def / 100 * procent
+               var resultdef = def / 100 * procent
               user.dueldef -= resultdef
               user.del12 = -1
                
@@ -5460,7 +5509,7 @@ const classes = [
             if(user.del12 == 0) {
               var def = user.def
               var procent = 20
-              var resultdef = def / 100 * procent
+               var resultdef = def / 100 * procent
               user.dueldef -= resultdef
               user.del12 = -1
                
@@ -5900,7 +5949,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -6510,7 +6559,7 @@ const classes = [
               if(user.del12 == 0) {
                 var def = user.def
                 var procent = 20
-                var resultdef = def / 100 * procent
+                 var resultdef = def / 100 * procent
                 user.dueldef -= resultdef
                 user.del12 = -1
                  
@@ -6773,7 +6822,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -7208,7 +7257,7 @@ const classes = [
               if(user.del12 == 0) {
                 var def = user.def
                 var procent = 20
-                var resultdef = def / 100 * procent
+                 var resultdef = def / 100 * procent
                 user.dueldef -= resultdef
                 user.del12 = -1
                  
@@ -7648,7 +7697,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -8255,7 +8304,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -8518,7 +8567,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -8950,7 +8999,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -9350,7 +9399,7 @@ const classes = [
             if(user.del12 == 0) {
               var def = user.def
               var procent = 20
-              var resultdef = def / 100 * procent
+               var resultdef = def / 100 * procent
               user.dueldef -= resultdef
               user.del12 = -1
                
@@ -9780,7 +9829,7 @@ const classes = [
             if(user.del12 == 0) {
               var def = user.def
               var procent = 20
-              var resultdef = def / 100 * procent
+               var resultdef = def / 100 * procent
               user.dueldef -= resultdef
               user.del12 = -1
                
@@ -10220,7 +10269,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -10835,7 +10884,7 @@ const classes = [
               if(user.del12 == 0) {
                 var def = user.def
                 var procent = 20
-                var resultdef = def / 100 * procent
+                 var resultdef = def / 100 * procent
                 user.dueldef -= resultdef
                 user.del12 = -1
                  
@@ -11273,7 +11322,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -11713,7 +11762,7 @@ const classes = [
               if(user.del12 == 0) {
                 var def = user.def
                 var procent = 20
-                var resultdef = def / 100 * procent
+                 var resultdef = def / 100 * procent
                 user.dueldef -= resultdef
                 user.del12 = -1
                  
@@ -12153,7 +12202,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -12766,7 +12815,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -13029,7 +13078,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -13467,7 +13516,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -14145,7 +14194,7 @@ const classes = [
           if(user.del12 == 0) {
             var def = user.def
             var procent = 20
-            var resultdef = def / 100 * procent
+             var resultdef = def / 100 * procent
             user.dueldef -= resultdef
             user.del12 = -1
              
@@ -14584,7 +14633,7 @@ const classes = [
               if(user.del12 == 0) {
                 var def = user.def
                 var procent = 20
-                var resultdef = def / 100 * procent
+                 var resultdef = def / 100 * procent
                 user.dueldef -= resultdef
                 user.del12 = -1
                  
@@ -14846,7 +14895,7 @@ const classes = [
               if(user.del12 == 0) {
                 var def = user.def
                 var procent = 20
-                var resultdef = def / 100 * procent
+                 var resultdef = def / 100 * procent
                 user.dueldef -= resultdef
                 user.del12 = -1
                  
@@ -15285,7 +15334,7 @@ const classes = [
               if(user.del12 == 0) {
                 var def = user.def
                 var procent = 20
-                var resultdef = def / 100 * procent
+                 var resultdef = def / 100 * procent
                 user.dueldef -= resultdef
                 user.del12 = -1
                  
@@ -15547,7 +15596,7 @@ const classes = [
               if(user.del12 == 0) {
                 var def = user.def
                 var procent = 20
-                var resultdef = def / 100 * procent
+                 var resultdef = def / 100 * procent
                 user.dueldef -= resultdef
                 user.del12 = -1
                  
@@ -15947,7 +15996,7 @@ const classes = [
         if(user.del12 == 0) {
           var def = user.def
           var procent = 20
-          var resultdef = def / 100 * procent
+           var resultdef = def / 100 * procent
           user.dueldef -= resultdef
           user.del12 = -1
            
@@ -16342,7 +16391,7 @@ const classes = [
             if(user.del12 == 0) {
               var def = user.def
               var procent = 20
-              var resultdef = def / 100 * procent
+               var resultdef = def / 100 * procent
               user.dueldef -= resultdef
               user.del12 = -1
                
@@ -16772,7 +16821,7 @@ const classes = [
             if(user.del12 == 0) {
               var def = user.def
               var procent = 20
-              var resultdef = def / 100 * procent
+               var resultdef = def / 100 * procent
               user.dueldef -= resultdef
               user.del12 = -1
                
@@ -17211,7 +17260,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -17818,7 +17867,7 @@ const classes = [
               if(user.del12 == 0) {
                 var def = user.def
                 var procent = 20
-                var resultdef = def / 100 * procent
+                 var resultdef = def / 100 * procent
                 user.dueldef -= resultdef
                 user.del12 = -1
                  
@@ -18255,7 +18304,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -18687,7 +18736,7 @@ const classes = [
               if(user.del12 == 0) {
                 var def = user.def
                 var procent = 20
-                var resultdef = def / 100 * procent
+                 var resultdef = def / 100 * procent
                 user.dueldef -= resultdef
                 user.del12 = -1
                  
@@ -19126,7 +19175,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -19731,7 +19780,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -19993,7 +20042,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -20423,7 +20472,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -22853,7 +22902,7 @@ const classes = [
             if(user.del12 == 0) {
               var def = user.def
               var procent = 20
-              var resultdef = def / 100 * procent
+               var resultdef = def / 100 * procent
               user.dueldef -= resultdef
               user.del12 = -1
                
@@ -23283,7 +23332,7 @@ const classes = [
             if(user.del12 == 0) {
               var def = user.def
               var procent = 20
-              var resultdef = def / 100 * procent
+               var resultdef = def / 100 * procent
               user.dueldef -= resultdef
               user.del12 = -1
                
@@ -23723,7 +23772,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -24331,7 +24380,7 @@ const classes = [
               if(user.del12 == 0) {
                 var def = user.def
                 var procent = 20
-                var resultdef = def / 100 * procent
+                 var resultdef = def / 100 * procent
                 user.dueldef -= resultdef
                 user.del12 = -1
                  
@@ -24769,7 +24818,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -25202,7 +25251,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -25642,7 +25691,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -26248,7 +26297,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -26511,7 +26560,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -26942,7 +26991,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -27006,6 +27055,7 @@ const classes = [
       msg.send(`"${u.nick}" восстанавливает 💚${heal2} здоровья`)
     }
     if(user.nakopleniye == 3) {
+      user.nakopleniye = -1
       u.control = 6
       user.steps += 1
       u.steps += 1
@@ -27348,7 +27398,7 @@ const classes = [
             if(user.del12 == 0) {
               var def = user.def
               var procent = 20
-              var resultdef = def / 100 * procent
+               var resultdef = def / 100 * procent
               user.dueldef -= resultdef
               user.del12 = -1
                
@@ -27778,7 +27828,7 @@ const classes = [
             if(user.del12 == 0) {
               var def = user.def
               var procent = 20
-              var resultdef = def / 100 * procent
+               var resultdef = def / 100 * procent
               user.dueldef -= resultdef
               user.del12 = -1
                
@@ -27850,7 +27900,6 @@ const classes = [
                 if(u.poison > 0) u.poison -= 2
                 if(user.poisoning > 0) user.poisoning -= 2
                 if(u.poisoning > 0) u.poisoning -= 2
-                user.nakopleniye += 1
                 if(u.control == 2) {
                   user.steps += 1
                   u.steps += 1
@@ -28218,7 +28267,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -28247,7 +28296,6 @@ const classes = [
               var spikes = result / 2
               u.duelhp -= result
               user.duelhp -= spikes
-              user.nakopleniye += 1
               if(user.cd11 > 0) user.cd11 -= 2
               if(user.del11 > 0) user.del11 -= 2
               if(user.cd12 > 0) user.cd12 -= 2
@@ -28848,7 +28896,7 @@ const classes = [
               if(user.del12 == 0) {
                 var def = user.def
                 var procent = 20
-                var resultdef = def / 100 * procent
+                 var resultdef = def / 100 * procent
                 user.dueldef -= resultdef
                 user.del12 = -1
                  
@@ -28918,7 +28966,6 @@ const classes = [
                 if(u.poison > 0) u.poison -= 2
                 if(user.poisoning > 0) user.poisoning -= 2
                 if(u.poisoning > 0) u.poisoning -= 2
-                user.nakopleniye += 1
                 if(u.control == 2) {
                   user.steps += 1
                   u.steps += 1
@@ -29286,7 +29333,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -29315,7 +29362,6 @@ const classes = [
                 var spikes = result / 2
                 u.duelhp -= result
                 user.duelhp -= spikes
-                user.nakopleniye += 1
                 if(user.cd11 > 0) user.cd11 -= 1
                 if(user.del11 > 0) user.del11 -= 1
                 if(user.cd12 > 0) user.cd12 -= 1
@@ -29741,7 +29787,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -29813,7 +29859,6 @@ const classes = [
                 if(u.poison > 0) u.poison -= 2
                 if(user.poisoning > 0) user.poisoning -= 2
                 if(u.poisoning > 0) u.poisoning -= 2
-                user.nakopleniye += 1
                 if(u.control == 2) {
                   user.steps += 1
                   u.steps += 1
@@ -30181,7 +30226,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -30208,7 +30253,6 @@ const classes = [
                 var udef = u.dueldef
                 var result = atk - udef
                 u.duelhp -= result
-                user.nakopleniye += 1
                 if(user.cd11 > 0) user.cd11 -= 2
                 if(user.del11 > 0) user.del11 -= 2
                 if(user.cd12 > 0) user.cd12 -= 2
@@ -30809,7 +30853,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -30879,7 +30923,6 @@ const classes = [
                 if(u.poison > 0) u.poison -= 1
                 if(user.poisoning > 0) user.poisoning -= 1
                 if(u.poisoning > 0) u.poisoning -= 1
-                user.nakopleniye += 1
                 user.steps += 1
                 u.steps += 1
                 if (u.clas.id == 1) {
@@ -31072,7 +31115,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -31099,7 +31142,6 @@ const classes = [
                 var udef = u.dueldef
                 var result = atk - udef
                 u.duelhp -= result
-                user.nakopleniye += 1
                 if(user.cd11 > 0) user.cd11 -= 1
                 if(user.del11 > 0) user.del11 -= 1
                 if(user.cd12 > 0) user.cd12 -= 1
@@ -31525,7 +31567,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -31925,7 +31967,7 @@ const classes = [
             if(user.del12 == 0) {
               var def = user.def
               var procent = 20
-              var resultdef = def / 100 * procent
+               var resultdef = def / 100 * procent
               user.dueldef -= resultdef
               user.del12 = -1
                
@@ -32355,7 +32397,7 @@ const classes = [
             if(user.del12 == 0) {
               var def = user.def
               var procent = 20
-              var resultdef = def / 100 * procent
+               var resultdef = def / 100 * procent
               user.dueldef -= resultdef
               user.del12 = -1
                
@@ -32427,7 +32469,6 @@ const classes = [
                 if(u.poison > 0) u.poison -= 2
                 if(user.poisoning > 0) user.poisoning -= 2
                 if(u.poisoning > 0) u.poisoning -= 2
-                user.nakopleniye += 1
                 if(u.control == 2) {
                   user.steps += 1
                   u.steps += 1
@@ -32795,7 +32836,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -32824,7 +32865,6 @@ const classes = [
               var spikes = result / 2
               u.duelhp -= result
               user.duelhp -= spikes
-              user.nakopleniye += 1
               if(user.cd11 > 0) user.cd11 -= 2
               if(user.del11 > 0) user.del11 -= 2
               if(user.cd12 > 0) user.cd12 -= 2
@@ -33420,7 +33460,7 @@ const classes = [
               if(user.del12 == 0) {
                 var def = user.def
                 var procent = 20
-                var resultdef = def / 100 * procent
+                 var resultdef = def / 100 * procent
                 user.dueldef -= resultdef
                 user.del12 = -1
                  
@@ -33490,7 +33530,6 @@ const classes = [
                 if(u.poison > 0) u.poison -= 2
                 if(user.poisoning > 0) user.poisoning -= 2
                 if(u.poisoning > 0) u.poisoning -= 2
-                user.nakopleniye += 1
                 if(u.control == 2) {
                   user.steps += 1
                   u.steps += 1
@@ -33858,7 +33897,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -33887,7 +33926,6 @@ const classes = [
                 var spikes = result / 2
                 u.duelhp -= result
                 user.duelhp -= spikes
-                user.nakopleniye += 1
                 if(user.cd11 > 0) user.cd11 -= 1
                 if(user.del11 > 0) user.del11 -= 1
                 if(user.cd12 > 0) user.cd12 -= 1
@@ -34308,7 +34346,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -34380,7 +34418,6 @@ const classes = [
                 if(u.poison > 0) u.poison -= 2
                 if(user.poisoning > 0) user.poisoning -= 2
                 if(u.poisoning > 0) u.poisoning -= 2
-                user.nakopleniye += 1
                 if(u.control == 2) {
                   user.steps += 1
                   u.steps += 1
@@ -34748,7 +34785,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -34775,7 +34812,6 @@ const classes = [
                 var udef = u.dueldef
                 var result = atk - udef
                 u.duelhp -= result
-                user.nakopleniye += 1
                 if(user.cd11 > 0) user.cd11 -= 2
                 if(user.del11 > 0) user.del11 -= 2
                 if(user.cd12 > 0) user.cd12 -= 2
@@ -35371,7 +35407,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -35441,7 +35477,6 @@ const classes = [
                 if(u.poison > 0) u.poison -= 1
                 if(user.poisoning > 0) user.poisoning -= 1
                 if(u.poisoning > 0) u.poisoning -= 1
-                user.nakopleniye += 1
                 user.steps += 1
                 u.steps += 1
                 if (u.clas.id == 1) {
@@ -35634,7 +35669,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -35661,7 +35696,6 @@ const classes = [
                 var udef = u.dueldef
                 var result = atk - udef
                 u.duelhp -= result
-                user.nakopleniye += 1
                 if(user.cd11 > 0) user.cd11 -= 1
                 if(user.del11 > 0) user.del11 -= 1
                 if(user.cd12 > 0) user.cd12 -= 1
@@ -36082,7 +36116,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -36482,7 +36516,7 @@ const classes = [
             if(user.del12 == 0) {
               var def = user.def
               var procent = 20
-              var resultdef = def / 100 * procent
+               var resultdef = def / 100 * procent
               user.dueldef -= resultdef
               user.del12 = -1
                
@@ -36912,7 +36946,7 @@ const classes = [
             if(user.del12 == 0) {
               var def = user.def
               var procent = 20
-              var resultdef = def / 100 * procent
+               var resultdef = def / 100 * procent
               user.dueldef -= resultdef
               user.del12 = -1
                
@@ -36984,7 +37018,6 @@ const classes = [
                 if(u.poison > 0) u.poison -= 2
                 if(user.poisoning > 0) user.poisoning -= 2
                 if(u.poisoning > 0) u.poisoning -= 2
-                user.nakopleniye += 1
                 if(u.control == 2) {
                   user.steps += 1
                   u.steps += 1
@@ -37352,7 +37385,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -37381,7 +37414,6 @@ const classes = [
               var spikes = result / 2
               u.duelhp -= result
               user.duelhp -= spikes
-              user.nakopleniye += 1
               if(user.cd11 > 0) user.cd11 -= 2
               if(user.del11 > 0) user.del11 -= 2
               if(user.cd12 > 0) user.cd12 -= 2
@@ -37978,7 +38010,7 @@ const classes = [
               if(user.del12 == 0) {
                 var def = user.def
                 var procent = 20
-                var resultdef = def / 100 * procent
+                 var resultdef = def / 100 * procent
                 user.dueldef -= resultdef
                 user.del12 = -1
                  
@@ -38048,7 +38080,6 @@ const classes = [
                 if(u.poison > 0) u.poison -= 2
                 if(user.poisoning > 0) user.poisoning -= 2
                 if(u.poisoning > 0) u.poisoning -= 2
-                user.nakopleniye += 1
                 if(u.control == 2) {
                   user.steps += 1
                   u.steps += 1
@@ -38416,7 +38447,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -38445,7 +38476,6 @@ const classes = [
                 var spikes = result / 2
                 u.duelhp -= result
                 user.duelhp -= spikes
-                user.nakopleniye += 1
                 if(user.cd11 > 0) user.cd11 -= 1
                 if(user.del11 > 0) user.del11 -= 1
                 if(user.cd12 > 0) user.cd12 -= 1
@@ -38867,7 +38897,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -38939,7 +38969,6 @@ const classes = [
                 if(u.poison > 0) u.poison -= 2
                 if(user.poisoning > 0) user.poisoning -= 2
                 if(u.poisoning > 0) u.poisoning -= 2
-                user.nakopleniye += 1
                 if(u.control == 2) {
                   user.steps += 1
                   u.steps += 1
@@ -39307,7 +39336,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -39334,7 +39363,6 @@ const classes = [
                 var udef = u.dueldef
                 var result = atk - udef
                 u.duelhp -= result
-                user.nakopleniye += 1
                 if(user.cd11 > 0) user.cd11 -= 2
                 if(user.del11 > 0) user.del11 -= 2
                 if(user.cd12 > 0) user.cd12 -= 2
@@ -39931,7 +39959,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -40001,7 +40029,6 @@ const classes = [
                 if(u.poison > 0) u.poison -= 1
                 if(user.poisoning > 0) user.poisoning -= 1
                 if(u.poisoning > 0) u.poisoning -= 1
-                user.nakopleniye += 1
                 user.steps += 1
                 u.steps += 1
                 if (u.clas.id == 1) {
@@ -40194,7 +40221,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -40221,7 +40248,6 @@ const classes = [
                 var udef = u.dueldef
                 var result = atk - udef
                 u.duelhp -= result
-                user.nakopleniye += 1
                 if(user.cd11 > 0) user.cd11 -= 1
                 if(user.del11 > 0) user.del11 -= 1
                 if(user.cd12 > 0) user.cd12 -= 1
@@ -40643,7 +40669,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -41459,7 +41485,7 @@ const classes = [
             if(user.del12 == 0) {
               var def = user.def
               var procent = 20
-              var resultdef = def / 100 * procent
+               var resultdef = def / 100 * procent
               user.dueldef -= resultdef
               user.del12 = -1
                
@@ -41887,7 +41913,7 @@ const classes = [
             if(user.del12 == 0) {
               var def = user.def
               var procent = 20
-              var resultdef = def / 100 * procent
+               var resultdef = def / 100 * procent
               user.dueldef -= resultdef
               user.del12 = -1
                
@@ -42286,7 +42312,7 @@ const classes = [
             if(user.del12 == 0) {
               var def = user.def
               var procent = 20
-              var resultdef = def / 100 * procent
+               var resultdef = def / 100 * procent
               user.dueldef -= resultdef
               user.del12 = -1
                
@@ -42715,7 +42741,7 @@ const classes = [
             if(user.del12 == 0) {
               var def = user.def
               var procent = 20
-              var resultdef = def / 100 * procent
+               var resultdef = def / 100 * procent
               user.dueldef -= resultdef
               user.del12 = -1
                
@@ -43155,7 +43181,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -43785,7 +43811,7 @@ const classes = [
               if(user.del12 == 0) {
                 var def = user.def
                 var procent = 20
-                var resultdef = def / 100 * procent
+                 var resultdef = def / 100 * procent
                 user.dueldef -= resultdef
                 user.del12 = -1
                  
@@ -44223,7 +44249,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -44678,7 +44704,7 @@ const classes = [
               if(user.del12 == 0) {
                 var def = user.def
                 var procent = 20
-                var resultdef = def / 100 * procent
+                 var resultdef = def / 100 * procent
                 user.dueldef -= resultdef
                 user.del12 = -1
                  
@@ -45118,7 +45144,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -45742,7 +45768,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -46005,7 +46031,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -46454,7 +46480,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -48524,7 +48550,7 @@ const classes = [
             if(user.del12 == 0) {
               var def = user.def
               var procent = 20
-              var resultdef = def / 100 * procent
+               var resultdef = def / 100 * procent
               user.dueldef -= resultdef
               user.del12 = -1
                
@@ -48953,7 +48979,7 @@ const classes = [
             if(user.del12 == 0) {
               var def = user.def
               var procent = 20
-              var resultdef = def / 100 * procent
+               var resultdef = def / 100 * procent
               user.dueldef -= resultdef
               user.del12 = -1
                
@@ -49393,7 +49419,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -50001,7 +50027,7 @@ const classes = [
               if(user.del12 == 0) {
                 var def = user.def
                 var procent = 20
-                var resultdef = def / 100 * procent
+                 var resultdef = def / 100 * procent
                 user.dueldef -= resultdef
                 user.del12 = -1
                  
@@ -50439,7 +50465,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -50872,7 +50898,7 @@ const classes = [
               if(user.del12 == 0) {
                 var def = user.def
                 var procent = 20
-                var resultdef = def / 100 * procent
+                 var resultdef = def / 100 * procent
                 user.dueldef -= resultdef
                 user.del12 = -1
                  
@@ -51312,7 +51338,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -51918,7 +51944,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -52181,7 +52207,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
@@ -52612,7 +52638,7 @@ const classes = [
                 if(user.del12 == 0) {
                   var def = user.def
                   var procent = 20
-                  var resultdef = def / 100 * procent
+                   var resultdef = def / 100 * procent
                   user.dueldef -= resultdef
                   user.del12 = -1
                    
