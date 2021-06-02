@@ -41,8 +41,8 @@ vk.updates.on('message', (next, context) => {
       dueldef: 0,
       control: 0,
       clas: {
-        name: "Нет",
-        id: 0
+        name: "Воин",
+        id: 1
       },
       money: 10000,
       quest: 0,
@@ -274,7 +274,6 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
   
   vk.updates.hear(/^(.*) Классы$/i, msg => {
     const user = users.filter(x => x.id === msg.senderId)[0]
-    const u = users.filter(x => x.id === msg.replyMessage.senderId)[0]
     if(msg.$match[1] != '[club202302035|@eswep]') return
     if(msg.messagePayload != "project RQ") return
     if(user.nick == "Игрок") return msg.send (`Невозможное действие. Установите себе ник`)

@@ -19,7 +19,7 @@
 			"name": "Ассасин",
 			"id": 3
 		},
-		"money": 10000,
+		"money": 5000,
 		"quest": 0,
 		"adm": false,
 		"predictionduel": false,
@@ -80,7 +80,7 @@
 		"quest": 0,
 		"adm": true,
 		"predictionduel": false,
-		"predictduel": true,
+		"predictduel": false,
 		"duel": false,
 		"steps": 0,
 		"timer": 0,
@@ -166,7 +166,7 @@
 		"invisible": false,
 		"cd35": 0,
 		"cd36": 0,
-		"porezka": 4,
+		"porezka": 0,
 		"cd37": 0,
 		"poisoning": -1
 	}
