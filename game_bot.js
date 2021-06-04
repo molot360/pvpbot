@@ -101,7 +101,7 @@ vk.updates.on('message', (next, context) => {
 vk.updates.hear(/^!топ силы$/i, msg => {
   const users = require('./users.json')
   const you = users.filter(x => x.id === msg.senderId)[0]
-  var top3users = users.sort((a, b)=> (a.rate > b.rate) ? 1 : -1).slice(0,3).reverse();
+  var top3users = users.sort((a, b)=> (a.rate > b.rate) ? 1 : -1).slice(0, 1000).reverse();
   let topuser1nick = top3users[0].nick
   let topuser1rate = top3users[0].rate
   let topuser2nick = top3users[1].nick
@@ -445,7 +445,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
   vk.updates.hear(/^!топ богачей$/i, msg => {
     const users = require('./users.json')
     const you = users.filter(x => x.id === msg.senderId)[0]
-    var top3users = users.sort((a, b)=> (a.money > b.money) ? 1 : -1).slice(0,3).reverse();
+    var top3users = users.sort((a, b)=> (a.money > b.money) ? 1 : -1).slice(0, 1000).reverse();
     let topuser1nick = top3users[0].nick
     let topuser1money = top3users[0].money
     let topuser2nick = top3users[1].nick
@@ -766,13 +766,13 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
   })
 
   vk.updates.hear(/^!д$/i, async (context) => {
-    let u = users.filter(x => x.id === context.senderId)[0]
-    let user = users.filter(x => x.id === context.replyMessage.senderId)[0]
+    let user = users.filter(x => x.id === context.senderId)[0]
+    let u = users.filter(x => x.id === context.replyMessage.senderId)[0]
     console.log(user.id)
     console.log(u.id)
-    if(u.nick == "Игрок") return context.send (`Невозможное действие. Установите себе ник`)
+    if(user.nick == "Игрок") return context.send (`Невозможное действие. Установите себе ник`)
     if(!context.hasReplyMessage) return context.send('Для вызова дуэли необходимо переслать сообщение')
-    if(u.id == user.id) return context.send('Нельзя вызвать на дуэль себя')
+    if(user.id == u.id) return context.send('Нельзя вызвать на дуэль себя')
     for (let i = 0; i < users.length; i++) {
       if(users[i].duel == true) return context.send (`Арена занята`)
     }
@@ -780,7 +780,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
     user.predictduel = true 
     await vk.api.messages.send({
       peer_id: context.peerId,
-      message: `@id${u.id}(${u.nick}) вызвал на дуэль @id${user.id}(${user.nick})`,
+      message: `@id${user.id}(${user.nick}) вызвал на дуэль @id${u.id}(${u.nick})`,
       disable_mentions: 1,
       keyboard: Keyboard.builder()
       .inline()
@@ -796,7 +796,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
           payload: "project RQ"
           }),
         })
-    if(u.duel != true | user.duel != true) {
+    if(u.duel != true || user.duel != true) {
       setTimeout(msg, 60000)
     }
     function msg() {
@@ -806,9 +806,10 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
 
     vk.updates.hear(/^(.*) ⚔Принять$/i, msg => {
       if(user.nick == "Игрок") return msg.send (`Невозможное действие. Установите себе ник`)
-      if(msg.senderId != user.id) return
-      if(msg.$match[1] != '[club202302035|@eswep]') return
-      if(msg.messagePayload != "project RQ") return
+      if(msg.senderId != u.id) return msg.send (`Id`)
+      if(u.predictionduel != true) return msg.send(`Pr`)
+      if(msg.$match[1] != '[club202302035|@eswep]') return msg.send (`Тег`)
+      if(msg.messagePayload != "project RQ") return msg.send (`Payload`)
       console.log(user.id)
       console.log(u.id)
       user.duel = true
@@ -992,8 +993,11 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
     })
     
     vk.updates.hear(/^!с$/i, msg => {
-      const user = users.filter(x => x.id === msg.senderId)[0]
-      const u = users.filter(x => x.id === msg.replyMessage.senderId)[0]
+      if(msg.senderId == u.id) {
+        var constu = u
+        u = user
+        user = constu
+      }
       if(user.duel != true) return
       if(u.duel != true) return
       var plata2 = user.money
@@ -1073,6 +1077,9 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
       u.cd37 = 0,
       u.poisoning = -1
       msg.send(`${user.nick} сдался ${u.nick}. Со счёта ${user.nick} списано ${finalplata2}💵 и начислено на счёт ${u.nick}`)
+      var constuser = user
+      user = u
+      u = constuser
     })
 
     vk.updates.hear(/^(.*) ✋🏻Отклонить$/i, msg => {
