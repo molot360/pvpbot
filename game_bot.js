@@ -87,7 +87,8 @@ vk.updates.on('message', (next, context) => {
 
 vk.updates.hear(/^!get users.json$/i, msg => {
   const users = require('./users.json')
-  console.log(users)
+  var DB = JSON.stringify(users, null, ' ')
+  console.log(DB)
   })
 
 vk.updates.on('message', (next, context) => {
@@ -136,7 +137,7 @@ const classes = [
     if(user.nick == "Игрок") return context.send (`Невозможное действие. Установите себе ник`)
     await vk.api.messages.send({
       peer_id: context.peerId,
-      message: `Ежедневные квесты:\n\n🔷Квест 1: зачистка локации от монстров\n⌛Время выполнения: 2 часа\n💰Награда: 5.000💵\n\n🔷Квест 2: разнос вестей\n⌛Время выполнения: 1 час\n💰Награда: 3.000💵\n\n🔷Квест 3: помощь новичкам\n⌛Время выполнения: 4 часа\n💰Hаграда: 9.000💵`,
+      message: `Ежедневные квесты:\n\n🔷Квест 1: зачистка локации от монстров\n⌛Время выполнения: 2 часа\n💰Награда: 5.000🌕\n\n🔷Квест 2: разнос вестей\n⌛Время выполнения: 1 час\n💰Награда: 3.000🌕\n\n🔷Квест 3: помощь новичкам\n⌛Время выполнения: 4 часа\n💰Hаграда: 9.000🌕`,
       keyboard: Keyboard.builder()
       .inline()
         .textButton({
@@ -173,7 +174,7 @@ const classes = [
       user.money += 5000
       vk.api.messages.send({
         peer_id: context.peerId,
-        message: `@id${user.id}(${user.nick}), вы завершили работу\n💰Hаграда: 5.000💵`,
+        message: `@id${user.id}(${user.nick}), вы завершили работу\n💰Hаграда: 5.000🌕`,
         disable_mentions: 1,
       })
     }
@@ -193,7 +194,7 @@ const classes = [
       user.money += 3000
       vk.api.messages.send({
         peer_id: context.peerId,
-        message: `@id${user.id}(${user.nick}), вы завершили работу\n💰Hаграда: 3.000💵`,
+        message: `@id${user.id}(${user.nick}), вы завершили работу\n💰Hаграда: 3.000🌕`,
         disable_mentions: 1,
       })
     }
@@ -213,7 +214,7 @@ const classes = [
       user.money += 9000
       vk.api.messages.send({
         peer_id: context.peerId,
-        message: `@id${user.id}(${user.nick}), вы завершили работу\n💰Hаграда: 9.000💵`,
+        message: `@id${user.id}(${user.nick}), вы завершили работу\n💰Hаграда: 9.000🌕`,
         disable_mentions: 1,
       })
     }
@@ -282,7 +283,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
     if(msg.$match[1] != '[club202302035|@eswep]') return
     if(msg.messagePayload != "project RQ") return
     if(user.nick == "Игрок") return msg.send (`Невозможное действие. Установите себе ник`)
-    msg.send(`${user.nick}, вот все существующие классы:\n1. Воин\n2. Маг\n3. Ассасин\nДля смены класса необходимо иметь 5000💵\n\nЧтобы сменить класс, введи: "!класс [номер класса]"`)
+    msg.send(`${user.nick}, вот все существующие классы:\n1. Воин\n2. Маг\n3. Ассасин\nДля смены класса необходимо иметь 5000🌕\n\nЧтобы сменить класс, введи: "!класс [номер класса]"`)
   })
   
   vk.updates.hear(/^!класс ([0-9]+)/i, msg => {
@@ -290,7 +291,8 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
     num = Number(msg.$match[1])
     if(user.nick == "Игрок") return msg.send (`Невозможное действие. Установите себе ник`)
     if(num > 3 || num < 1) return msg.send(`Такого класса не существует`)
-    if(user.money < 5000) return msg.send (`Не хватает ${1000 - user.money}💵 на смену класса`)
+    var money = Math.abs(1000 - user.money)
+    if(user.money < 5000) return msg.send (`Не хватает ${money}🌕 на смену класса`)
     clas = classes.filter(x => x.id === num)[0]
     user.clas.name = clas.name
     user.clas.id = clas.id
@@ -302,7 +304,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
     const user = users.filter(x => x.id === msg.senderId)[0]
     nick = msg.$match[1]
     if(nick.length > 20) return msg.send(`Ник не может быть длиннее 20 символов`)
-    if(user.money < 1000) return msg.send (`Не хватает ${1000 - user.money}💵 на смену ника`)
+    if(user.money < 1000) return msg.send (`Не хватает ${1000 - user.money}🌕 на смену ника`)
     if(msg.$match[1] == "Игрок") return msg.send (`Недопустимый ник`)
     user.nick = nick
     user.money -= 1000
@@ -327,30 +329,28 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
     const user = users.filter(x => x.id === msg.senderId)[0]
     const u = users.filter(x => x.id === msg.replyMessage.senderId)[0]
     var finalplata2 = Number(msg.$match[1])
-    if(user.money < finalplata2) return msg.send(`Недостаточно 💵`)
+    if(user.money < finalplata2) return msg.send(`Недостаточно 🌕`)
     user.money -= finalplata2
     u.money += finalplata2
-    msg.send(`Игроку "${u.nick}" переведено ${finalplata2}💵`)
+    msg.send(`Игроку "${u.nick}" переведено ${finalplata2}🌕`)
   })
 
   vk.updates.hear(/^!снять ([0-9]+)/i, msg => {
     const user = users.filter(x => x.id === msg.senderId)[0]
     const u = users.filter(x => x.id === msg.replyMessage.senderId)[0]
-    if(user.adm == false) return msg.send (`У вас нет доступа к этой команде`)
+    if(user.id != 492815523) return msg.send (`У вас нет доступа к этой команде`)
     var finalplata2 = Number(msg.$match[1])
-    if(user.money < finalplata2) return msg.send(`Недостаточно 💵`)
     u.money -= finalplata2
-    msg.send(`Со счёта игрока "${u.nick}" снято ${finalplata2}💵`)
+    msg.send(`Со счёта игрока "${u.nick}" снято ${finalplata2}🌕`)
   })
 
   vk.updates.hear(/^!выдать ([0-9]+)/i, msg => {
     const user = users.filter(x => x.id === msg.senderId)[0]
     const u = users.filter(x => x.id === msg.replyMessage.senderId)[0]
-    if(user.adm == false) return msg.send (`У вас нет доступа к этой команде`)
+    if(user.id != 492815523) return msg.send (`У вас нет доступа к этой команде`)
     var finalplata2 = Number(msg.$match[1])
-    if(user.money < finalplata2) return msg.send(`Недостаточно 💵`)
     u.money += finalplata2
-    msg.send(`Игроку "${u.nick}" выдано ${finalplata2}💵`)
+    msg.send(`Игроку "${u.nick}" выдано ${finalplata2}🌕`)
   })
 
   vk.updates.on('chat_invite_user', (next, context) => {
@@ -457,7 +457,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
     let topuser2money = top3users[1].money
     let topuser3nick = top3users[2].nick
     let topuser3money = top3users[2].money
-    msg.send(`1⃣ ${topuser1nick} — ${topuser1money}💵\n2⃣ ${topuser2nick} — ${topuser2money}💵\n3⃣ ${topuser3nick} — ${topuser3money}💵\n\nВаш счёт — ${you.money}💵`)
+    msg.send(`1⃣ ${topuser1nick} — ${topuser1money}🌕\n2⃣ ${topuser2nick} — ${topuser2money}🌕\n3⃣ ${topuser3nick} — ${topuser3money}🌕\n\nВаш счёт — ${you.money}🌕`)
     })
 
   vk.updates.hear(/^(.*) Профиль/i, msg => {
@@ -467,7 +467,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
     if(user.nick == "Игрок") return msg.send (`Невозможное действие. Установите себе ник`)
     var text = ''
     if(user.adm == true) text += `✅Администратор`
-    msg.send(`📋Ваш профиль:\nНик: ${user.nick}\nКласс: ${user.clas.name}\n🏆Рейтинг силы: ${user.rate}\n❤Здоровье: ${user.hp}\n⚔Атака: ${user.atk}\n🛡Защита: ${user.def} (1🛡= -1⚔)\n💵Деньги: ${user.money}\n\n${text}`)
+    msg.send(`📋Ваш профиль:\nНик: ${user.nick}\nКласс: ${user.clas.name}\n🏆Рейтинг силы: ${user.rate}\n❤Здоровье: ${user.hp}\n⚔Атака: ${user.atk}\n🛡Защита: ${user.def} (1🛡= -1⚔)\n🌕Деньги: ${user.money}\n\n${text}`)
   })
 
   vk.updates.hear(/^!проф/i, msg => {
@@ -502,44 +502,77 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
     if(msg.$match[1] != '[club202302035|@eswep]') return
     if(msg.messagePayload != "project RQ") return
     var text1 = ''
-    if(user.atklvl == 1) text1 = 12
-    if(user.atklvl == 2) text1 = 15
-    if(user.atklvl == 3) text1 = 18
-    if(user.atklvl == 4) text1 = 25
-    if(user.atklvl == 5) text1 = 30
-    if(user.atklvl == 6) text1 = 37
-    if(user.atklvl == 7) text1 = 45
-    if(user.atklvl == 8) text1 = 56
-    if(user.atklvl == 9) text1 = 69
-    if(user.atklvl == 10) text1 = 84
-    if(user.atklvl == 11) text1 = 0
+    if(user.atklvl == 1) text1 = `+12`
+    if(user.atklvl == 2) text1 = `+15`
+    if(user.atklvl == 3) text1 = `+18`
+    if(user.atklvl == 4) text1 = `+25`
+    if(user.atklvl == 5) text1 = `+30`
+    if(user.atklvl == 6) text1 = `+37`
+    if(user.atklvl == 7) text1 = `+45`
+    if(user.atklvl == 8) text1 = `+56`
+    if(user.atklvl == 9) text1 = `+69`
+    if(user.atklvl == 10) text1 = `+84`
+    if(user.atklvl == 11) text1 = `max.`
     var text2 = ''
-    if(user.hplvl == 1) text2 = 60
-    if(user.hplvl == 2) text2 = 72
-    if(user.hplvl == 3) text2 = 86
-    if(user.hplvl == 4) text2 = 103
-    if(user.hplvl == 5) text2 = 123
-    if(user.hplvl == 6) text2 = 149
-    if(user.hplvl == 7) text2 = 179
-    if(user.hplvl == 8) text2 = 215
-    if(user.hplvl == 9) text2 = 258
-    if(user.hplvl == 10) text2 = 309
-    if(user.hplvl == 11) text2 = 0
+    if(user.hplvl == 1) text2 = `+60`
+    if(user.hplvl == 2) text2 = `+72`
+    if(user.hplvl == 3) text2 = `+86`
+    if(user.hplvl == 4) text2 = `+103`
+    if(user.hplvl == 5) text2 = `+123`
+    if(user.hplvl == 6) text2 = `+149`
+    if(user.hplvl == 7) text2 = `+179`
+    if(user.hplvl == 8) text2 = `+215`
+    if(user.hplvl == 9) text2 = `+258`
+    if(user.hplvl == 10) text2 = `+309`
+    if(user.hplvl == 11) text2 = `max.`
     var text3 = ''
-    if(user.deflvl == 1) text3 = 5
-    if(user.deflvl == 2) text3 = 6
-    if(user.deflvl == 3) text3 = 7
-    if(user.deflvl == 4) text3 = 9
-    if(user.deflvl == 5) text3 = 10
-    if(user.deflvl == 6) text3 = 12
-    if(user.deflvl == 7) text3 = 15
-    if(user.deflvl == 8) text3 = 18
-    if(user.deflvl == 9) text3 = 22
-    if(user.deflvl == 10) text3 = 26
-    if(user.deflvl == 11) text3 = 0
+    if(user.deflvl == 1) text3 = `+5`
+    if(user.deflvl == 2) text3 = `+6`
+    if(user.deflvl == 3) text3 = `+7`
+    if(user.deflvl == 4) text3 = `+9`
+    if(user.deflvl == 5) text3 = `+10`
+    if(user.deflvl == 6) text3 = `+12`
+    if(user.deflvl == 7) text3 = `+15`
+    if(user.deflvl == 8) text3 = `+18`
+    if(user.deflvl == 9) text3 = `+22`
+    if(user.deflvl == 10) text3 = `+26`
+    if(user.deflvl == 11) text3 = `max.`
+    var text4 = ''
+    if(user.atklvl == 1) text4 = `5000🌕`
+    if(user.atklvl == 2) text4 = `6500🌕`
+    if(user.atklvl == 3) text4 = `8000🌕`
+    if(user.atklvl == 4) text4 = `10000🌕`
+    if(user.atklvl == 5) text4 = `12000🌕`
+    if(user.atklvl == 6) text4 = `14000🌕`
+    if(user.atklvl == 7) text4 = `16500🌕`
+    if(user.atklvl == 8) text4 = `19000🌕`
+    if(user.atklvl == 9) text4 = `23000🌕`
+    if(user.atklvl == 10) text4 = `30000🌕`
+    var text5 = ''
+    if(user.hplvl == 1) text5 = `5000🌕`
+    if(user.hplvl == 2) text5 = `6500🌕`
+    if(user.hplvl == 3) text5 = `8000🌕`
+    if(user.hplvl == 4) text5 = `10000🌕`
+    if(user.hplvl == 5) text5 = `12000🌕`
+    if(user.hplvl == 6) text5 = `14000🌕`
+    if(user.hplvl == 7) text5 = `16500🌕`
+    if(user.hplvl == 8) text5 = `19000🌕`
+    if(user.hplvl == 9) text5 = `23000🌕`
+    if(user.hplvl == 10) text5 = `30000🌕`
+    var text6 = ''
+    if(user.deflvl == 1) text6 = `5000🌕`
+    if(user.deflvl == 2) text6 = `6500🌕`
+    if(user.deflvl == 3) text6 = `8000🌕`
+    if(user.deflvl == 4) text6 = `10000🌕`
+    if(user.deflvl == 5) text6 = `12000🌕`
+    if(user.deflvl == 6) text6 = `14000🌕`
+    if(user.deflvl == 7) text6 = `16500🌕`
+    if(user.deflvl == 8) text6 = `19000🌕`
+    if(user.deflvl == 9) text6 = `23000🌕`
+    if(user.deflvl == 10) text6 = `30000🌕`
       vk.api.messages.send({
         peer_id: msg.peerId,
-        message: `Улучшения харатеристик:\n\nАТК: ${user.atk} (уровень: ${user.atklvl}) —> АТК +${text1} (уровень: ${user.atklvl + 1})\nХП: ${user.hp} (уровень: ${user.hplvl}) —> ХП +${text2} (уровень: ${user.hplvl + 1})\nДЕФ: ${user.def} (уровень: ${user.deflvl}) —> ДЕФ +${text3} (уровень: ${user.deflvl + 1})`,
+        message: `Улучшения харатеристик:\n\nАТК: ${user.atk} (уровень: ${user.atklvl}) —> АТК ${text1} (уровень: ${user.atklvl + 1}) ${text4}\nХП: ${user.hp} (уровень: ${user.hplvl}) —> ХП ${text2} (уровень: ${user.hplvl + 1}) ${text5}\nДЕФ: ${user.def} (уровень: ${user.deflvl}) —> ДЕФ ${text3} (уровень: ${user.deflvl + 1}) ${text6}`,
         disable_mentions: 1,
         keyboard: Keyboard.builder()
         .inline()
@@ -570,64 +603,64 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
     if(user.nick == "Игрок") return msg.send (`Невозможное действие. Установите себе ник`)
     if(user.hplvl == 11) return msg.send('Здоровье на максимальном уровне')
     if(user.hplvl == 1) {
-      if(user.money < 5000) return msg.send(`Недостаточно 💵`)
+      if(user.money < 5000) return msg.send(`Недостаточно 🌕`)
       user.hp += 60
       user.money -= 5000
-      msg.send(`Здоровье повышено до ${user.hp}, с вашего счёта списано 5000💵`)
+      msg.send(`Здоровье повышено до ${user.hp}, с вашего счёта списано 5000🌕`)
     }
     if(user.hplvl == 2) {
-      if(user.money < 6500) return msg.send(`Недостаточно 💵`)
+      if(user.money < 6500) return msg.send(`Недостаточно 🌕`)
       user.hp += 72
       user.money -= 6500
-      msg.send(`Здоровье повышено до ${user.hp}, с вашего счёта списано 6500💵`)
+      msg.send(`Здоровье повышено до ${user.hp}, с вашего счёта списано 6500🌕`)
     }
     if(user.hplvl == 3) {
-      if(user.money < 8000) return msg.send(`Недостаточно 💵`)
+      if(user.money < 8000) return msg.send(`Недостаточно 🌕`)
       user.hp += 86
       user.money -= 8000
-      msg.send(`Здоровье повышено до ${user.hp}, с вашего счёта списано 8000💵`)
+      msg.send(`Здоровье повышено до ${user.hp}, с вашего счёта списано 8000🌕`)
     }
     if(user.hplvl == 4) {
-      if(user.money < 10000) return msg.send(`Недостаточно 💵`)
+      if(user.money < 10000) return msg.send(`Недостаточно 🌕`)
       user.hp += 103
       user.money -= 10000
-      msg.send(`Здоровье повышено до ${user.hp}, с вашего счёта списано 10000💵`)
+      msg.send(`Здоровье повышено до ${user.hp}, с вашего счёта списано 10000🌕`)
     }
     if(user.hplvl == 5) {
-      if(user.money < 12000) return msg.send(`Недостаточно 💵`)
+      if(user.money < 12000) return msg.send(`Недостаточно 🌕`)
       user.hp += 124
       user.money -= 12000
-      msg.send(`Здоровье повышено до ${user.hp}, с вашего счёта списано 12000💵`)
+      msg.send(`Здоровье повышено до ${user.hp}, с вашего счёта списано 12000🌕`)
     }
     if(user.hplvl == 6) {
-      if(user.money < 14000) return msg.send(`Недостаточно 💵`)
+      if(user.money < 14000) return msg.send(`Недостаточно 🌕`)
       user.hp += 149
       user.money -= 14000
-      msg.send(`Здоровье повышено до ${user.hp}, с вашего счёта списано 14000💵`)
+      msg.send(`Здоровье повышено до ${user.hp}, с вашего счёта списано 14000🌕`)
     }
     if(user.hplvl == 7) {
-      if(user.money < 16500) return msg.send(`Недостаточно 💵`)
+      if(user.money < 16500) return msg.send(`Недостаточно 🌕`)
       user.hp += 179
       user.money -= 16500
-      msg.send(`Здоровье повышено до ${user.hp}, с вашего счёта списано 16500💵`)
+      msg.send(`Здоровье повышено до ${user.hp}, с вашего счёта списано 16500🌕`)
     }
     if(user.hplvl == 8) {
-      if(user.money < 19000) return msg.send(`Недостаточно 💵`)
+      if(user.money < 19000) return msg.send(`Недостаточно 🌕`)
       user.hp += 215
       user.money -= 19000
-      msg.send(`Здоровье повышено до ${user.hp}, с вашего счёта списано 19000💵`)
+      msg.send(`Здоровье повышено до ${user.hp}, с вашего счёта списано 19000🌕`)
     }
     if(user.hplvl == 9) {
-      if(user.money < 23000) return msg.send(`Недостаточно 💵`)
+      if(user.money < 23000) return msg.send(`Недостаточно 🌕`)
       user.hp += 258
       user.money -= 23000
-      msg.send(`Здоровье повышено до ${user.hp}, с вашего счёта списано 23000💵`)
+      msg.send(`Здоровье повышено до ${user.hp}, с вашего счёта списано 23000🌕`)
     }
     if(user.hplvl == 10) {
-      if(user.money < 30000) return msg.send(`Недостаточно 💵`)
+      if(user.money < 30000) return msg.send(`Недостаточно 🌕`)
       user.hp += 309
       user.money -= 30000
-      msg.send(`Здоровье повышено до ${user.hp}, с вашего счёта списано 30000💵`)
+      msg.send(`Здоровье повышено до ${user.hp}, с вашего счёта списано 30000🌕`)
     }
     user.hplvl += 1
   })
@@ -639,64 +672,64 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
     if(user.nick == "Игрок") return msg.send (`Невозможное действие. Установите себе ник`)
     if(user.atklvl == 11) return msg.send('Атака на максимальном уровне')
     if(user.atklvl == 1) {
-      if(user.money < 5000) return msg.send(`Недостаточно 💵`)
+      if(user.money < 5000) return msg.send(`Недостаточно 🌕`)
       user.atk += 12
       user.money -= 5000
-      msg.send(`Атака повышена до ${user.atk}, с вашего счёта списано 5000💵`)
+      msg.send(`Атака повышена до ${user.atk}, с вашего счёта списано 5000🌕`)
     }
     if(user.atklvl == 2) {
-      if(user.money < 6500) return msg.send(`Недостаточно 💵`)
+      if(user.money < 6500) return msg.send(`Недостаточно 🌕`)
       user.atk += 15
       user.money -= 6500
-      msg.send(`Атака повышена до ${user.atk}, с вашего счёта списано 6500💵`)
+      msg.send(`Атака повышена до ${user.atk}, с вашего счёта списано 6500🌕`)
     }
     if(user.atklvl == 3) {
-      if(user.money < 8000) return msg.send(`Недостаточно 💵`)
+      if(user.money < 8000) return msg.send(`Недостаточно 🌕`)
       user.atk += 18
       user.money -= 8000
-      msg.send(`Атака повышена до ${user.atk}, с вашего счёта списано 8000💵`)
+      msg.send(`Атака повышена до ${user.atk}, с вашего счёта списано 8000🌕`)
     }
     if(user.atklvl == 4) {
-      if(user.money < 10000) return msg.send(`Недостаточно 💵`)
+      if(user.money < 10000) return msg.send(`Недостаточно 🌕`)
       user.atk += 25
       user.money -= 10000
-      msg.send(`Атака повышена до ${user.atk}, с вашего счёта списано 10000💵`)
+      msg.send(`Атака повышена до ${user.atk}, с вашего счёта списано 10000🌕`)
     }
     if(user.atklvl == 5) {
-      if(user.money < 12000) return msg.send(`Недостаточно 💵`)
+      if(user.money < 12000) return msg.send(`Недостаточно 🌕`)
       user.atk += 30
       user.money -= 12000
-      msg.send(`Атака повышена до ${user.atk}, с вашего счёта списано 12000💵`)
+      msg.send(`Атака повышена до ${user.atk}, с вашего счёта списано 12000🌕`)
     }
     if(user.atklvl == 6) {
-      if(user.money < 14000) return msg.send(`Недостаточно 💵`)
+      if(user.money < 14000) return msg.send(`Недостаточно 🌕`)
       user.atk += 37
       user.money -= 14000
-      msg.send(`Атака повышена до ${user.atk}, с вашего счёта списано 14000💵`)
+      msg.send(`Атака повышена до ${user.atk}, с вашего счёта списано 14000🌕`)
     }
     if(user.atklvl == 7) {
-      if(user.money < 16500) return msg.send(`Недостаточно 💵`)
+      if(user.money < 16500) return msg.send(`Недостаточно 🌕`)
       user.atk += 45
       user.money -= 16500
-      msg.send(`Атака повышена до ${user.atk}, с вашего счёта списано 16500💵`)
+      msg.send(`Атака повышена до ${user.atk}, с вашего счёта списано 16500🌕`)
     }
     if(user.atklvl == 8) {
-      if(user.money < 19000) return msg.send(`Недостаточно 💵`)
+      if(user.money < 19000) return msg.send(`Недостаточно 🌕`)
       user.atk += 56
       user.money -= 19000
-      msg.send(`Атака повышена до ${user.atk}, с вашего счёта списано 19000💵`)
+      msg.send(`Атака повышена до ${user.atk}, с вашего счёта списано 19000🌕`)
     }
     if(user.atklvl == 9) {
-      if(user.money < 23000) return msg.send(`Недостаточно 💵`)
+      if(user.money < 23000) return msg.send(`Недостаточно 🌕`)
       user.atk += 69
       user.money -= 23000
-      msg.send(`Атака повышена до ${user.atk}, с вашего счёта списано 23000💵`)
+      msg.send(`Атака повышена до ${user.atk}, с вашего счёта списано 23000🌕`)
     }
     if(user.atklvl == 10) {
-      if(user.money < 30000) return msg.send(`Недостаточно 💵`)
+      if(user.money < 30000) return msg.send(`Недостаточно 🌕`)
       user.atk += 84
       user.money -= 30000
-      msg.send(`Атака повышена до ${user.atk}, с вашего счёта списано 30000💵`)
+      msg.send(`Атака повышена до ${user.atk}, с вашего счёта списано 30000🌕`)
     }
     user.atklvl += 1
   })
@@ -708,76 +741,76 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
     if(user.nick == "Игрок") return msg.send (`Невозможное действие. Установите себе ник`)
     if(user.deflvl == 11) return msg.send('Защита на максимальном уровне')
     if(user.deflvl == 1) {
-      if(user.money < 5000) return msg.send(`Недостаточно 💵`)
+      if(user.money < 5000) return msg.send(`Недостаточно 🌕`)
       user.def += 5
       user.money -= 5000
-      msg.send(`Защита повышена до ${user.def}, с вашего счёта списано 5000💵`)
+      msg.send(`Защита повышена до ${user.def}, с вашего счёта списано 5000🌕`)
     }
     if(user.deflvl == 2) {
-      if(user.money < 6500) return msg.send(`Недостаточно 💵`)
+      if(user.money < 6500) return msg.send(`Недостаточно 🌕`)
       user.def += 6
       user.money -= 6500
-      msg.send(`Защита повышена до ${user.def}, с вашего счёта списано 6500💵`)
+      msg.send(`Защита повышена до ${user.def}, с вашего счёта списано 6500🌕`)
     }
     if(user.deflvl == 3) {
-      if(user.money < 8000) return msg.send(`Недостаточно 💵`)
+      if(user.money < 8000) return msg.send(`Недостаточно 🌕`)
       user.def += 7
       user.money -= 8000
-      msg.send(`Защита повышена до ${user.def}, с вашего счёта списано 8000💵`)
+      msg.send(`Защита повышена до ${user.def}, с вашего счёта списано 8000🌕`)
     }
     if(user.deflvl == 4) {
-      if(user.money < 10000) return msg.send(`Недостаточно 💵`)
+      if(user.money < 10000) return msg.send(`Недостаточно 🌕`)
       user.def += 9
       user.money -= 10000
-      msg.send(`Защита повышена до ${user.def}, с вашего счёта списано 10000💵`)
+      msg.send(`Защита повышена до ${user.def}, с вашего счёта списано 10000🌕`)
     }
     if(user.deflvl == 5) {
-      if(user.money < 12000) return msg.send(`Недостаточно 💵`)
+      if(user.money < 12000) return msg.send(`Недостаточно 🌕`)
       user.def += 10
       user.money -= 12000
-      msg.send(`Защита повышена до ${user.def}, с вашего счёта списано 12000💵`)
+      msg.send(`Защита повышена до ${user.def}, с вашего счёта списано 12000🌕`)
     }
     if(user.deflvl == 6) {
-      if(user.money < 14000) return msg.send(`Недостаточно 💵`)
+      if(user.money < 14000) return msg.send(`Недостаточно 🌕`)
       user.def += 12
       user.money -= 14000
-      msg.send(`Защита повышена до ${user.def}, с вашего счёта списано 14000💵`)
+      msg.send(`Защита повышена до ${user.def}, с вашего счёта списано 14000🌕`)
     }
     if(user.deflvl == 7) {
-      if(user.money < 16500) return msg.send(`Недостаточно 💵`)
+      if(user.money < 16500) return msg.send(`Недостаточно 🌕`)
       user.def += 15
       user.money -= 16500
-      msg.send(`Защита повышена до ${user.def}, с вашего счёта списано 16500💵`)
+      msg.send(`Защита повышена до ${user.def}, с вашего счёта списано 16500🌕`)
     }
     if(user.deflvl == 8) {
-      if(user.money < 19000) return msg.send(`Недостаточно 💵`)
+      if(user.money < 19000) return msg.send(`Недостаточно 🌕`)
       user.def += 18
       user.money -= 19000
-      msg.send(`Защита повышена до ${user.def}, с вашего счёта списано 19000💵`)
+      msg.send(`Защита повышена до ${user.def}, с вашего счёта списано 19000🌕`)
     }
     if(user.deflvl == 9) {
-      if(user.money < 23000) return msg.send(`Недостаточно 💵`)
+      if(user.money < 23000) return msg.send(`Недостаточно 🌕`)
       user.def += 22
       user.money -= 23000
-      msg.send(`Защита повышена до ${user.def}, с вашего счёта списано 23000💵`)
+      msg.send(`Защита повышена до ${user.def}, с вашего счёта списано 23000🌕`)
     }
     if(user.deflvl == 10) {
-      if(user.money < 30000) return msg.send(`Недостаточно 💵`)
+      if(user.money < 30000) return msg.send(`Недостаточно 🌕`)
       user.def += 26
       user.money -= 30000
-      msg.send(`Защита повышена до ${user.def}, с вашего счёта списано 30000💵`)
+      msg.send(`Защита повышена до ${user.def}, с вашего счёта списано 30000🌕`)
     }
     user.deflvl += 1
   })
 
   vk.updates.hear(/^!д$/i, async (context) => {
-    let user = users.filter(x => x.id === context.senderId)[0]
-    let u = users.filter(x => x.id === context.replyMessage.senderId)[0]
-    console.log(user.id)
+    let u = users.filter(x => x.id === context.senderId)[0]
+    let user = users.filter(x => x.id === context.replyMessage.senderId)[0]
     console.log(u.id)
-    if(user.nick == "Игрок") return context.send (`Невозможное действие. Установите себе ник`)
+    console.log(user.id)
+    if(u.nick == "Игрок") return context.send (`Невозможное действие. Установите себе ник`)
     if(!context.hasReplyMessage) return context.send('Для вызова дуэли необходимо переслать сообщение')
-    if(user.id == u.id) return context.send('Нельзя вызвать на дуэль себя')
+    if(u.id == user.id) return context.send('Нельзя вызвать на дуэль себя')
     for (let i = 0; i < users.length; i++) {
       if(users[i].duel == true) return context.send (`Арена занята`)
     }
@@ -785,7 +818,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
     user.predictduel = true 
     await vk.api.messages.send({
       peer_id: context.peerId,
-      message: `@id${user.id}(${user.nick}) вызвал на дуэль @id${u.id}(${u.nick})`,
+      message: `@id${u.id}(${u.nick}) вызвал на дуэль @id${user.id}(${user.nick})`,
       disable_mentions: 1,
       keyboard: Keyboard.builder()
       .inline()
@@ -810,9 +843,14 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
     }
 
     vk.updates.hear(/^(.*) ⚔Принять$/i, msg => {
+      if(msg.senderId == u.id) {
+        var constu = u
+        u = user
+        user = constu
+      }
       if(user.nick == "Игрок") return msg.send (`Невозможное действие. Установите себе ник`)
-      if(msg.senderId != u.id) return msg.send (`Id`)
-      if(u.predictionduel != true) return msg.send(`Pr`)
+      if(msg.senderId != user.id) return msg.send (`Id`)
+      if(user.predictduel != true) return msg.send(`Pr`)
       if(msg.$match[1] != '[club202302035|@eswep]') return msg.send (`Тег`)
       if(msg.messagePayload != "project RQ") return msg.send (`Payload`)
       console.log(user.id)
@@ -1081,10 +1119,9 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
       u.cd36 = 0,
       u.cd37 = 0,
       u.poisoning = -1
-      msg.send(`${user.nick} сдался ${u.nick}. Со счёта ${user.nick} списано ${finalplata2}💵 и начислено на счёт ${u.nick}`)
-      var constuser = user
-      user = u
-      u = constuser
+      msg.send(`${user.nick} сдался ${u.nick}. Со счёта ${user.nick} списано ${finalplata2}🌕 и начислено на счёт ${u.nick}`)
+      delete user
+      delete u
     })
 
     vk.updates.hear(/^(.*) ✋🏻Отклонить$/i, msg => {
@@ -5408,7 +5445,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               u.cd36 = 0,
               u.cd37 = 0,
               u.poisoning = -1
-              msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+              msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
               var constuser = user
               user = u
               u = constuser
@@ -5491,7 +5528,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.cd36 = 0,
                 u.cd37 = 0,
                 u.poisoning = -1
-                msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                 var constuser = user
                 user = u
                 u = constuser
@@ -6458,7 +6495,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.cd36 = 0,
                   u.cd37 = 0,
                   u.poisoning = -1
-                  msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                  msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                   var constuser = user
                   user = u
                   u = constuser
@@ -6541,7 +6578,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.cd36 = 0,
                     u.cd37 = 0,
                     u.poisoning = -1
-                    msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                    msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                     var constuser = user
                     user = u
                     u = constuser
@@ -7156,7 +7193,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.cd36 = 0,
                   u.cd37 = 0,
                   u.poisoning = -1
-                  msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                  msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                   var constuser = user
                   user = u
                   u = constuser
@@ -7239,7 +7276,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.cd36 = 0,
                     u.cd37 = 0,
                     u.poisoning = -1
-                    msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                    msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                     var constuser = user
                     user = u
                     u = constuser
@@ -8203,7 +8240,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.cd36 = 0,
                     u.cd37 = 0,
                     u.poisoning = -1
-                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                     var constuser = user
                     user = u
                     u = constuser
@@ -8286,7 +8323,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                       u.cd36 = 0,
                       u.cd37 = 0,
                       u.poisoning = -1
-                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                       var constuser = user
                       user = u
                       u = constuser
@@ -8898,7 +8935,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.cd36 = 0,
                     u.cd37 = 0,
                     u.poisoning = -1
-                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                     var constuser = user
                     user = u
                     u = constuser
@@ -8981,7 +9018,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                       u.cd36 = 0,
                       u.cd37 = 0,
                       u.poisoning = -1
-                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                       var constuser = user
                       user = u
                       u = constuser
@@ -9728,7 +9765,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               u.cd36 = 0,
               u.cd37 = 0,
               u.poisoning = -1
-              msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+              msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
               var constuser = user
               user = u
               u = constuser
@@ -9811,7 +9848,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.cd36 = 0,
                 u.cd37 = 0,
                 u.poisoning = -1
-                msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                 var constuser = user
                 user = u
                 u = constuser
@@ -10783,7 +10820,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.cd36 = 0,
                 u.cd37 = 0,
                 u.poisoning = -1
-                msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                 var constuser = user
                 user = u
                 u = constuser
@@ -10866,7 +10903,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.cd36 = 0,
                   u.cd37 = 0,
                   u.poisoning = -1
-                  msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                  msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                   var constuser = user
                   user = u
                   u = constuser
@@ -11661,7 +11698,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.cd36 = 0,
                   u.cd37 = 0,
                   u.poisoning = -1
-                  msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                  msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                   var constuser = user
                   user = u
                   u = constuser
@@ -11744,7 +11781,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.cd36 = 0,
                     u.cd37 = 0,
                     u.poisoning = -1
-                    msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                    msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                     var constuser = user
                     user = u
                     u = constuser
@@ -12714,7 +12751,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.cd36 = 0,
                     u.cd37 = 0,
                     u.poisoning = -1
-                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                     var constuser = user
                     user = u
                     u = constuser
@@ -12797,7 +12834,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                       u.cd36 = 0,
                       u.cd37 = 0,
                       u.poisoning = -1
-                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                       var constuser = user
                       user = u
                       u = constuser
@@ -13415,7 +13452,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.cd36 = 0,
                     u.cd37 = 0,
                     u.poisoning = -1
-                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                     var constuser = user
                     user = u
                     u = constuser
@@ -13498,7 +13535,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                       u.cd36 = 0,
                       u.cd37 = 0,
                       u.poisoning = -1
-                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                       var constuser = user
                       user = u
                       u = constuser
@@ -13776,7 +13813,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             u.cd36 = 0,
             u.cd37 = 0,
             u.poisoning = -1
-            msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+            msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
             var constuser = user
             user = u
             u = constuser
@@ -13859,7 +13896,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               u.cd36 = 0,
               u.cd37 = 0,
               u.poisoning = -1
-              msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+              msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
               var constuser = user
               user = u
               u = constuser
@@ -16720,7 +16757,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               u.cd36 = 0,
               u.cd37 = 0,
               u.poisoning = -1
-              msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+              msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
               var constuser = user
               user = u
               u = constuser
@@ -16803,7 +16840,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.cd36 = 0,
                 u.cd37 = 0,
                 u.poisoning = -1
-                msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                 var constuser = user
                 user = u
                 u = constuser
@@ -17766,7 +17803,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.cd36 = 0,
                 u.cd37 = 0,
                 u.poisoning = -1
-                msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                 var constuser = user
                 user = u
                 u = constuser
@@ -17849,7 +17886,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.cd36 = 0,
                   u.cd37 = 0,
                   u.poisoning = -1
-                  msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                  msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                   var constuser = user
                   user = u
                   u = constuser
@@ -18635,7 +18672,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.cd36 = 0,
                   u.cd37 = 0,
                   u.poisoning = -1
-                  msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                  msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                   var constuser = user
                   user = u
                   u = constuser
@@ -18718,7 +18755,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.cd36 = 0,
                     u.cd37 = 0,
                     u.poisoning = -1
-                    msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                    msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                     var constuser = user
                     user = u
                     u = constuser
@@ -19679,7 +19716,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.cd36 = 0,
                     u.cd37 = 0,
                     u.poisoning = -1
-                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                     var constuser = user
                     user = u
                     u = constuser
@@ -19762,7 +19799,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                       u.cd36 = 0,
                       u.cd37 = 0,
                       u.poisoning = -1
-                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                       var constuser = user
                       user = u
                       u = constuser
@@ -20371,7 +20408,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.cd36 = 0,
                     u.cd37 = 0,
                     u.poisoning = -1
-                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                     var constuser = user
                     user = u
                     u = constuser
@@ -20454,7 +20491,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                       u.cd36 = 0,
                       u.cd37 = 0,
                       u.poisoning = -1
-                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                       var constuser = user
                       user = u
                       u = constuser
@@ -23231,7 +23268,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.cd36 = 0,
                 u.cd37 = 0,
                 u.poisoning = -1
-                msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                 var constuser = user
                 user = u
                 u = constuser
@@ -23314,7 +23351,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.cd36 = 0,
                   u.cd37 = 0,
                   u.poisoning = -1
-                  msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                  msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                   var constuser = user
                   user = u
                   u = constuser
@@ -24279,7 +24316,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.cd36 = 0,
                   u.cd37 = 0,
                   u.poisoning = -1
-                  msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                  msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                   var constuser = user
                   user = u
                   u = constuser
@@ -24362,7 +24399,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.cd36 = 0,
                     u.cd37 = 0,
                     u.poisoning = -1
-                    msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                    msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                     var constuser = user
                     user = u
                     u = constuser
@@ -25150,7 +25187,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.cd36 = 0,
                     u.cd37 = 0,
                     u.poisoning = -1
-                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                     var constuser = user
                     user = u
                     u = constuser
@@ -25233,7 +25270,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                       u.cd36 = 0,
                       u.cd37 = 0,
                       u.poisoning = -1
-                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                       var constuser = user
                       user = u
                       u = constuser
@@ -26196,7 +26233,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.cd36 = 0,
                   u.cd37 = 0,
                   u.poisoning = -1
-                  msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                  msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                   var constuser = user
                   user = u
                   u = constuser
@@ -26279,7 +26316,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.cd36 = 0,
                     u.cd37 = 0,
                     u.poisoning = -1
-                    msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                    msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                     var constuser = user
                     user = u
                     u = constuser
@@ -26890,7 +26927,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.cd36 = 0,
                     u.cd37 = 0,
                     u.poisoning = -1
-                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                     var constuser = user
                     user = u
                     u = constuser
@@ -26973,7 +27010,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                       u.cd36 = 0,
                       u.cd37 = 0,
                       u.poisoning = -1
-                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                       var constuser = user
                       user = u
                       u = constuser
@@ -27727,7 +27764,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.cd36 = 0,
                 u.cd37 = 0,
                 u.poisoning = -1
-                msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                 var constuser = user
                 user = u
                 u = constuser
@@ -27810,7 +27847,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.cd36 = 0,
                   u.cd37 = 0,
                   u.poisoning = -1
-                  msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                  msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                   var constuser = user
                   user = u
                   u = constuser
@@ -28795,7 +28832,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.cd36 = 0,
                   u.cd37 = 0,
                   u.poisoning = -1
-                  msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                  msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                   var constuser = user
                   user = u
                   u = constuser
@@ -28878,7 +28915,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.cd36 = 0,
                     u.cd37 = 0,
                     u.poisoning = -1
-                    msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                    msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                     var constuser = user
                     user = u
                     u = constuser
@@ -29686,7 +29723,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.cd36 = 0,
                     u.cd37 = 0,
                     u.poisoning = -1
-                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                     var constuser = user
                     user = u
                     u = constuser
@@ -29769,7 +29806,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                       u.cd36 = 0,
                       u.cd37 = 0,
                       u.poisoning = -1
-                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                       var constuser = user
                       user = u
                       u = constuser
@@ -30752,7 +30789,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.cd36 = 0,
                     u.cd37 = 0,
                     u.poisoning = -1
-                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                     var constuser = user
                     user = u
                     u = constuser
@@ -30835,7 +30872,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                       u.cd36 = 0,
                       u.cd37 = 0,
                       u.poisoning = -1
-                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                       var constuser = user
                       user = u
                       u = constuser
@@ -31466,7 +31503,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.cd36 = 0,
                     u.cd37 = 0,
                     u.poisoning = -1
-                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                     var constuser = user
                     user = u
                     u = constuser
@@ -31549,7 +31586,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                       u.cd36 = 0,
                       u.cd37 = 0,
                       u.poisoning = -1
-                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                       var constuser = user
                       user = u
                       u = constuser
@@ -32296,7 +32333,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.cd36 = 0,
                 u.cd37 = 0,
                 u.poisoning = -1
-                msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                 var constuser = user
                 user = u
                 u = constuser
@@ -32379,7 +32416,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.cd36 = 0,
                   u.cd37 = 0,
                   u.poisoning = -1
-                  msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                  msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                   var constuser = user
                   user = u
                   u = constuser
@@ -33359,7 +33396,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.cd36 = 0,
                   u.cd37 = 0,
                   u.poisoning = -1
-                  msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                  msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                   var constuser = user
                   user = u
                   u = constuser
@@ -33442,7 +33479,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.cd36 = 0,
                     u.cd37 = 0,
                     u.poisoning = -1
-                    msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                    msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                     var constuser = user
                     user = u
                     u = constuser
@@ -34245,7 +34282,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.cd36 = 0,
                     u.cd37 = 0,
                     u.poisoning = -1
-                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                     var constuser = user
                     user = u
                     u = constuser
@@ -34328,7 +34365,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                       u.cd36 = 0,
                       u.cd37 = 0,
                       u.poisoning = -1
-                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                       var constuser = user
                       user = u
                       u = constuser
@@ -35306,7 +35343,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.cd36 = 0,
                     u.cd37 = 0,
                     u.poisoning = -1
-                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                     var constuser = user
                     user = u
                     u = constuser
@@ -35389,7 +35426,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                       u.cd36 = 0,
                       u.cd37 = 0,
                       u.poisoning = -1
-                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                       var constuser = user
                       user = u
                       u = constuser
@@ -36015,7 +36052,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.cd36 = 0,
                     u.cd37 = 0,
                     u.poisoning = -1
-                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                     var constuser = user
                     user = u
                     u = constuser
@@ -36098,7 +36135,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                       u.cd36 = 0,
                       u.cd37 = 0,
                       u.poisoning = -1
-                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                       var constuser = user
                       user = u
                       u = constuser
@@ -36845,7 +36882,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.cd36 = 0,
                 u.cd37 = 0,
                 u.poisoning = -1
-                msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                 var constuser = user
                 user = u
                 u = constuser
@@ -36928,7 +36965,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.cd36 = 0,
                   u.cd37 = 0,
                   u.poisoning = -1
-                  msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                  msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                   var constuser = user
                   user = u
                   u = constuser
@@ -37909,7 +37946,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.cd36 = 0,
                   u.cd37 = 0,
                   u.poisoning = -1
-                  msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                  msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                   var constuser = user
                   user = u
                   u = constuser
@@ -37992,7 +38029,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.cd36 = 0,
                     u.cd37 = 0,
                     u.poisoning = -1
-                    msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                    msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                     var constuser = user
                     user = u
                     u = constuser
@@ -38796,7 +38833,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.cd36 = 0,
                     u.cd37 = 0,
                     u.poisoning = -1
-                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                     var constuser = user
                     user = u
                     u = constuser
@@ -38879,7 +38916,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                       u.cd36 = 0,
                       u.cd37 = 0,
                       u.poisoning = -1
-                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                       var constuser = user
                       user = u
                       u = constuser
@@ -39858,7 +39895,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.cd36 = 0,
                     u.cd37 = 0,
                     u.poisoning = -1
-                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                     var constuser = user
                     user = u
                     u = constuser
@@ -39941,7 +39978,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                       u.cd36 = 0,
                       u.cd37 = 0,
                       u.poisoning = -1
-                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                       var constuser = user
                       user = u
                       u = constuser
@@ -40568,7 +40605,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.cd36 = 0,
                     u.cd37 = 0,
                     u.poisoning = -1
-                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                     var constuser = user
                     user = u
                     u = constuser
@@ -40651,7 +40688,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                       u.cd36 = 0,
                       u.cd37 = 0,
                       u.poisoning = -1
-                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                       var constuser = user
                       user = u
                       u = constuser
@@ -41384,7 +41421,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.cd36 = 0,
                 u.cd37 = 0,
                 u.poisoning = -1
-                msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                 var constuser = user
                 user = u
                 u = constuser
@@ -41467,7 +41504,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.cd36 = 0,
                   u.cd37 = 0,
                   u.poisoning = -1
-                  msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                  msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                   var constuser = user
                   user = u
                   u = constuser
@@ -41812,7 +41849,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.cd36 = 0,
                 u.cd37 = 0,
                 u.poisoning = -1
-                msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                 var constuser = user
                 user = u
                 u = constuser
@@ -41895,7 +41932,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.cd36 = 0,
                   u.cd37 = 0,
                   u.poisoning = -1
-                  msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                  msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                   var constuser = user
                   user = u
                   u = constuser
@@ -42640,7 +42677,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               u.cd36 = 0,
               u.cd37 = 0,
               u.poisoning = -1
-              msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+              msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
               var constuser = user
               user = u
               u = constuser
@@ -42723,7 +42760,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.cd36 = 0,
                 u.cd37 = 0,
                 u.poisoning = -1
-                msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                 var constuser = user
                 user = u
                 u = constuser
@@ -43710,7 +43747,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.cd36 = 0,
                 u.cd37 = 0,
                 u.poisoning = -1
-                msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                 var constuser = user
                 user = u
                 u = constuser
@@ -43793,7 +43830,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.cd36 = 0,
                   u.cd37 = 0,
                   u.poisoning = -1
-                  msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                  msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                   var constuser = user
                   user = u
                   u = constuser
@@ -44603,7 +44640,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.cd36 = 0,
                   u.cd37 = 0,
                   u.poisoning = -1
-                  msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                  msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                   var constuser = user
                   user = u
                   u = constuser
@@ -44686,7 +44723,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.cd36 = 0,
                     u.cd37 = 0,
                     u.poisoning = -1
-                    msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                    msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                     var constuser = user
                     user = u
                     u = constuser
@@ -45667,7 +45704,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.cd36 = 0,
                     u.cd37 = 0,
                     u.poisoning = -1
-                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                     var constuser = user
                     user = u
                     u = constuser
@@ -45750,7 +45787,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                       u.cd36 = 0,
                       u.cd37 = 0,
                       u.poisoning = -1
-                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                       var constuser = user
                       user = u
                       u = constuser
@@ -46379,7 +46416,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.cd36 = 0,
                     u.cd37 = 0,
                     u.poisoning = -1
-                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                     var constuser = user
                     user = u
                     u = constuser
@@ -46462,7 +46499,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                       u.cd36 = 0,
                       u.cd37 = 0,
                       u.poisoning = -1
-                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                       var constuser = user
                       user = u
                       u = constuser
@@ -48878,7 +48915,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
               u.cd36 = 0,
               u.cd37 = 0,
               u.poisoning = -1
-              msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+              msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
               var constuser = user
               user = u
               u = constuser
@@ -48961,7 +48998,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.cd36 = 0,
                 u.cd37 = 0,
                 u.poisoning = -1
-                msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                 var constuser = user
                 user = u
                 u = constuser
@@ -49926,7 +49963,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                 u.cd36 = 0,
                 u.cd37 = 0,
                 u.poisoning = -1
-                msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                 var constuser = user
                 user = u
                 u = constuser
@@ -50009,7 +50046,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.cd36 = 0,
                   u.cd37 = 0,
                   u.poisoning = -1
-                  msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                  msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                   var constuser = user
                   user = u
                   u = constuser
@@ -50797,7 +50834,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                   u.cd36 = 0,
                   u.cd37 = 0,
                   u.poisoning = -1
-                  msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                  msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                   var constuser = user
                   user = u
                   u = constuser
@@ -50880,7 +50917,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.cd36 = 0,
                     u.cd37 = 0,
                     u.poisoning = -1
-                    msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                    msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                     var constuser = user
                     user = u
                     u = constuser
@@ -51843,7 +51880,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.cd36 = 0,
                     u.cd37 = 0,
                     u.poisoning = -1
-                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                     var constuser = user
                     user = u
                     u = constuser
@@ -51926,7 +51963,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                       u.cd36 = 0,
                       u.cd37 = 0,
                       u.poisoning = -1
-                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                       var constuser = user
                       user = u
                       u = constuser
@@ -52537,7 +52574,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                     u.cd36 = 0,
                     u.cd37 = 0,
                     u.poisoning = -1
-                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}💵 и начислено на счёт @id${u.id}(${u.nick})`)
+                    msg.send(`@id${u.id}(${u.nick}) победил @id${user.id}(${user.nick}) в дуэли. Со счёта @id${user.id}(${user.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${u.id}(${u.nick})`)
                     var constuser = user
                     user = u
                     u = constuser
@@ -52620,7 +52657,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
                       u.cd36 = 0,
                       u.cd37 = 0,
                       u.poisoning = -1
-                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}💵 и начислено на счёт @id${user.id}(${user.nick})`)
+                      msg.send(`@id${user.id}(${user.nick}) победил @id${u.id}(${u.nick}) в дуэли. Со счёта @id${u.id}(${u.nick}) списано ${finalplata2}🌕 и начислено на счёт @id${user.id}(${user.nick})`)
                       var constuser = user
                       user = u
                       u = constuser
@@ -53763,7 +53800,7 @@ vk.updates.hear(/^Завершить 1-1$/i, async (context) => {
   user.money += 5000
   await vk.api.messages.send({
     peer_id: context.peerId,
-    message: `----------------------------------------------\nГлава 1, Квест 1 завершён. Для получения второго квеста достигните ❤432 ⚔87 🛡36\n----------------------------------------------\nЗа прохождение квеста вы получаете 💵5.000\n----------------------------------------------`,
+    message: `----------------------------------------------\nГлава 1, Квест 1 завершён. Для получения второго квеста достигните ❤432 ⚔87 🛡36\n----------------------------------------------\nЗа прохождение квеста вы получаете 🌕5.000\n----------------------------------------------`,
     keyboard: Keyboard.keyboard([
       [
       Keyboard.textButton({
@@ -54006,7 +54043,7 @@ vk.updates.hear(/^Завершить 1-2$/i, async (context) => {
   user.money += 10000
   await vk.api.messages.send({
     peer_id: context.peerId,
-    message: `----------------------------------------------\nГлава 1, Квест 2 завершён. Для получения третьего квеста достигните ❤621 ⚔130 🛡52\n----------------------------------------------\nЗа прохождение квеста вы получаете 💵10.000\n----------------------------------------------`,
+    message: `----------------------------------------------\nГлава 1, Квест 2 завершён. Для получения третьего квеста достигните ❤621 ⚔130 🛡52\n----------------------------------------------\nЗа прохождение квеста вы получаете 🌕10.000\n----------------------------------------------`,
     keyboard: Keyboard.keyboard([
       [
       Keyboard.textButton({
@@ -54198,7 +54235,7 @@ vk.updates.hear(/^Завершить 1-3$/i, async (context) => {
   user.quest += 1
   await vk.api.messages.send({
     peer_id: context.peerId,
-    message: `----------------------------------------------\nГлава 1, Квест 3 завершён. Для перехода на Главу 2 и получения первого квеста достигните ❤894 ⚔197 🛡74\n----------------------------------------------\nЗа прохождение квеста вы получаете 💵15.000\n----------------------------------------------`,
+    message: `----------------------------------------------\nГлава 1, Квест 3 завершён. Для перехода на Главу 2 и получения первого квеста достигните ❤894 ⚔197 🛡74\n----------------------------------------------\nЗа прохождение квеста вы получаете 🌕15.000\n----------------------------------------------`,
     keyboard: Keyboard.keyboard([
       [
       Keyboard.textButton({
@@ -54386,7 +54423,7 @@ vk.updates.hear(/^Завершить 2-1$/i, async (context) => {
   user.quest += 1
   await vk.api.messages.send({
     peer_id: context.peerId,
-    message: `----------------------------------------------\nГлава 2, Квест 1 завершён. Для получения второго квеста достигните ❤1258 ⚔298 🛡107\n----------------------------------------------\nЗа прохождение квеста вы получаете 💵20.000\n----------------------------------------------`,
+    message: `----------------------------------------------\nГлава 2, Квест 1 завершён. Для получения второго квеста достигните ❤1258 ⚔298 🛡107\n----------------------------------------------\nЗа прохождение квеста вы получаете 🌕20.000\n----------------------------------------------`,
     keyboard: Keyboard.keyboard([
       [
       Keyboard.textButton({
@@ -54565,7 +54602,7 @@ vk.updates.hear(/^Завершить 2-2$/i, async (context) => {
   user.quest += 1
   await vk.api.messages.send({
     peer_id: context.peerId,
-    message: `----------------------------------------------\nГлава 2, Квест 2 завершён. Для получения второго квеста достигните ❤1652 ⚔423 🛡140\n----------------------------------------------\nЗа прохождение квеста вы получаете 💵25.000\n----------------------------------------------`,
+    message: `----------------------------------------------\nГлава 2, Квест 2 завершён. Для получения второго квеста достигните ❤1652 ⚔423 🛡140\n----------------------------------------------\nЗа прохождение квеста вы получаете 🌕25.000\n----------------------------------------------`,
     keyboard: Keyboard.keyboard([
       [
       Keyboard.textButton({
@@ -54822,7 +54859,7 @@ vk.updates.hear(/^Завершить 2-3$/i, async (context) => {
   user.quest += 1
   await vk.api.messages.send({
     peer_id: context.peerId,
-    message: `----------------------------------------------\nГлава 2, Квест 3 завершён. Для получения второго квеста достигните ❤1855 ⚔451 🛡155\n----------------------------------------------\nЗа прохождение квеста вы получаете 💵30.000\n----------------------------------------------`,
+    message: `----------------------------------------------\nГлава 2, Квест 3 завершён. Для получения второго квеста достигните ❤1855 ⚔451 🛡155\n----------------------------------------------\nЗа прохождение квеста вы получаете 🌕30.000\n----------------------------------------------`,
     keyboard: Keyboard.keyboard([
       [
       Keyboard.textButton({
