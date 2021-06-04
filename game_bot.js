@@ -85,6 +85,11 @@ vk.updates.on('message', (next, context) => {
   return context()
 })
 
+vk.updates.hear(/^!get users.json$/i, msg => {
+  const users = require('./users.json')
+  console.log(users)
+  })
+
 vk.updates.on('message', (next, context) => {
   const user = users.filter(x => x.id === next.senderId)[0]
   var a = -user.atk
