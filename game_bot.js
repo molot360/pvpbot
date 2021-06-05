@@ -837,7 +837,6 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
         })
 
     vk.updates.hear(/^(.*) ⚔Принять$/i, msg => {
-      if(user.nick == "Игрок") return msg.send (`Невозможное действие. Установите себе ник`)
       console.log(`принятие`)
       console.log(msg.senderId)
       console.log(u.id)
@@ -1124,7 +1123,6 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
     })
 
     vk.updates.hear(/^(.*) ✋🏻Отклонить$/i, msg => {
-      if(user.nick == "Игрок") return msg.send (`Невозможное действие. Установите себе ник`)
       if(msg.senderId != user.id) return
       if(msg.$match[1] != '[club202302035|@eswep]') return
       if(msg.messagePayload != "project RQ") return
