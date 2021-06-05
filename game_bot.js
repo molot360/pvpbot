@@ -1129,6 +1129,8 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
       if(msg.$match[1] != '[club202302035|@eswep]') return
       if(msg.messagePayload != "project RQ") return
       msg.send(`@id${u.id}(${u.nick}) отклонил дуэль от @id${user.id}(${user.nick})`)
+      user = undefined
+      u = undefined
     })
   
   vk.updates.hear(/^(.*) 😈$/i, msg => {
