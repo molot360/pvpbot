@@ -45,6 +45,9 @@ vk.updates.on('message', (next, context) => {
         id: 1
       },
       money: 10000,
+      zachistkalocation: false,
+      raznosvestei: false,
+      helpbeginners: false,
       quest: 0,
       adm: false,
       predictionduel: false,
@@ -160,18 +163,25 @@ const classes = [
           payload: "project RQ"
           })
         })
+      })
 
   vk.updates.hear(/^(.*) Зачистка локации$/i, async (context) => {
+    const user = users.filter(x => x.id === context.senderId)[0]
     if(context.$match[1] != '[club202302035|@eswep]') return
     if(context.messagePayload != "project RQ") return
     if(user.nick == "Игрок") return context.send (`Невозможное действие. Установите себе ник`)
+    if(user.zachistkalocation == true) return context.send(`Вы уже выполняете ежедневное задание`)
+    if(user.raznosvestei == true) return context.send(`Вы уже выполняете ежедневное задание`)
+    if(user.helpbeginners == true) return context.send(`Вы уже выполняете ежедневное задание`)
     await vk.api.messages.send({
       peer_id: context.peerId,
       message: `@id${user.id}(${user.nick}), вы начали зачистку локации\n⌛Время работы: 2 часа`,
       disable_mentions: 1,
     })
+    user.zachistkalocation = true
     function zachistkalocation() {
       user.money += 5000
+      user.zachistkalocation = false
       vk.api.messages.send({
         peer_id: context.peerId,
         message: `@id${user.id}(${user.nick}), вы завершили работу\n💰Hаграда: 5.000🌕`,
@@ -182,16 +192,22 @@ const classes = [
   })
 
   vk.updates.hear(/^(.*) Разнос вестей$/i, async (context) => {
+    const user = users.filter(x => x.id === context.senderId)[0]
     if(context.$match[1] != '[club202302035|@eswep]') return
     if(context.messagePayload != "project RQ") return
     if(user.nick == "Игрок") return context.send (`Невозможное действие. Установите себе ник`)
+    if(user.zachistkalocation == true) return context.send(`Вы уже выполняете ежедневное задание`)
+    if(user.raznosvestei == true) return context.send(`Вы уже выполняете ежедневное задание`)
+    if(user.helpbeginners == true) return context.send(`Вы уже выполняете ежедневное задание`)
     await vk.api.messages.send({
       peer_id: context.peerId,
       message: `@id${user.id}(${user.nick}), вы начали разносить вести по городу\n⌛Время работы: 1 час`,
       disable_mentions: 1,
     })
+    user.raznosvestei = true
     function raznosvestei() {
       user.money += 3000
+      user.raznosvestei = false
       vk.api.messages.send({
         peer_id: context.peerId,
         message: `@id${user.id}(${user.nick}), вы завершили работу\n💰Hаграда: 3.000🌕`,
@@ -202,16 +218,22 @@ const classes = [
   })
 
   vk.updates.hear(/^(.*) Помощь новичкам$/i, async (context) => {
+    const user = users.filter(x => x.id === context.senderId)[0]
     if(context.$match[1] != '[club202302035|@eswep]') return
     if(context.messagePayload != "project RQ") return
     if(user.nick == "Игрок") return context.send (`Невозможное действие. Установите себе ник`)
+    if(user.zachistkalocation == true) return context.send(`Вы уже выполняете ежедневное задание`)
+    if(user.raznosvestei == true) return context.send(`Вы уже выполняете ежедневное задание`)
+    if(user.helpbeginners == true) return context.send(`Вы уже выполняете ежедневное задание`)
     await vk.api.messages.send({
       peer_id: context.peerId,
       message: `${user.nick}, вы начали помогать новичкам\n⌛Время работы: 4 часа`,
       disable_mentions: 1,
     })
+    user.helpbeginners = true
     function helpbeginners() {
       user.money += 9000
+      user.helpbeginners = false
       vk.api.messages.send({
         peer_id: context.peerId,
         message: `@id${user.id}(${user.nick}), вы завершили работу\n💰Hаграда: 9.000🌕`,
@@ -220,7 +242,6 @@ const classes = [
     }
     setTimeout(helpbeginners, 14400000)
   })
-})
 
 vk.updates.hear(/^!кв (.*)/i, msg => {
   const user = users.filter(x => x.id === msg.senderId)[0]
@@ -804,8 +825,8 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
   })
 
   vk.updates.hear(/^!д$/i, async (context) => {
-    let u = users.filter(x => x.id === context.senderId)[0]
-    let user = users.filter(x => x.id === context.replyMessage.senderId)[0]
+    var u = users.filter(x => x.id === context.senderId)[0]
+    var user = users.filter(x => x.id === context.replyMessage.senderId)[0]
     console.log(`!д`)
     console.log(u.id)
     console.log(user.id)
@@ -817,7 +838,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
     }
     u.predictionduel = true
     user.predictduel = true 
-    await vk.api.messages.send({
+    vk.api.messages.send({
       peer_id: context.peerId,
       message: `@id${u.id}(${u.nick}) вызвал на дуэль @id${user.id}(${user.nick})`,
       disable_mentions: 1,
@@ -836,142 +857,34 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
           }),
         })
 
-    vk.updates.hear(/^(.*) ⚔Принять$/i, msg => {
-      console.log(`принятие`)
-      console.log(msg.senderId)
-      console.log(u.id)
-      console.log(user.id)
-      if(msg.senderId == u.id) {
-        var constu = u
-        u = user
-        user = constu
-      }
-      if(msg.senderId != user.id) return msg.send (`Id`)
-      if(user.predictduel != true) return msg.send(`Pr`)
-      if(msg.$match[1] != '[club202302035|@eswep]') return msg.send (`Тег`)
-      if(msg.messagePayload != "project RQ") return msg.send (`Payload`)
-      user.duel = true
-      u.duel = true
-      user.duelhp = user.hp
-      user.duelatk = user.atk
-      user.dueldef = user.def
-      u.duelhp = u.hp
-      u.duelatk = u.atk
-      u.dueldef = u.def
-      u.predictionduel = false
-      user.predictduel = false
-      user.predictionduel = false
-      u.predictduel = false
-      user.steps += 1
-      if (user.clas.id == 1) {
-        vk.api.messages.send({
-          peer_id: msg.peerId,
-          message: `@id${user.id}(${user.nick}) принял дуэль от @id${u.id}(${u.nick}). Первый ход делает @id${user.id}(${user.nick})`,
-          disable_mentions: 1,
-          keyboard: Keyboard.builder()
-          .inline()
-            .textButton({
-              label: "😈",
-              color: "primary",
-              payload: "project RQ"
-              })
-          .inline()
-            .textButton({
-              label: "🛡",
-              color: "primary",
-              payload: "project RQ"
-              })
-          .inline()
-            .textButton({
-              label: "🖤",
-              color: "negative",
-              payload: "project RQ"
-              })
-          .inline()
-            .textButton({
-              label: "❣",
-              color: "positive",
-              payload: "project RQ"
-              })
-          .row()
-          .inline()
-            .textButton({
-              label: "☦",
-              color: "negative",
-              payload: "project RQ"
-              })
-          .inline()
-            .textButton({
-              label: "⚙",
-              color: "primary",
-              payload: "project RQ"
-              })
-          .inline()
-            .textButton({
-              label: "⚔",
-              color: "primary",
-              payload: "project RQ"
-              })
-          .inline()
-            .textButton({
-              label: "АТК",
-              color: "negative",
-              payload: "project RQ"
-              })
-            })
-      }
-      if (user.clas.id == 2) {
-        vk.api.messages.send({
-          peer_id: msg.peerId,
-          message: `@id${user.id}(${user.nick}) принял дуэль от @id${u.id}(${u.nick}). Первый ход делает @id${user.id}(${user.nick})`,
-          disable_mentions: 1,
-          keyboard: Keyboard.builder()
-          .inline()
-            .textButton({
-              label: "❄",
-              color: "primary",
-              payload: "project RQ"
-              })
-          .inline()
-            .textButton({
-              label: "💥",
-              color: "secondary",
-              payload: "project RQ"
-              })
-          .inline()
-            .textButton({
-              label: "🍃",
-              color: "positive",
-              payload: "project RQ"
-              })
-          .inline()
-            .textButton({
-              label: "🔥",
-              color: "negative",
-              payload: "project RQ"
-              })
-          .row()
-          .inline()
-            .textButton({
-              label: "💧",
-              color: "negative",
-              payload: "project RQ"
-              })
-          .inline()
-            .textButton({
-              label: "⚡",
-              color: "negative",
-              payload: "project RQ"
-              })
-          .inline()
-            .textButton({
-              label: "АТК",
-              color: "negative",
-              payload: "project RQ"
-              })
-            })
-      }
-      if (user.clas.id == 3) {
+  vk.updates.hear(/^(.*) ⚔Принять$/i, msg => {
+    console.log(`принятие`)
+    console.log(msg.senderId)
+    console.log(u.id)
+    console.log(user.id)
+    if(msg.senderId == u.id) {
+      var constu = u
+      u = user
+      user = constu
+    }
+    if(msg.senderId != user.id) return msg.send (`Id`)
+    if(user.predictduel != true) return msg.send(`Pr`)
+    if(msg.$match[1] != '[club202302035|@eswep]') return msg.send (`Тег`)
+    if(msg.messagePayload != "project RQ") return msg.send (`Payload`)
+    user.duel = true
+    u.duel = true
+    user.duelhp = user.hp
+    user.duelatk = user.atk
+    user.dueldef = user.def
+    u.duelhp = u.hp
+    u.duelatk = u.atk
+    u.dueldef = u.def
+    u.predictionduel = false
+    user.predictduel = false
+    user.predictionduel = false
+    u.predictduel = false
+    user.steps += 1
+    if (user.clas.id == 1) {
       vk.api.messages.send({
         peer_id: msg.peerId,
         message: `@id${user.id}(${user.nick}) принял дуэль от @id${u.id}(${u.nick}). Первый ход делает @id${user.id}(${user.nick})`,
@@ -979,45 +892,45 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
         keyboard: Keyboard.builder()
         .inline()
           .textButton({
-            label: "🦠",
-            color: "negative",
-            payload: "project RQ"
-            })
-        .inline()
-          .textButton({
-            label: "🔪",
-            color: "negative",
-            payload: "project RQ"
-            })
-        .inline()
-          .textButton({
-            label: "💣",
+            label: "😈",
             color: "primary",
             payload: "project RQ"
             })
         .inline()
           .textButton({
-            label: "👁‍🗨",
+            label: "🛡",
             color: "primary",
+            payload: "project RQ"
+            })
+        .inline()
+          .textButton({
+            label: "🖤",
+            color: "negative",
+            payload: "project RQ"
+            })
+        .inline()
+          .textButton({
+            label: "❣",
+            color: "positive",
             payload: "project RQ"
             })
         .row()
         .inline()
           .textButton({
-            label: "🧬",
-            color: "positive",
+            label: "☦",
+            color: "negative",
             payload: "project RQ"
             })
         .inline()
           .textButton({
-            label: "🗡",
-            color: "secondary",
+            label: "⚙",
+            color: "primary",
             payload: "project RQ"
             })
         .inline()
           .textButton({
-            label: "💉",
-            color: "positive",
+            label: "⚔",
+            color: "primary",
             payload: "project RQ"
             })
         .inline()
@@ -1027,109 +940,217 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
             payload: "project RQ"
             })
           })
-        }
-    })
-    
-    vk.updates.hear(/^!с$/i, msg => {
-      if(msg.senderId == u.id) {
-        var constu = u
-        u = user
-        user = constu
+    }
+    if (user.clas.id == 2) {
+      vk.api.messages.send({
+        peer_id: msg.peerId,
+        message: `@id${user.id}(${user.nick}) принял дуэль от @id${u.id}(${u.nick}). Первый ход делает @id${user.id}(${user.nick})`,
+        disable_mentions: 1,
+        keyboard: Keyboard.builder()
+        .inline()
+          .textButton({
+            label: "❄",
+            color: "primary",
+            payload: "project RQ"
+            })
+        .inline()
+          .textButton({
+            label: "💥",
+            color: "secondary",
+            payload: "project RQ"
+            })
+        .inline()
+          .textButton({
+            label: "🍃",
+            color: "positive",
+            payload: "project RQ"
+            })
+        .inline()
+          .textButton({
+            label: "🔥",
+            color: "negative",
+            payload: "project RQ"
+            })
+        .row()
+        .inline()
+          .textButton({
+            label: "💧",
+            color: "negative",
+            payload: "project RQ"
+            })
+        .inline()
+          .textButton({
+            label: "⚡",
+            color: "negative",
+            payload: "project RQ"
+            })
+        .inline()
+          .textButton({
+            label: "АТК",
+            color: "negative",
+            payload: "project RQ"
+            })
+          })
+    }
+    if (user.clas.id == 3) {
+    vk.api.messages.send({
+      peer_id: msg.peerId,
+      message: `@id${user.id}(${user.nick}) принял дуэль от @id${u.id}(${u.nick}). Первый ход делает @id${user.id}(${user.nick})`,
+      disable_mentions: 1,
+      keyboard: Keyboard.builder()
+      .inline()
+        .textButton({
+          label: "🦠",
+          color: "negative",
+          payload: "project RQ"
+          })
+      .inline()
+        .textButton({
+          label: "🔪",
+          color: "negative",
+          payload: "project RQ"
+          })
+      .inline()
+        .textButton({
+          label: "💣",
+          color: "primary",
+          payload: "project RQ"
+          })
+      .inline()
+        .textButton({
+          label: "👁‍🗨",
+          color: "primary",
+          payload: "project RQ"
+          })
+      .row()
+      .inline()
+        .textButton({
+          label: "🧬",
+          color: "positive",
+          payload: "project RQ"
+          })
+      .inline()
+        .textButton({
+          label: "🗡",
+          color: "secondary",
+          payload: "project RQ"
+          })
+      .inline()
+        .textButton({
+          label: "💉",
+          color: "positive",
+          payload: "project RQ"
+          })
+      .inline()
+        .textButton({
+          label: "АТК",
+          color: "negative",
+          payload: "project RQ"
+          })
+        })
       }
-      if(user.duel != true) return
-      if(u.duel != true) return
-      var plata2 = user.money
-      var procentplata = 10
-      var resultplata2 = plata2 / 100 * procentplata
-      let num27 = resultplata2
-      var finalplata = num27.toFixed(0)
-      var finalplata2 = Number(finalplata)
-      user.money -= finalplata2
-      u.money += finalplata2
-      user.duel = false
-      u.duel = false
-      u.predictionduel = false
-      user.predictduel = false
-      user.steps = 0
-      u.steps = 0
-      user.timer = 0
-      u.timer = 0
-      user.duelhp = 0
-      user.duelatk = 0
-      user.dueldef = 0
-      u.duelhp = 0
-      u.duelatk = 0
-      u.dueldef = 0
-      user.cd11 = 0,
-      user.del11 = -1,
-      user.cd12 = 0,
-      user.del12 = -1,
-      user.cd13 = 0,
-      user.cd14 = 0,
-      user.cd15 = 0,
-      user.spikes = -1,
-      user.cd16 = 0,
-      user.clinch = -1,
-      user.cd21 = 0,
-      user.cd22 = 0,
-      user.nakopleniye = 0,
-      user.el1 = 0,
-      user.burn = 0,
-      user.el2 = 0,
-      user.el3 = 0,
-      user.cd31 = 0,
-      user.poison = 0,
-      user.cd32 = 0,
-      user.cd33 = 0,
-      user.cd34 = 0,
-      user.invisible = false,
-      user.cd35 = 0,
-      user.cd36 = 0,
-      user.cd37 = 0,
-      user.poisoning = -1
-      u.cd11 = 0,
-      u.del11 = -1,
-      u.cd12 = 0,
-      u.del12 = -1,
-      u.cd13 = 0,
-      u.cd14 = 0,
-      u.cd15 = 0,
-      u.spikes = -1,
-      u.cd16 = 0,
-      u.clinch = -1,
-      u.cd21 = 0,
-      u.cd22 = 0,
-      u.nakopleniye = 0,
-      u.el1 = 0,
-      u.burn = 0,
-      u.el2 = 0,
-      u.el3 = 0,
-      u.cd31 = 0,
-      u.poison = 0,
-      u.cd32 = 0,
-      u.cd33 = 0,
-      u.cd34 = 0,
-      u.invisible = false,
-      u.cd35 = 0,
-      u.cd36 = 0,
-      u.cd37 = 0,
-      u.poisoning = -1
-      msg.send(`${user.nick} сдался ${u.nick}. Со счёта ${user.nick} списано ${finalplata2}🌕 и начислено на счёт ${u.nick}`)
-      user = undefined
-      u = undefined
-      console.log(`сдача`)
-      console.log(user)
-      console.log(u)
-    })
+  })
+  
+  vk.updates.hear(/^!с$/i, msg => {
+    if(msg.senderId == u.id) {
+      var constu = u
+      u = user
+      user = constu
+    }
+    if(user.duel != true) return
+    if(u.duel != true) return
+    var plata2 = user.money
+    var procentplata = 10
+    var resultplata2 = plata2 / 100 * procentplata
+    let num27 = resultplata2
+    var finalplata = num27.toFixed(0)
+    var finalplata2 = Number(finalplata)
+    user.money -= finalplata2
+    u.money += finalplata2
+    user.duel = false
+    u.duel = false
+    u.predictionduel = false
+    user.predictduel = false
+    user.steps = 0
+    u.steps = 0
+    user.timer = 0
+    u.timer = 0
+    user.duelhp = 0
+    user.duelatk = 0
+    user.dueldef = 0
+    u.duelhp = 0
+    u.duelatk = 0
+    u.dueldef = 0
+    user.cd11 = 0,
+    user.del11 = -1,
+    user.cd12 = 0,
+    user.del12 = -1,
+    user.cd13 = 0,
+    user.cd14 = 0,
+    user.cd15 = 0,
+    user.spikes = -1,
+    user.cd16 = 0,
+    user.clinch = -1,
+    user.cd21 = 0,
+    user.cd22 = 0,
+    user.nakopleniye = 0,
+    user.el1 = 0,
+    user.burn = 0,
+    user.el2 = 0,
+    user.el3 = 0,
+    user.cd31 = 0,
+    user.poison = 0,
+    user.cd32 = 0,
+    user.cd33 = 0,
+    user.cd34 = 0,
+    user.invisible = false,
+    user.cd35 = 0,
+    user.cd36 = 0,
+    user.cd37 = 0,
+    user.poisoning = -1
+    u.cd11 = 0,
+    u.del11 = -1,
+    u.cd12 = 0,
+    u.del12 = -1,
+    u.cd13 = 0,
+    u.cd14 = 0,
+    u.cd15 = 0,
+    u.spikes = -1,
+    u.cd16 = 0,
+    u.clinch = -1,
+    u.cd21 = 0,
+    u.cd22 = 0,
+    u.nakopleniye = 0,
+    u.el1 = 0,
+    u.burn = 0,
+    u.el2 = 0,
+    u.el3 = 0,
+    u.cd31 = 0,
+    u.poison = 0,
+    u.cd32 = 0,
+    u.cd33 = 0,
+    u.cd34 = 0,
+    u.invisible = false,
+    u.cd35 = 0,
+    u.cd36 = 0,
+    u.cd37 = 0,
+    u.poisoning = -1
+    msg.send(`${user.nick} сдался ${u.nick}. Со счёта ${user.nick} списано ${finalplata2}🌕 и начислено на счёт ${u.nick}`)
+    user = undefined
+    u = undefined
+    console.log(`сдача`)
+    console.log(user)
+    console.log(u)
+  })
 
-    vk.updates.hear(/^(.*) ✋🏻Отклонить$/i, msg => {
-      if(msg.senderId != user.id) return
-      if(msg.$match[1] != '[club202302035|@eswep]') return
-      if(msg.messagePayload != "project RQ") return
-      msg.send(`@id${u.id}(${u.nick}) отклонил дуэль от @id${user.id}(${user.nick})`)
-      user = undefined
-      u = undefined
-    })
+  vk.updates.hear(/^(.*) ✋🏻Отклонить$/i, msg => {
+    if(msg.senderId != user.id) return
+    if(msg.$match[1] != '[club202302035|@eswep]') return
+    if(msg.messagePayload != "project RQ") return
+    msg.send(`@id${u.id}(${u.nick}) отклонил дуэль от @id${user.id}(${user.nick})`)
+    user = undefined
+    u = undefined
+  })
   
   vk.updates.hear(/^(.*) 😈$/i, msg => {
     if(user.duel == false) return msg.send ('В данный момент вы не в дуэли')
@@ -53410,6 +53431,7 @@ vk.updates.hear(/^!дефлвл (.*)/i, msg => {
     user = u
     u = constuser
   })
+  return (u, user)
 })
 
 vk.updates.hear(/^Начать$/i, async (context) => {
