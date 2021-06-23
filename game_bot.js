@@ -98,12 +98,11 @@ vk.updates.hear(/^!get users.json$/i, msg => {
 })
 
 function DB() {
-  var users = require('./users.json')
-  var DB = JSON.stringify(users, null, ' ')
-  users = DB
+  var DB = `БД`
+  fs.writeFileSync("https://github.com/molot360/pvpbot/blob/main/users.json", JSON.stringify(DB, null, "\t"))
   console.log(`БД обновлена`)
 }
-setInterval(DB, 300000)
+setInterval(DB, 30000)
 
 vk.updates.on('message', (next, context) => {
   const user = users.filter(x => x.id === next.senderId)[0]
