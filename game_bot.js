@@ -90,10 +90,19 @@ vk.updates.on('message', (next, context) => {
 })
 
 vk.updates.hear(/^!get users.json$/i, msg => {
-  const users = require('./users.json')
+  var users = require('./users.json')
+  console.log(users)
   var DB = JSON.stringify(users, null, ' ')
   console.log(DB)
-  })
+  users = DB
+})
+
+function DB() {
+  var users = require('./users.json')
+  var DB = JSON.stringify(users, null, ' ')
+  users = DB
+}
+setInterval(DB, 300000)
 
 vk.updates.on('message', (next, context) => {
   const user = users.filter(x => x.id === next.senderId)[0]
