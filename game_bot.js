@@ -101,6 +101,7 @@ function DB() {
   var users = require('./users.json')
   var DB = JSON.stringify(users, null, ' ')
   users = DB
+  console.log(`БД обновлена`)
 }
 setInterval(DB, 300000)
 
